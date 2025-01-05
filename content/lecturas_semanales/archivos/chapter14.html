@@ -1,0 +1,892 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Costos en cadenas de Markov &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter14';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)" href="../Modulo4.html" />
+    <link rel="prev" title="Redes de Jackson" href="chapter13.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter14.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Costos en cadenas de Markov</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="costos-en-cadenas-de-markov">
+<h1>Costos en cadenas de Markov<a class="headerlink" href="#costos-en-cadenas-de-markov" title="Link to this heading">#</a></h1>
+<p>En este documento se introduce el concepto de estructura de costo
+(<em>reward structure</em>, en inglés), que proporciona un enfoque muy general
+para la definición de indicadores de utilidad que pueden ser
+cuantificados a partir de los índices de rendimiento calculados con
+cadenas de Markov. A través de ejemplo se caracterizan primero los tipos
+fundamentales de costos que pueden ser asociados a los elementos de una
+Cadena de Markov, y luego se muestran las alternativas de análisis y su
+aplicación.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>En este contexto, el término estructura de costos hace referencia a un
+enriquecimiento de los elementos de una Cadena de Markov, tales como
+estados y transiciones, que permite agregar una nueva capa de
+información cuantitativa útil para la realización de análisis económicos
+acerca del desempeño del sistema.</p>
+<p>Como ejemplo, consideramos un sistema que pueda ser modelado a través de
+una cola <span class="math notranslate nohighlight">\(M/M/1/c\)</span>, con tasa de llagada <span class="math notranslate nohighlight">\(\lambda\)</span> y de servicio <span class="math notranslate nohighlight">\(\mu\)</span>,
+por ejemplo, una tienda con un solo empleado y capacidad finita. Como ya
+sabemos, varios índices o indicadores que pueden ser calculados a partir
+del análisis del modelo permiten caracterizar el desempeño del sistema
+frente a aspectos de varia naturaleza. Por ejemplo:</p>
+<ol class="arabic simple">
+<li><p>La probabilidad de que el sistema esté vacío es un indicador del
+nivel de utilización del empleado.</p></li>
+<li><p>La diferencia entre la tasa del proceso de llegada y la tasa
+efectiva es un indicador de la cantidad de demanda insatisfecha.</p></li>
+<li><p>El tiempo promedio de espera de los usuarios que se encuentran en el
+sistema es un indicador de la ineficiencia del servicio y por ende
+de la insatisfacción del usuario.</p></li>
+</ol>
+<p>Cada uno de estos índices se evalúa a partir del análisis de la
+distribución de probabilidad de estado de la cola que modela el sistema,
+sea esa en el transitorio, en el cual se denota con
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}(t)\)</span>, o en el estado estacionario (para este modelo
+siempre existe), en el cual esta denotada como <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span>.
+En particular, si el espacio de estados es el conjunto
+<span class="math notranslate nohighlight">\(S = \{ 0,1,\ldots,c\}\)</span> los tres índices que se definen arriba se
+obtienen de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>La probabilidad de que el sistema se encuentre vacío en el tiempo
+<span class="math notranslate nohighlight">\(t\)</span> (transitorio) se calcula a partir del vector
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha} \bullet e^{\mathbb{Q}t}\ \)</span>donde
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\)</span> es el vector de la distribución inicial de
+probabilidad, y <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> la matriz de las tasas de transición
+del proceso de nacimiento y muerte que representa la evolución del
+número de usuarios en la cola. Siendo el estado 0, que corresponde
+al sistema vacio y el primero en el espacio de estados ordenado, la
+primera componente del vector
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha} \bullet e^{\mathbb{Q}t}\)</span> corresponde a
+<span class="math notranslate nohighlight">\(\pi_{0}(t)\)</span>, siendo ella la probabilidad de que el sistema esté
+vacío al tiempo <span class="math notranslate nohighlight">\(t\)</span>. Si el análisis se hace en el estado
+estacionario, el indicador será el valor de <span class="math notranslate nohighlight">\(\pi_{0}\)</span>, primer
+elemento del vector de la distribución de probabilidad estacionaria.</p></li>
+<li><p>La demanda insatisfecha se obtiene a partir de la probabilidad de
+que un usuario no pueda ingresar al sistema por falta de capacidad.
+Por lo cual, análogamente al caso anterior, el último elemento del
+vector <span class="math notranslate nohighlight">\(\overrightarrow{\alpha} \bullet e^{\mathbb{Q}t}\)</span>, que
+corresponde a la probabilidad de bloqueo de la cola <span class="math notranslate nohighlight">\(\pi_{c}(t)\)</span> en
+el tiempo <span class="math notranslate nohighlight">\(t\)</span> y el último elemento del vector de la distribución de
+probabilidad estacionara <span class="math notranslate nohighlight">\(\pi_{c}\)</span> son las cantidades a estimar para
+el análisis en el estado transitorio y estacionario,
+respectivamente. La demanda insatisfecha en el estado estacionario
+es <span class="math notranslate nohighlight">\(\lambda \cdot \pi_{c}\)</span>.</p></li>
+<li><p>La eficiencia del servicio en el estado transitorio puede ser
+calculada como <span class="math notranslate nohighlight">\(W_{q}(t)\)</span> en un análisis transitorio al tiempo <span class="math notranslate nohighlight">\(t\)</span> y
+como <span class="math notranslate nohighlight">\(W_{q}\)</span> en el estado estacionario. Estos tiempos pueden ser
+calculados con la ley de Little, sea en el transitorio como para el
+estado estacionario (una vez se conozca el valor de <span class="math notranslate nohighlight">\(L_{q}(t)\)</span> y de
+<span class="math notranslate nohighlight">\(L_{q}\)</span>, promedios de usuarios en espera), como sigue:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[{W_{q}(t) = \frac{L_{q}(t)}{\lambda_{eff}},\ \ W}_{q} = \frac{L_{q}}{\lambda_{eff}}\]</div>
+<p>Los promedios <span class="math notranslate nohighlight">\(L_{q}(t)\)</span> y de <span class="math notranslate nohighlight">\(L_{q}\)</span> se obtienen utilizando la
+distribución de probabilidad de estado apropiada para el caso en
+cuestión, como sigue:</p>
+<div class="math notranslate nohighlight">
+\[L_{q}(t) = \sum_{j = 2}^{c}{(j - 1) \bullet \pi_{j}(t)},\ \ \ \ \ \ \ L_{q} = \sum_{j = 2}^{c}{(j - 1) \bullet \pi_{j}}\]</div>
+<p>Es interesante observar que cada uno de los indicadores tiene diferente
+naturaleza y es dimensionalmente diferente a los demás. El primero es
+una probabilidad, entonces es un número puro; el segundo es una tasa,
+con dimensiones de usuarios por unidad de tiempo, y el tercero es un
+tiempo. Independientemente de su naturaleza, el cálculo de los
+indicadores tiene aspectos comunes que son importantes resaltar. En
+efecto, para obtener cada uno de ellos se necesita calcular un promedio
+que involucra la distribución de la probabilidad de estado. Por cada
+indicador se asocia un valor a cada estado, y ese valor es utilizado en
+un promedio ponderado por la distribución de probabilidad.</p>
+<p>Por ejemplo, si denotamos con <span class="math notranslate nohighlight">\(r_{j}\)</span> el valor que se asocia al estado
+<span class="math notranslate nohighlight">\(j \in 0,1,\ldots,c\)</span> para los indicadores anteriormente definidos, vemos
+que se utilizaron (de manera implícita) las siguientes asignaciones de
+valores a los estados.</p>
+<p><img alt="Figura 1" src="../../../_images/retornos1.png" /></p>
+<p>En cada uno de los casos anteriores, el cálculo de la cantidad deseada
+es igual al cálculo de los siguientes promedios</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\sum_{j = 0}^{c}{{r_{j} \bullet \pi}_{j}(t),\ \ \ \ \ \ \ \ \ \ \ }\sum_{j = 0}^{c}{r_{j} \bullet \pi}_{j}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Según se quiera realizar el análisis en el transitorio o en el estado
+estacionario, respectivamente.</p>
+<p>El vector <span class="math notranslate nohighlight">\(\overrightarrow{r} = (r_{0},r_{1},\ldots.)\)</span> define lo que se
+conoce como <em>estructura de costo</em> sobre los estados del modelo de la
+Cadena de Markov. Estrictamente hablando, es necesario definir un valor
+para cado estado, aun cuando quizá sean todos cero excepto por un solo
+estado, como en el caso del indicador 1 arriba. La ventaja de introducir
+el concepto de estructura de costo es que proporciona una generalización
+útil para muchos tipos de análisis, aparentemente de diferente
+naturaleza. Supondremos que en una estructura de costo pueda haber
+costos con valores positivos y negativos, según sea necesario para el
+indicador que se pretende calcular. La expresión en inglés <em>reward
+structure</em> es más precisa que la versión en español, ya que el término
+<em>reward</em> (premio) en inglés no tiene necesariamente una connotación
+positiva, y pueden darse <em>rewards</em> positivos (que pueden representar
+ganancias) y negativos (que modelan pérdidas o costos).</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Para el sistema que se modela con la cola <span class="math notranslate nohighlight">\(M/M/1/c\)</span>, si
+cada cliente que ingresa al sistema realiza en promedio una compra de
+<span class="math notranslate nohighlight">\(\$ 4,000\)</span>, ¿cuál es el valor diario del ingreso por ventas? Asuma que
+la tasa de llegada es <span class="math notranslate nohighlight">\(\lambda = 12horas^{- 1}\ \)</span>, que cada cliente
+necesita un tiempo promedio de atención de <span class="math notranslate nohighlight">\(6\)</span> minutos promedio, y que
+solo 5 clientes pueden entrar a la tienda por su reducida capacidad.</p>
+<p>En este caso, se define una estructura de costos que por cada estado
+indique una ganancia. Si el sistema está vacío, no se genera ganancia,
+entonces <span class="math notranslate nohighlight">\(r_{0} = 0\)</span>. Si un cliente está en el sistema, este completará
+el servicio con una tasa <span class="math notranslate nohighlight">\(\mu = \frac{1}{6\ minutos} = 10horas^{- 1}\)</span>, y
+con esa misma tasa el vendedor ganará <span class="math notranslate nohighlight">\(\$ 4,000\)</span>. Entonces, para el
+estado 1 podemos definir en la estructura de costo que
+<span class="math notranslate nohighlight">\(r_{1}\)</span>=<span class="math notranslate nohighlight">\(\ \mu \bullet \$ 4,000 = \frac{\$ 40,000}{hora}\)</span>. Si en la
+tienda hay más de un usuario, igualmente esos terminan sus compras a una
+tasa <span class="math notranslate nohighlight">\(\mu\)</span> ya que los servicios son secuenciales, entonces se definirá
+<span class="math notranslate nohighlight">\(r_{i}\)</span>=<span class="math notranslate nohighlight">\(\frac{\$ 40,000}{hora}\)</span> por todo estado que no sea aquel que
+corresponda al sistema vacío. Suponiendo que el sistema está en estado
+estacionario (lo cual no será siempre verdadero, ya que cada mañana
+empieza en un estado particular que no coincide al equilibrio, es decir
+el estado vacio), es posible calcular el promedio como sigue:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{j = 0}^{c}{r_{j} \bullet \pi}_{j} = \sum_{j = 1}^{c}{\frac{\$ 40,000}{hora} \bullet \pi}_{j} = \frac{\$ 40,000}{hora}(1 - \pi_{0})\]</div>
+<p>Para la cola <span class="math notranslate nohighlight">\(M/M/1/c\)</span> el valor de <span class="math notranslate nohighlight">\(\pi_{0}\)</span> es dado por:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \frac{1 - \rho}{1 - \rho^{c + 1}}\]</div>
+<p>Siendo <span class="math notranslate nohighlight">\(\rho = \lambda/\mu = 12/10 = 1.2\)</span>. Entonces será:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \frac{1 - \rho}{1 - \rho^{c + 1}} = \frac{1 - 1.2}{1 - {1.2}^{6}} = \frac{- 0.2}{- 1.985} \approx 0.1\]</div>
+<p>Y el valor promedio de la ganancia horaria es
+<span class="math notranslate nohighlight">\(\$ 40,000/hora(1 - \pi_{0}) = \$ 40,000/hora*(1 - 0.1) = \$ 36,000/hora\)</span>.
+Por ende, en un día de ventas se ganarán en promedio
+<span class="math notranslate nohighlight">\(\frac{\$ 36,000}{hora} \cdot 8\frac{horas}{día}\  = \frac{\$ 288,000}{día}\)</span>.</p>
+<p>Para calcular las ganancias promedio diarias podemos determinar las
+ganancias promedio horarias y multiplicar por el número de horas de
+trabajo de la tienda (supongamos sean 8).</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>Si la cola que modela el sistema hubiese sido
+una <span class="math notranslate nohighlight">\(M/M/1\)</span> (capacidad infinita, el cálculo habría sido mucho más
+sencillo, ya que, en una cola estacionaria sin bloqueo, la tasa de
+salida del usuario debe necesariamente corresponder a la tasa de
+llegada. Por esta razón, la tasa horaria de ganancia por ventas habría
+sido igual a la tasa de llegada <span class="math notranslate nohighlight">\(\lambda\)</span> (en horas) por el valor de la
+venta unitaria.</p>
+</div>
+<p>A la hora de definir estructuras de costos, es posible utilizar a la vez
+valores que representan el resultado de diferentes desempeños del
+sistema, por ejemplo, pérdidas y ganancias. Supongamos que se asigna un
+valor de <span class="math notranslate nohighlight">\(\$ 1,000\)</span> por cada unidad de tiempo que un cliente pasa en
+espera en la tienda que se analiza en el Ejemplo 1. En este caso, dicho
+valor sería un costo para el sistema. Entonces, al valor diario esperado
+se deberá restar el costo de la espera, lo cual podemos calcular a
+partir de las probabilidades en estado estable a través del siguiente
+promedio:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{j = 2}^{c}{{\frac{\$ 1,000}{hora} \bullet \pi}_{j} \bullet (j - 1) =}\frac{\$ 1,000}{hora}\  \bullet \sum_{j = 2}^{c}{\pi_{j} \bullet (j - 1) = \frac{\$ 1,000}{hora}\  \bullet L_{q}}\]</div>
+<p>En la expresión anterior, el promedio es calculado sobre los estados en
+los cuales hay clientes que esperan en cola, es decir los estados
+<span class="math notranslate nohighlight">\(2,\ 3,\ldots,\ \ c\)</span>. En el estado <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(2 \leq j \leq c\)</span>, exactamente
+<span class="math notranslate nohighlight">\(j - 1\)</span> clientes estarán esperando (y uno en servicio). Nótese que
+finalmente el promedio se reduce a la multiplicación entre el valor
+horario de la espera <span class="math notranslate nohighlight">\(\left( \frac{\$ 1,000}{hora} \right)\)</span> y <span class="math notranslate nohighlight">\(L_{q}\)</span>,
+el numero promedio de clientes en espera es el estado estacionario.</p>
+<p>Es posible obtener este mismo valor con un razonamiento diferente, a
+partir de <span class="math notranslate nohighlight">\(W_{q}\)</span>, el tiempo promedio de espera de cada usuario en el
+estado estacionario. Si cada usuario que entra al sistema espera en
+promedio un tiempo <span class="math notranslate nohighlight">\(W_{q}\)</span>, entonces el costo de la espera, por cada
+cliente que ingrese al sistema, será
+<span class="math notranslate nohighlight">\(\frac{\$ 1000}{hora} \bullet W_{q}\)</span>. Ahora bien, en el estado
+estacionario, el número de clientes que entra al sistema cada hora (y
+que sale de ello, por el equilibrio del estado estable) es simplemente
+dado por la tasa efectiva de llegada
+<span class="math notranslate nohighlight">\(\lambda_{eff} = \lambda(1 - \pi_{c})\)</span>. Entonces, el promedio horario
+será dado por el total de los tiempos de espera de los clientes, así
+como sigue:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\$ 1,000}{hora} \bullet W_{q} \bullet \lambda_{eff} = \frac{\$ 1,000}{hora} \bullet L_{q}\]</div>
+<p>Donde la última equivalencia se obtiene por la ley de Little.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>En una fábrica de papel hay <span class="math notranslate nohighlight">\(n = 5\)</span> máquinas que en
+paralelo muelen la madera que entra al proceso de transformación. Cada
+máquina es capaz de procesar en promedio <span class="math notranslate nohighlight">\(\mu = 5\)</span> toneladas de materia
+prima por hora. El proceso de producción es continuo las 24 horas. Sin
+embargo, cada máquina puede de manera independiente sufrir una parada
+debido a fallas técnicas, que ocurren de acuerdo con un proceso de
+Poisson de tasa <span class="math notranslate nohighlight">\(\phi = \frac{0.01}{hora}\)</span>. Cuando una máquina para,
+estará sujeta a un proceso de reparación, que se demora en promedio
+<span class="math notranslate nohighlight">\(\delta^{- 1} = 210\ minutos.\ \)</span>El valor de la reparación de una máquina
+es en promedio <span class="math notranslate nohighlight">\(15,000\ \text{USD}\)</span>. Por cada tonelada de madera molida,
+el proceso productivo genera una cantidad de producto final cuyo valor
+corresponde a <span class="math notranslate nohighlight">\(500\ \text{USD}\)</span>.</p>
+<p>Si todas las maquinas llegaran a parar debido a las fallas, la
+producción de toda la planta sería suspendida y, además de la falta de
+ingreso, se incurriría en una perdida (debida a los costos fijos) de
+<span class="math notranslate nohighlight">\(10,000\ \text{USD}\)</span> por hora de suspensión. Para retomar la producción
+después de una parada total, es necesario realizar además de las
+reparaciones una recalibración de todas las máquinas. Estos dos procesos
+requieren en promedio un tiempo de <span class="math notranslate nohighlight">\(\eta^{- 1} =\)</span> 8 horas, después del
+cual toda la planta vuelve a ser operativa. La recalibración acarrea un
+costo adicional de <span class="math notranslate nohighlight">\(100,000\ \text{USD}\)</span> en insumos necesarios para la
+reactivación de las máquinas. ¿Cuál es en el estado estacionario el
+promedio del valor horario generado por la planta?</p>
+<p>Si todos los tiempos son modelables como variables aleatorias con
+distribución exponencial, este sistema puede ser modelado como una
+Cadena de Markov en tiempo continuo. En cuanto a la variable de estado,
+es necesario contar el número de máquinas en los diferentes estados,
+porqué existe un estado (cuando todas las máquinas están dañadas), que
+introduce una sincronización entre las máquinas (se separan y
+reconfiguran todas a la vez). Si el sistema no tuviese dicha
+sincronización, sería posible modelar el estado de una sola máquina, ya
+que el estado total del sistema sería el estado de 5 máquinas totalmente
+independientes entre sí.</p>
+<p>Observamos que es suficiente definir la cadena de Markov en tiempo
+continuo <span class="math notranslate nohighlight">\(\{ X(t),t \geq 0\}\)</span> con la sola variable
+<span class="math notranslate nohighlight">\(X(t) = Número\ de\ máquinas\ en\ operación\ al\ tiempo\ t\)</span>, ya que el
+numero de máquinas dañadas al tiempo <span class="math notranslate nohighlight">\(t\)</span> es igual a <span class="math notranslate nohighlight">\(5 - X(t)\)</span>, siempre
+que se conoce <span class="math notranslate nohighlight">\(X(t)\)</span>. En la Figura 1 se ilustra el diagrama de tasas de
+transición para el modelo.</p>
+<p><img alt="Figura 2" src="../../../_images/retornos2.png" /></p>
+<p>La cadena es finita e irreducible, por lo cual el modelo alcanza en el
+largo plazo un estado estacionario. El siguiente código R© calcula el
+vector <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> de la distribución de la probabilidad de
+estado en el largo plazo, solucionando el sistema de ecuaciones lineales
+conformado por
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}\mathbb{\bullet Q =}\overrightarrow{0}\)</span> y la
+condición de normalización <span class="math notranslate nohighlight">\(\sum_{j = 0}^{5}{\pi_{j} = 1}\)</span>.</p>
+<p><img alt="Figura 3" src="../../../_images/retornos3.png" /></p>
+<p>Las probabilidades en el estado estacionario son reportadas en la
+siguiente gráfica (producida por el mismo script de R© anterior).</p>
+<p><img alt="Figura 4" src="../../../_images/retornos4.png" /></p>
+<p>Con estas probabilidades, podemos calcular el valor generado por la
+fábrica, definiendo la siguiente estructura de costos. Si la fábrica
+está en el estado <span class="math notranslate nohighlight">\(i\ \)</span>por un intervalo de tiempo de duración <span class="math notranslate nohighlight">\(t\)</span> (en
+horas)<span class="math notranslate nohighlight">\(,\ i &gt; 0\)</span>, produce un valor igual a
+<span class="math notranslate nohighlight">\(i \bullet t \bullet 500\ \text{USD}\)</span>. Si máquina está en el estado
+<span class="math notranslate nohighlight">\(j,\ \ 0 &lt; j &lt; 5\)</span>, se ocasiona el costo de la reparación
+<span class="math notranslate nohighlight">\((15,000\ \text{USD})\)</span> cada vez que una de las máquinas dañadas completa
+su reparación, lo cual ocurre con una tasa de <span class="math notranslate nohighlight">\(j \bullet \delta\)</span>. Si la
+máquina permanece en el estadio 0 (producción parada) por un intervalo
+de tiempo de duración <span class="math notranslate nohighlight">\(t\ \)</span>(en horas) la fábrica acumula una pérdida de
+<span class="math notranslate nohighlight">\(t \bullet 10,000\ \text{USD}\)</span>. Además, cuando abandona ese estado (lo
+cual ocurre con una tasa <span class="math notranslate nohighlight">\(\eta\)</span>, incurre en el costo de 100,000USD. Por
+ende, la estructura de costos para el problema es la siguiente:</p>
+<p><img alt="Figura 5" src="../../../_images/retornos5.png" /></p>
+<p>Nótese que, en la tabla anterior, todos los valores de <span class="math notranslate nohighlight">\(r_{i}\ \)</span> son
+tasas, es decir que son dimensionalmente coherentes, en cuanto a que
+todos <span class="math notranslate nohighlight">\(\frac{USD}{hora}\)</span>. El primero es el valor horario generado por
+las máquinas en funcionamiento, el segundo, tercero, cuarto y quinto son
+la diferencia entre el valor horario generado por las máquinas en
+funcionamiento menos lo que se paga (por hora) al reparar las que estén
+dañadas, y el ultimo es la suma del valor de la perdida horaria más lo
+que se paga (por hora) por reparación y recalibración cuando el sistema
+pare completamente. Entonces, el valor calculado con la expresión (1) es
+el promedio del valor generado en estado estable, cuando se utilicen las
+probabilidades reportadas en la gráfica 2, o en el transitorio si se
+utilizaran las probabilidades <span class="math notranslate nohighlight">\(\pi_{j}(t)\)</span></p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>Es muy importante tener en cuenta que los valores que se suman
+deben tener las mismas dimensiones, de lo contrario el valor calculado
+con la expresión (1) no tendrá sentido.</p>
+</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 3</p>
+<p>Considere un sistema de control a bordo de un avión, que
+incluye 2 procesadores que trabajan en paralelo para asegurar un control
+fiable del sistema. La redundancia está utilizada para garantizar un
+nivel protección en contra de las fallas de los equipos. Existen dos
+tipos distintos de fallas:</p>
+<p>- Fallas del hardware, de naturaleza persistente, que determinan la
+parada de la máquina y la falta de resultado de la computación.</p>
+<p>- Fallas del software, de naturaleza transitoria, ya que sus efectos se
+observan como errores en los resultados de un cálculo y en la
+computación siguiente desaparecen.</p>
+<p>Cada computación (por ejemplo, cálculo de una altitud, de una velocidad
+del viento, o de la distancia con otro avión) es simultáneamente
+ejecutada en los procesadores disponibles y dura un tiempo fijo
+<span class="math notranslate nohighlight">\(\tau = 1\ minuto\)</span>. Después de este tiempo se determina el resultado que
+se transmite, según las reglas definidas en la siguiente tabla, donde C,
+E y A denotan resultado correcto, erróneo y ausente, respectivamente,
+para la computación de cada procesador.</p>
+<p><img alt="Figura 6" src="../../../_images/retornos6.png" /></p>
+<p>En la tabla a la izquierda arriba, el elemento de la matriz es el valor
+que se reporta como resultado final, y el código color indica el
+potencial peligro que dicho resultado implica para el vuelo, siendo el
+hecho que se reporte un valor equivocado más grave que el hecho de no
+reportar un valor. Cada una de las situaciones anteriores tiene asociado
+un valor para el sistema, según la tabla arriba a la derecha. Se quiere
+determinar el valor total acumulado por el sistema en un vuelo de 8
+horas.</p>
+<p>Es posible modelar el resultado de la computación <span class="math notranslate nohighlight">\(n\)</span>-ésima a través de
+una CMTD. Definimos como estado de la cadena
+<span class="math notranslate nohighlight">\(\{ X_{n} = ({NC}_{n},{NE}_{n},{NA}_{n}),n \geq 1\}\)</span>
+donde<span class="math notranslate nohighlight">\(\ {NC}_{n},{NE}_{n}\)</span> y <span class="math notranslate nohighlight">\({NA}_{n}\)</span> son el número de resultado
+correctos, erróneos y ausentes producidos en la <span class="math notranslate nohighlight">\(n\)</span>-ésima computación
+por los 2 procesadores. El espacio de estados <span class="math notranslate nohighlight">\(S_{X}\)</span> está conformado
+por todos los vectores de tres componentes enteras no-negativas tales
+que la suma de esas es 2:</p>
+<div class="math notranslate nohighlight">
+\[S_{X} = \left\{ (i,j,k) \middle| i + j + k = 2,\ \ i,j,k\mathbb{\  \in N} \right\} = \{(2,0,0),(1,1,0),(0,1,1),(1,0,1),\ (0,1,1),(0,2,0),(0,0,2)\}\]</div>
+<p>Nótese que es posible definir una variable de estado más sencilla, que
+por ejemplo solo tenga las primeras dos componentes, ya que la tercera
+es totalmente dependiente de las primeras dos. Es decir, si sabemos que
+en una computación hay exactamente un resultado correcto y no hay
+resultados erróneos, necesariamente habrá un computador que no está
+produciendo resultado alguno. Usar dicha variable no cambiaría el
+modelado en términos de número de estados y tampoco afectaría las
+transiciones entre estados, así que en este caso es preferible
+especificar las tres componentes y ser más claros teniendo toda la
+información explicita.</p>
+<p>También sería posible elegir una variable de estado de dos componentes
+donde cada componente es el tipo de resultado que un computador retorna,
+p.e. <span class="math notranslate nohighlight">\((C,C)\)</span>. Esto nos daría 9 posibles estados, que se obtienen
+componiendo los tres resultados posibles de cada una de las dos
+computaciones. Dado que los estados simétricos (como por ejemplo <span class="math notranslate nohighlight">\((E,C)\)</span>
+y <span class="math notranslate nohighlight">\((C,E)\)</span> tienen el mismo valor frente a la métrica que se quiere
+evaluar es preferible usar una variable que cuente el número de
+resultados de cada tipo.</p>
+<p>Sea <span class="math notranslate nohighlight">\(p_{E}\)</span> la probabilidad de que en el lapso que toma una computación
+(el <span class="math notranslate nohighlight">\(\tau\)</span>) un procesador (que no tuvo una falla hardware) sufra una
+falla software y <span class="math notranslate nohighlight">\(p_{H}\)</span> la probabilidad de que sufra una falla
+hardware. Por los datos que se tienen sobre el sistema, <span class="math notranslate nohighlight">\(p_{E}\)</span> y
+<span class="math notranslate nohighlight">\(p_{H}\)</span> corresponden a la probabilidad de que un procesador, en una
+computación, retorne un resultado equivocado (debido a la ocurrencia de
+una falla del software) o no retorne resultado (debido a una falla
+hardware), respectivamente. La probabilidad de que el resultado de la
+computación sea correcto se denota con <span class="math notranslate nohighlight">\(p_{C} = 1 - p_{E} - p_{H}\)</span>. Esta
+última probabilidad aplica solo para los computadores que no sufrieron
+fallas hardware, ya que, si un computador la sufrió, seguramente seguirá
+fallado y no reportará resultado alguno. Las probabilidades de
+transición entre estados son las que se muestran en la expresión
+siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P =}\begin{matrix}
+(2,0,0) \\
+(1,1,0) \\
+(0,2,0) \\
+(1,0,1) \\
+(0,1,1) \\
+(0,0,2)
+\end{matrix}\begin{bmatrix}
+p_{C}^{2} &amp; 2p_{C}p_{E} &amp; p_{E}^{2} &amp; 2p_{C}p_{H} &amp; 2p_{E}p_{H} &amp; p_{H}^{2} \\
+p_{C}^{2} &amp; 2p_{C}p_{E} &amp; p_{E}^{2} &amp; 2p_{C}p_{H} &amp; 2p_{E}p_{H} &amp; p_{H}^{2} \\
+p_{C}^{2} &amp; 2p_{C}p_{E} &amp; p_{E}^{2} &amp; 2p_{C}p_{H} &amp; 2p_{E}p_{H} &amp; p_{H}^{2} \\
+0 &amp; 0 &amp; 0 &amp; p_{C} &amp; p_{E} &amp; p_{H} \\
+0 &amp; 0 &amp; 0 &amp; p_{C} &amp; p_{E} &amp; p_{H} \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}\end{split}\]</div>
+<p>Por cada uno de los estados, los costos son aquellos que se reportan en
+la matriz ilustrada anteriormente, por lo cual, la estructura de costos
+está representada por el siguiente vector.</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{r} = (1, - 100, - 100,1, - 1000, - 100)\]</div>
+<p>Para calcular el valor acumulado en un vuelo de 8 horas (lo cual
+corresponde a 480 minutos), podemos calcular cuantas veces se emite, en
+8 horas, una pareja cualquiera de resultados de la computación. Esta
+información se obtiene calculando la matriz de tiempos de ocupación
+<span class="math notranslate nohighlight">\(\mathbb{M}^{(480)}\)</span>. Multiplicando dicha matriz por el vector
+<span class="math notranslate nohighlight">\(\overrightarrow{r}\)</span>, se calcula un vector de valores, uno por cada
+posible estado inicial del sistema. Nótese que no es correcto asumir
+ningún estado inicial en particular, ya que, si bien los dos
+computadores pueden iniciar el vuelo sin fallas, desdé la primera
+computación es posible obtener cualquiera de las configuraciones
+representadas en los 6 estados del modelo. Por esta razón, utilizamos el
+siguiente vector de distribución de probabilidades iniciales de la
+cadena:</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\alpha} = \left( p_{C}^{2},2p_{C}p_{E},p_{E}^{2},2p_{C}p_{H},2p_{E}p_{H},p_{H}^{2} \right)\]</div>
+<p>Por lo tanto, el valor acumulado en un vuelo de 8 horas será dado por la
+siguiente expresión:</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\alpha} \bullet \mathbb{M}^{(479)} \bullet \overrightarrow{r}\]</div>
+<p>Nótese que a través del vector <span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\)</span> se está en
+efecto modelando el resultado de la primera computación, así que ahora
+se calcula <span class="math notranslate nohighlight">\(\mathbb{M}^{(479)}\)</span> y no más <span class="math notranslate nohighlight">\(\mathbb{M}^{(480)}\)</span>.</p>
+<p>El siguiente código R© realiza el cálculo del valor acumulado por unos
+posibles valores de las probabilidades <span class="math notranslate nohighlight">\(p_{E}\)</span> y <span class="math notranslate nohighlight">\(p_{H}\)</span>, y produce una
+gráfica de la frecuencia con la cual cada uno de los posibles resultados
+(C, A, E) es finalmente reportado como resultado de la ocurrencia de las
+fallas y de la lógica de control del sistema.</p>
+<p><img alt="Figura 7" src="../../../_images/retornos7.png" /></p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter13.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Redes de Jackson</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Modulo4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

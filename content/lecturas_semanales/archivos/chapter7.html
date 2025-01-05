@@ -1,0 +1,860 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cadenas embebidas &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter7';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Análisis de tiempos promedios" href="chapter8.html" />
+    <link rel="prev" title="Probabilidades en estado estable" href="chapter6.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter7.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cadenas embebidas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-de-cadenas-embebidas">Definición de cadenas embebidas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-cadena-embebida-emc">La cadena embebida - EMC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procesos-semi-markovianos-y-emc">Procesos Semi-Markovianos y EMC</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cadenas-embebidas">
+<h1>Cadenas embebidas<a class="headerlink" href="#cadenas-embebidas" title="Link to this heading">#</a></h1>
+<p>En este capítulo se define una relación importante entre las cadenas de
+Markov en tiempo continuo y aquellas en tiempo discreto. En particular,
+se detalla la manera en la cual es posible obtener de una cadena de
+Markov en tiempo continuo, cadenas en tiempo discreto <em>embebidas</em>, en
+inglés <em>embedded</em>. Se presentan algunos ejemplos y se explican las
+correspondencias que existen entre las versiones continuas y discretas
+de los modelos.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Cuando se quiere modelar la evolución de un sistema con un proceso
+estocástico Markoviano, el primer paso del modelado es la elección del
+tipo de modelo.</p>
+<p>Las cadenas de Markov pueden ser de tiempo continuo o de tiempo
+discreto. Las cadenas en tiempo continuo modelan cambios de estado del
+sistema que se pueden dar en cualquier momento en el tiempo, es decir
+que proporcionan un modelo capaz de capturar la dinámica completa del
+sistema en el tiempo. Por otra parte, los modelos en tiempo discreto
+únicamente contemplan la posibilidad de cambio de estado en una
+secuencia elegida de puntos en el tiempo. Por ende, es posible que los
+modelos en tiempo discreto no observen todos los cambios de estado.</p>
+<p>Para determinar cuál debería ser el tipo de cadena de Markov a modelar,
+con el fin de estudiar un sistema de interés, resulta pertinente
+considerar los siguientes tres elementos:</p>
+<ul class="simple">
+<li><p>La pregunta que se quiere contestar, es decir, qué es lo que se
+pretende medir con el modelo. Si sólo estamos interesados en
+revisiones periódicas del estado del sistema, probablemente no sea
+relevante conocer su evolución para todos los valores del tiempo.</p></li>
+<li><p>Los datos que se tienen disponibles. Para modelar un sistema como
+una cadena de Markov de tiempo continuo, es necesario conocer las
+distribuciones de probabilidad de acuerdo con las que ocurren los
+eventos que llevan a cambios de estado. Además, es necesario que
+todas las distribuciones sean exponenciales e independientes. Por el
+contrario, para caracterizar una cadena de Markov en tiempo
+discreto, solo se necesitan probabilidades de transición entre
+estados.</p></li>
+<li><p>Cuando sea posible optar por ambas posibilidades, la mejor decisión
+siempre es aquella que nos lleva al modelo más sencillo en términos
+de tamaño (estados y transiciones), ya que eso determina la
+complejidad de la definición y la solución del modelo mismo.</p></li>
+</ul>
+<p>Cuando se opte por modelar con una cadena Markov en tiempo continuo
+<span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span>, se está construyendo una representación del
+sistema que permite estudiar su evolución a través del tiempo, ya que,
+en principio, es posible conocer la distribución de probabilidad del
+estado del proceso para cualquier valor del índice <span class="math notranslate nohighlight">\(t\)</span>. Esto implica que
+también es posible estudiar la evolución del modelo en una secuencia
+(finita o numerable) de puntos en el tiempo.</p>
+</section>
+<section id="definicion-de-cadenas-embebidas">
+<h2>Definición de cadenas embebidas<a class="headerlink" href="#definicion-de-cadenas-embebidas" title="Link to this heading">#</a></h2>
+<p>Si se define una secuencia de puntos de observación en el tiempo
+<span class="math notranslate nohighlight">\(\tau_{0},\ \tau_{1},\tau_{2},\ldots\)</span> a partir de un proceso estocástico
+en tiempo continuo <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span>, es posible definir el proceso
+estocástico en tiempo discreto <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span>, tal que</p>
+<p><span class="math notranslate nohighlight">\(Z_{n} ≝ X(\tau_{n})\)</span>, por cada <span class="math notranslate nohighlight">\(n \geq 0\)</span>,</p>
+<p>ya que cualquier secuencia de momentos de observación
+<span class="math notranslate nohighlight">\(\tau_{0},\ \tau_{1},\tau_{2},\ldots\)</span>, está contenida en el conjunto de
+índices del proceso en tiempo continuo <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span>. En este
+caso, se dice que el proceso estocástico <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span> en
+tiempo discreto es un proceso <em>embebido</em> del proceso en tiempo continuo.
+Además, se puede determinar que cuando <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span> es una
+cadena de Markov, <span class="math notranslate nohighlight">\(\left\{ Z_{n},\ n \geq 0 \right\}\)</span> también lo es. Por
+ejemplo, respecto a las probabilidades condicionales de ambas cadenas,</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack Z_{n} = i|Z_{n - 1} = k \right\rbrack = P\left\lbrack X\left( \tau_{n} \right) = i|X\left( \tau_{n - 1} \right) = k \right\rbrack,\]</div>
+<p>y para las probabilidades marginales,</p>
+<p><span class="math notranslate nohighlight">\(P\left\lbrack X(\tau_{n}) = i \right\rbrack = P\left\lbrack Z_{n} = i \right\rbrack\)</span>.</p>
+<p>Entre los motivos por los cuales puede ser útil la definición de cadenas
+embebidas, resulta pertinente el hecho de que varios aspectos de las
+cadenas de Markov de tiempo continuo pueden ser estudiados con mayor
+facilidad en cadenas discretas embebidas.</p>
+</section>
+<section id="la-cadena-embebida-emc">
+<h2>La cadena embebida - EMC<a class="headerlink" href="#la-cadena-embebida-emc" title="Link to this heading">#</a></h2>
+<p>Entre todas las infinitas cadenas embebidas que pueden ser definidas a
+partir de un proceso de Markov de tiempo continuo, existe una que se
+llama “la cadena embebida” (en inglés, <em>the Embedded Markov Chain</em> –
+EMC) del proceso en tiempo continuo. Esta cadena se obtiene agregando
+las tasas de las distribuciones exponenciales en probabilidades
+condicionales de un salto. Corresponde a seleccionar como puntos de
+observación discretos, todos los momentos en el tiempo inmediatamente
+después a aquellos en los cuales el estado de la cadena continua cambia.</p>
+<p>Consideramos una cadena de Markov en tiempo continuo
+<span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span>, con espacio de estados <span class="math notranslate nohighlight">\(S\ \)</span>y matriz de tasas de
+transición <span class="math notranslate nohighlight">\(Q\)</span>, se tiene en la cadena embebida <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span>
+que:</p>
+<ol class="arabic simple">
+<li><p>El espacio de estados de la EMC es igual a <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p>Para todo <span class="math notranslate nohighlight">\(i,j \in S\)</span>, <span class="math notranslate nohighlight">\(i \neq j\)</span>, la probabilidad de transición
+entre el estado <span class="math notranslate nohighlight">\(i\)</span> y el estado <span class="math notranslate nohighlight">\(j\)</span> se define como<br />
+<span class="math notranslate nohighlight">\(p_{ij} = - q_{ij}/q_{ii}\)</span> si <span class="math notranslate nohighlight">\({q}_{ii} \neq 0\)</span>.</p></li>
+<li><p>Para todo <span class="math notranslate nohighlight">\(i,j \in S\)</span>, <span class="math notranslate nohighlight">\(i \neq j\)</span>, la probabilidad de transición
+<span class="math notranslate nohighlight">\(p_{ij} = 0\)</span> si <span class="math notranslate nohighlight">\(q_{ii} = 0\)</span>.</p></li>
+<li><p>Para todo <span class="math notranslate nohighlight">\(i \in S\)</span>, la probabilidad de transición <span class="math notranslate nohighlight">\(p_{ii}\)</span> es nula
+si <span class="math notranslate nohighlight">\(q_{ii} \neq 0\)</span>, y es 1 si <span class="math notranslate nohighlight">\(q_{ii} = 0\)</span>.</p></li>
+<li><p>El tiempo que pasa entre cada par de observaciones de la cadena de
+Markov no necesariamente es igual
+(<span class="math notranslate nohighlight">\(\tau_{1} - \tau_{0} \neq \tau_{2} - \tau_{1} \neq \ldots \neq \tau_{n} - \tau_{n - 1}\)</span>),
+al ser los momentos de observación dependientes de variables
+exponenciales.</p></li>
+</ol>
+<p>La matriz <span class="math notranslate nohighlight">\(P\)</span> que se define según las expresiones 2, 3 y 4, debe cumplir
+las mismas propiedades que cualquier matriz de transición en tiempo
+discreto, esto es, todos sus elementos son números entre 0 y 1, y la
+suma de cada fila es unitaria.</p>
+<p>Demostrar que la suma de la fila sea unitaria se puede hacer de la
+siguiente manera. Por cada fila <span class="math notranslate nohighlight">\(i\)</span>, si <span class="math notranslate nohighlight">\(q_{ii} = 0\)</span>, sigue que el único
+elemento no nulo de la fila de la matriz <span class="math notranslate nohighlight">\(P\)</span> es <span class="math notranslate nohighlight">\(p_{ii} = 1\)</span>; si
+<span class="math notranslate nohighlight">\(q_{ii} \neq 0\)</span>, entonces se tiene que la suma de los elementos de la
+fila <span class="math notranslate nohighlight">\(i\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{j\epsilon S\ j \neq i\ }^{\ }p_{ij} = - \sum_{j\epsilon S\ j \neq i\ }^{\ }\frac{q_{ij}}{q_{ii}} = \frac{1}{q_{ii}}\sum_{j\epsilon S\ j \neq i\ }^{\ }\left( - q_{ij} \right) = \frac{1}{q_{ii}}q_{ii} = 1\ ,\ \ \forall i \in S\ |q_{ii} \neq 0.\]</div>
+<p>Por la manera en la cual se definen las probabilidades, la EMC tiene una
+probabilidad de transición no nula por cada tasa de transición no nula
+en la cadena continua original. Dado que los espacios de estados son
+iguales, el diagrama de tasas de la cadena continua original y el
+diagrama de transición de la EMC son isomorfos, excepto por los estados
+absorbentes de la CMTC<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, que no tienen reciclo en la versión continua
+del proceso y sí lo tienen en la EMC. En efecto, la EMC es fácil de
+construir a partir de la inspección del diagrama de estado transición
+del proceso en tiempo continuo.</p>
+<p>Por ejemplo, si consideramos el siguiente diagrama (Figura 1), asociado
+a una cadena de Markov en tiempo continuo <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span>,</p>
+<p><img alt="Figura 1" src="../../../_images/cadenasEmbebidas1.png" /></p>
+<p>Es posible construir su respectiva matriz de tasas de transición,
+recordando que los elementos de la diagonal corresponden a la suma
+negativa de los valores de la fila, por lo cual</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q} = \left( \begin{matrix}
+\begin{matrix}
+ - 2 &amp; 2\ \ \  \\
+\ 3 &amp; - 4\ \ \ \ \ \ 
+\end{matrix} \\
+\begin{matrix}
+\ \ 2\ \  &amp; \ \ \ 1\ \ \ \ \ \  \\
+\ 0\  &amp; 0\ \ \ 
+\end{matrix}
+\end{matrix}\begin{matrix}
+\begin{matrix}
+0\ \ \ \ \  &amp; \ 0 \\
+0\ \ \ \ \  &amp; \ 1
+\end{matrix} \\
+\begin{matrix}
+ - 8\  &amp; \ \ \ 5 \\
+1.5 &amp; - 1.5
+\end{matrix}
+\end{matrix} \right).\end{split}\]</div>
+<p>A partir de ésta, es posible construir la EMC <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span>,
+siguiendo las expresiones mostradas al inicio de la sección, encontrando
+que</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P} = \left( \begin{matrix}
+\begin{matrix}
+0\ \ \  &amp; 1\ \  \\
+3/4\ \ \ \  &amp; 0\ \ 
+\end{matrix} \\
+\begin{matrix}
+2/8 &amp; 1/8 \\
+\ 0\  &amp; \ 0
+\end{matrix}
+\end{matrix}\ \ \begin{matrix}
+\begin{matrix}
+0 &amp; 0 \\
+0 &amp; 1/4
+\end{matrix} \\
+\begin{matrix}
+0 &amp; 5/8 \\
+1 &amp; 0
+\end{matrix}
+\end{matrix} \right).\end{split}\]</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo</p>
+<p>Consideramos un sistema de producción donde las máquinas
+están sujetas a fallas. Cuando una máquina sufre una falla, un operario
+realiza una revisión, la cual con probabilidad <span class="math notranslate nohighlight">\(1\)</span> resuelve el problema
+y la máquina vuelve a estar operativa. La línea de producción solo tiene
+1 máquina. Supongamos que los tiempos entre las fallas, los tiempos
+entre llegada de las piezas a procesar, los tiempos de procesamiento y
+los tiempos de la revisión sean todos exponenciales e independientes
+(<span class="math notranslate nohighlight">\(\lambda =\)</span> tasa de llegada, <span class="math notranslate nohighlight">\(\mu =\)</span> tasa de procesamiento, <span class="math notranslate nohighlight">\(\alpha =\)</span>
+tasa de falla, <span class="math notranslate nohighlight">\(\beta =\)</span> tasa de revisión), y construimos un proceso de
+Markov para estudiar el número de piezas a procesar en el sistema.
+También, supongamos que no llegan piezas cuando no hay máquinas
+operativas.</p>
+<p>Ya que todos los tiempos siguen distribuciones exponenciales e
+independientes, es más sencillo modelar el sistema como una cadena de
+Markov de tiempo continuo. Además, si se quiere estudiar el número de
+piezas en el sistema, es más interesante poder conocer el estado del
+sistema en todo momento del tiempo.</p>
+<p>Definimos entonces como variable de estado del proceso de Markov en
+tiempo continuo <span class="math notranslate nohighlight">\(\left\{ \left( X(t),O(t) \right),\ t \geq 0 \right\}\)</span>,
+donde</p>
+<p><span class="math notranslate nohighlight">\(X(t) ≝ \ \)</span>Número de piezas por procesar en el sistema en el tiempo <span class="math notranslate nohighlight">\(t,\)</span></p>
+<p><span class="math notranslate nohighlight">\(O(t) ≝ \ \)</span>Número de máquinas operativas en el sistema en el tiempo <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>El espacio de estados <span class="math notranslate nohighlight">\(S\)</span> del proceso estocástico depende de los
+espacios de estados de las 2 componentes de la variable: la primera
+puede tomar cualquier valor entero no negativo, es decir, el espacio de
+estados de la variable <span class="math notranslate nohighlight">\(X(t)\)</span> es <span class="math notranslate nohighlight">\(S_{X} = \{ 0,1,2,\ldots\}\)</span>, y el
+espacio de estados de la segunda componente <span class="math notranslate nohighlight">\(O(t)\ \)</span>es el conjunto
+discreto <span class="math notranslate nohighlight">\(S_{O} = \{ 0,1\}\)</span>. Ya que en este ejemplo todas las
+combinaciones entre los valores de las variables son posibles, el
+espacio de estados del proceso
+<span class="math notranslate nohighlight">\(\left\{ \left( X(t),O(t) \right),\ t \geq 0 \right\}\)</span> es
+<span class="math notranslate nohighlight">\(S = S_{X} \times S_{O}\)</span>, el producto cartesiano de los conjuntos
+<span class="math notranslate nohighlight">\(S_{X}\ \)</span> y <span class="math notranslate nohighlight">\(S_{O}\)</span>, lo cual es definido como sigue:</p>
+<div class="math notranslate nohighlight">
+\[S = S_{X} \times S_{O} = \left\{ (x,o) \right\}\left| x\  \in S_{X}\ ,\ o\  \in \ S_{O} \right\}.\]</div>
+<p>Debido a que el espacio de estados <span class="math notranslate nohighlight">\(S\)</span> tiene un número infinito de
+elementos, la única manera de especificar completamente las tasas de
+transición entre estados es a través de una formalización matemática.
+Consideramos entonces un estado genérico <span class="math notranslate nohighlight">\((x,o) \in S\)</span>, y miramos qué
+eventos pueden modificarlo. Por sencillez, vamos escribiendo las
+posibles transiciones en la siguiente tabla:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Tipo de evento</strong></p></th>
+<th class="head"><p><strong>Tasa de ocurrencia</strong></p></th>
+<th class="head"><p><strong>Nuevo estado</strong></p></th>
+<th class="head"><p><strong>Condiciones</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Llegada de una pieza</p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((x + 1,o)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(o &gt; 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Fin del procesamiento de una pieza</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((x - 1,o)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(o &gt; 0,\ x &gt; 0\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Falla de una máquina</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((x,o - 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(o &gt; 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Revisión exitosa de una máquina</p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((x,o + 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(o = 0\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A partir de la tabla, podemos definir la tasa de transición entre el
+estado <span class="math notranslate nohighlight">\({\overrightarrow{s}}_{1} = (x_{1},o_{1})\)</span> y el estado
+<span class="math notranslate nohighlight">\({\overrightarrow{s}}_{2} = (x_{2},o_{2})\)</span>, para todo
+<span class="math notranslate nohighlight">\({\overrightarrow{s}}_{1} \neq {\overrightarrow{s}}_{2}\)</span>, como sigue:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}q_{{\overrightarrow{s}}_{1}{\rightarrow \overrightarrow{s}}_{2}} = \left\{ \begin{matrix}
+\lambda,\ si\ \ \left( x_{2} = x_{1} + 1 \right)\ y\ {(o}_{1} = o_{2}) &gt; 0 \\
+\mu\ ,si\ \ (x_{2} = x_{1} - 1)\ y\ {(o}_{1} = o_{2} &gt; 0) \\
+\begin{matrix}
+\alpha,\ si\ \ \left( x_{2} = x_{1} \right)\ y\ {(o}_{2} = o_{1} - 1 \geq 0) \\
+\beta,\ si\ \ {(x}_{2} = x_{1})\ y\ {(o}_{2} = o_{1} + 1 \geq 0)\  \\
+0\ \ \ \ \ \ \ de\ lo\ contrario\ (d.l.c)
+\end{matrix}
+\end{matrix} \right.\ \ \end{split}\]</div>
+<p>Los elementos diagonales de la matriz <span class="math notranslate nohighlight">\(Q\)</span> son definidos como el negativo
+de la suma de los demás elementos de la fila de la matriz. La siguiente
+figura muestra una parte del diagrama de transición de la cadena de
+Markov en tiempo continuo y de la matriz de tasas de transición (sin los
+elementos diagonales).</p>
+<p><img alt="Figura 2" src="../../../_images/cadenasEmbebidas2.png" /></p>
+<p>A partir de la cadena continua, se tiene que la EMC de este proceso de
+Markov en tiempo continuo tiene el mismo diagrama de transición en
+términos de estados y arcos, como se ilustra en la siguiente figura:</p>
+<p><img alt="Figura 3" src="../../../_images/cadenasEmbebidas3.png" /></p>
+<p>Donde las probabilidades de transición son definidas como:</p>
+<div class="math notranslate nohighlight">
+\[a = \frac{\mu}{\mu + \alpha + \lambda}\ \ b = \frac{\lambda}{\mu + \alpha + \lambda}\ \ \ c = \frac{\alpha}{\mu + \alpha + \lambda}\ \ d = \frac{\lambda}{\alpha + \lambda}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\lambda,\mu,\alpha\ y\ \beta\)</span> son las tasas de transición que
+describen los cambios en la cadena continua.</p>
+</div>
+</section>
+<section id="procesos-semi-markovianos-y-emc">
+<h2>Procesos Semi-Markovianos y EMC<a class="headerlink" href="#procesos-semi-markovianos-y-emc" title="Link to this heading">#</a></h2>
+<p>En un proceso semi-Markoviano la distribución de probabilidad de la
+variable aleatoria continua que caracteriza la permanencia en un estado
+<span class="math notranslate nohighlight">\(i\)</span> antes de saltar a un estado <span class="math notranslate nohighlight">\(j\)</span> es diferente de la distribución
+exponencial. Por tanto incumple la propiedad de no memoria. En muchos
+casos de estos casos, donde el proceso es no markoviano, es posible
+obtener cadenas embebidas que si lo son.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo</p>
+<p>Consideramos un sistema de producción donde la llegada de
+los materiales a procesar sigue un proceso de Poisson de parámetro
+<span class="math notranslate nohighlight">\(\lambda\)</span>, pero los tiempos de procesamiento de las piezas siguen una
+distribución uniforme, en el intervalo <span class="math notranslate nohighlight">\(\lbrack 0,M\rbrack\)</span>. Supongamos
+que todos los tiempos son independientes entre sí. Debido al tipo de
+distribución de los tiempos de procesamiento, no es posible modelarlo
+como una cadena de Markov de tiempo continuo. Conocer el número de
+piezas en el sistema no es una información suficiente para determinar la
+probabilidad del próximo estado, porque el tiempo de procesamiento de la
+pieza que está siendo procesada afecta la distribución del tiempo de
+servicio residual. Por ejemplo, si el sistema acaba de alcanzar el
+estado con 1 pieza, la distribución del tiempo de servicio es uniforme
+en <span class="math notranslate nohighlight">\(\lbrack 0,M\rbrack\)</span>. Por otro lado, si todavía se está procesando la
+pieza, y al tiempo <span class="math notranslate nohighlight">\(t &lt; M\)</span> llega otra, el proceso alcanzará el estado
+con dos piezas. El tiempo que ahora queda para terminar la primera pieza
+será distribuido en el intervalo <span class="math notranslate nohighlight">\(\lbrack t,M\rbrack\)</span> y no en
+<span class="math notranslate nohighlight">\(\lbrack 0,M\rbrack\)</span>. Entonces, es necesario tener memoria de los
+tiempos de procesamiento que ya se dieron. Podríamos definir un proceso
+estocástico como <span class="math notranslate nohighlight">\(\left\{ (X(t),W(t))\ t \geq 0 \right\}\)</span>, donde <span class="math notranslate nohighlight">\(X(t)\)</span>
+sea el número de piezas al tiempo <span class="math notranslate nohighlight">\(t\)</span>, y <span class="math notranslate nohighlight">\(W(t)\)</span> sea el tiempo de
+procesamiento residual de la pieza en el sistema de producción.</p>
+<p>Ahora sí el estado tendría toda la información necesaria para que el
+proceso estocástico fuese Markoviano, pero un proceso de este tipo, con
+una variable de estado mixta (parte discreta y parte continua) es
+bastante difícil de estudiar. Definimos un proceso embebido de la
+siguiente manera: sea <span class="math notranslate nohighlight">\(\tau_{0},\ \tau_{1},\tau_{2},\ldots\)</span>la secuencia
+de puntos de observación tales que <span class="math notranslate nohighlight">\(\tau_{n}\)</span> es el momento en <em>el
+tiempo en el cual termina el procesamiento</em> de la <span class="math notranslate nohighlight">\(n\)</span>-ésima pieza, y
+<span class="math notranslate nohighlight">\(\tau_{0} = 0\)</span>. Si</p>
+<p><span class="math notranslate nohighlight">\(Z_{n} ≝ (X(\tau_{n})\)</span>,<span class="math notranslate nohighlight">\(\ W(\tau_{n}))\)</span> por cada <span class="math notranslate nohighlight">\(n \geq 0,\)</span></p>
+<p>entonces la segunda componente siempre será nula. Si <span class="math notranslate nohighlight">\(W(\tau_{n})\)</span> es
+constante, podemos eliminarlo del estado y quedamos con el proceso
+embebido <span class="math notranslate nohighlight">\(Z_{n} ≝ X(\tau_{n})\)</span> en una sola variable. Es sencillo
+entender que el proceso en tiempo discreto <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span> posee
+las propiedades de las cadenas de Markov. La única información necesaria
+para predecir la probabilidad de ocupar un estado en el futuro es el
+último estado del proceso, y la homogeneidad en el tiempo es garantizada
+por el hecho que en los puntos de observación siempre los eventos se dan
+con las mismas distribuciones condicionales.</p>
+</div>
+<p>De la misma manera, se puede verificar que si <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span> es
+homogéneo en el tiempo, también lo será <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span>.
+Entonces, un proceso embebido de una cadena de Markov de tiempo continuo
+siempre es una cadena de Markov de tiempo discreto.</p>
+<p>El cálculo de las probabilidades de transición en un paso de una cadena
+embebida puede ser laborioso, y su dificultad depende de la secuencia de
+puntos de observación que se eligió. Para el ejemplo que se reportó
+anteriormente, existe una probabilidad de transición no nula entre cada
+pareja de estados y un reciclo por cada estado, es decir la matriz P de
+las probabilidades a un paso no contiene ceros. Consideramos, por
+ejemplo:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack Z_{n} = 0 \right\rbrack.\]</div>
+<p>Esta probabilidad es igual a la probabilidad de que solo una pieza entre
+al sistema y que su procesamiento termine antes de que llegue la
+segunda. Si denotamos con <span class="math notranslate nohighlight">\(S_{n}\)</span> la variable aleatoria que representa
+el tiempo de llegada de la <span class="math notranslate nohighlight">\(n\)</span>-ésima pieza de acuerdo con el proceso de
+Poisson, y con <span class="math notranslate nohighlight">\(U\sim Unif\lbrack 0,M\rbrack\)</span> la variable aleatoria
+continua que representa el tiempo de procesamiento de la pieza, podemos
+reescribir la probabilidad de arriba como sigue:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack Z_{n} = 0 \right\rbrack = P\left\lbrack \ S_{n + 2} &gt; \ S_{n + 1} + U \right\rbrack = P\left\lbrack \ S_{n + 2} - \ S_{n + 1} &gt; U \right\rbrack.\]</div>
+<p>Dado que por cada <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(S_{n}\)</span> es la suma de <span class="math notranslate nohighlight">\(n\)</span> variables aleatorias
+independientes y con la misma distribución exponencial,
+<span class="math notranslate nohighlight">\(S_{n + 2} - \ S_{n + 1}\)</span> es una variable aleatoria exponencial, por lo
+cual la probabilidad expresada arriba es igual a la probabilidad de que
+una variable exponencial de parámetro <span class="math notranslate nohighlight">\(\lambda\)</span> sea mayor que una
+variable aleatoria uniforme en <span class="math notranslate nohighlight">\(\lbrack 0,M\rbrack\)</span>.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Un estado absorbente <span class="math notranslate nohighlight">\(i \in S\)</span> es un estado de una cadena
+(continua o discreta) que se caracteriza por tener una probabilidad
+de 0 de ir a cualquier otro estado j <span class="math notranslate nohighlight">\((j \in S,\ i \neq j)\)</span></p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter6.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Probabilidades en estado estable</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter8.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Análisis de tiempos promedios</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-de-cadenas-embebidas">Definición de cadenas embebidas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-cadena-embebida-emc">La cadena embebida - EMC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procesos-semi-markovianos-y-emc">Procesos Semi-Markovianos y EMC</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

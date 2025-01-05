@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Programación Dinámica &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter17';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Complementaria 1: Introducción a Python" href="../../complementarias/Complementaria1.html" />
+    <link rel="prev" title="Principio de Optimalidad y Ecuaciones de Bellman" href="chapter16.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter17.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Programación Dinámica</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componentes">Componentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuaciones-de-bellman">Ecuaciones de Bellman</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#politicas-optimas">Políticas Óptimas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-dinamica-estocastica-parada-optima">Programación Dinámica Estocástica: Parada Óptima</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-dinamica-estocastica-maximizacion-de-probabilidades">Programación Dinámica Estocástica: Maximización de Probabilidades</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="programacion-dinamica">
+<h1>Programación Dinámica<a class="headerlink" href="#programacion-dinamica" title="Link to this heading">#</a></h1>
+<p>En este capítulo hablaremos sobre el método de solución denominado
+programación dinámica. Este es aplicado para resolver problemas de
+decisión en el tiempo.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Un problema de decisión en el tiempo se puede dividir entre un problema
+determinístico o estocástico, dependiendo de la dinámica subyacente a
+las transiciones entre estados de una época de decisión a otra, por lo
+que la programación dinámica también se puede dividir entre
+determinística (DDP por sus siglas en inglés) y estocástica (SDP por sus
+siglas en inglés), donde un DDP es un caso particular de un SDP en el
+que todas las probabilidades de transición son 0 o 1. Enunciaremos de
+nuevo los componentes que debe tener un proceso de decisión.</p>
+</section>
+<section id="componentes">
+<h2>Componentes<a class="headerlink" href="#componentes" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(E = \{ 1,\ldots,\ T\}\)</span> : Conjunto de épocas donde se toma una
+decisión.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_{t}\)</span>: Variable que representa el sistema en cada época <span class="math notranslate nohighlight">\(t \in E\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(S_{t}\)</span>: Conjunto de posibles valores (estados) que puede tomar la
+variable en la época de observación <span class="math notranslate nohighlight">\(t \in E\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_{t}(i):\)</span> Conjunto de decisiones que es posible tomar cuando el
+sistema está en la época <span class="math notranslate nohighlight">\(t \in E\)</span> y la variable toma un valor
+<span class="math notranslate nohighlight">\(i \in S_{t}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{t}(i,a)\)</span>: Retorno inmediato dado que se toma la decisión
+<span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>, en la época <span class="math notranslate nohighlight">\(t \in E\)</span> y el sistema se encuentra en
+el estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_{t}(j|i,a)\)</span>: Probabilidad que al tomar la decisión
+<span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>, en la época <span class="math notranslate nohighlight">\(t \in E\)</span> y el sistema está en el
+estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>, en la época <span class="math notranslate nohighlight">\(t + 1\)</span> el sistema pase a estar en
+el estado <span class="math notranslate nohighlight">\(j \in S_{t + 1}\)</span>.</p></li>
+</ol>
+<p>Cabe notar que, para programación dinámica determinística, el componente
+de probabilidades no se tiene en cuenta y más bien se define:</p>
+<ol class="arabic simple" start="7">
+<li><p><span class="math notranslate nohighlight">\(s_{t + 1}(i,a)\)</span>: Estado en el que se encuentra el sistema en
+<span class="math notranslate nohighlight">\(t + 1\)</span>, dado que en <span class="math notranslate nohighlight">\(t \in E\)</span> está en el estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span> y se
+tomó la decisión <span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>.</p></li>
+</ol>
+</section>
+<section id="ecuaciones-de-bellman">
+<h2>Ecuaciones de Bellman<a class="headerlink" href="#ecuaciones-de-bellman" title="Link to this heading">#</a></h2>
+<p>Las ecuaciones de Bellman para cada uno de estos modelos se comportan de
+forma parecida. Para una programación dinámica determinística, la
+ecuación de Bellman se define como:</p>
+<div class="math notranslate nohighlight">
+\[f_{t}(i) = \underset{a \in A_{t(i)}}{min/max}\left\{ c_{t}(i,a) + f_{t + 1}(s_{t + 1}(i,a)) \right\}\ \forall t &lt; T\]</div>
+<div class="math notranslate nohighlight">
+\[f_{T}(i) = \underset{a \in A_{T}(i)}{min/max}\left\{ c_{t}(i,a) \right\}\ \]</div>
+<p>Donde se conoce exactamente el estado al que se pasará en la siguiente
+época al tomar una decisión. Así, el valor de tomar la decisión se puede
+pensar como el retorno inmediato, más los retornos futuros, que dependen
+del estado al que se llega al tomar dicha decisión. A diferencia de
+esto, en una programación dinámica estocástica, existe una probabilidad
+asociada a estar en un estado futuro, que depende de la decisión que se
+tome. Por tal motivo la ecuación de Bellman se define como:</p>
+<div class="math notranslate nohighlight">
+\[f_{t}(i) = \underset{a \in A_{t(i)}}{min/max}{\left\{ c_{t}(i,a) + \sum_{j \in S_{t + 1}}^{}{p_{t}\left( j \middle| i,a \right)f_{t + 1}(j)} \right\}\ \forall t &lt; T}\]</div>
+<div class="math notranslate nohighlight">
+\[f_{T}(i) = \underset{a \in A_{T(i)}}{min/max}\left\{ c_{t}(i,a) \right\}\ \]</div>
+<p>De forma similar al caso determinístico, el valor de una decisión es el
+retorno inmediato, más el <u>valor esperado</u> de los retornos
+futuros, que dependen del estado al que se llega siguiendo la
+probabilidad dada por <span class="math notranslate nohighlight">\(p_{t}(j|i,a)\)</span>.</p>
+</section>
+<section id="politicas-optimas">
+<h2>Políticas Óptimas<a class="headerlink" href="#politicas-optimas" title="Link to this heading">#</a></h2>
+<p>Utilizando programación dinámica, siempre se encuentra una o varias
+políticas óptimas para un problema. Si se encuentran varias, es porque
+cada una de estas es un óptimo alterno del problema. Claro está que la
+política óptima tiene una estructura diferente, dependiendo del modelo
+que se esté observando.</p>
+<p>Para el caso de una programación dinámica determinística la política
+óptima está compuesta por una decisión para cada época, dado que en cada
+época sólo se puede estar en un único estado. Como un problema de
+decisión en el tiempo se puede representar en una red, esta política se
+asemeja a un camino más corto (si se está minimizando) o a un camino más
+largo (si se está maximizando) entre un nodo en la época inicial y un
+nodo en la época final del problema de decisión.</p>
+<p>En la programación dinámica estocástica, la política óptima define una
+decisión para cada época <span class="math notranslate nohighlight">\(t \in E\)</span> y cada estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>. Esto
+último se debe a que no se conoce con certeza el estado del sistema en
+una época en particular. La estructura de la política se representa como
+un árbol de decisión, donde según la época y el estado del sistema, se
+tiene una o varias decisiones posibles (cuando existen óptimos
+alternos).</p>
+</section>
+<section id="programacion-dinamica-estocastica-parada-optima">
+<h2>Programación Dinámica Estocástica: Parada Óptima<a class="headerlink" href="#programacion-dinamica-estocastica-parada-optima" title="Link to this heading">#</a></h2>
+<p>Un caso particular de SDP se conoce como parada óptima, donde las
+decisiones consisten en parar o seguir. Cuando se decide parar, el
+problema termina en esa época y no hay estados a futuro. Si se decide
+seguir, el problema continúa. Dado esto, se consideran los siguientes
+cambios en los componentes:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A_{t}(i) = \{ parar,\ seguir\}\)</span> <span class="math notranslate nohighlight">\(\forall\ t \in E,\ i \in S_{t}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{t}(i,seguir) = 0\)</span>, <span class="math notranslate nohighlight">\(\forall\ t \in E\ ,t &lt; T,\ i \in S_{t}\)</span></p></li>
+</ul>
+<p>Finalmente, la ecuación de Bellman se puede definir como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{t}(i) = {min/max}\begin{Bmatrix}
+Seguir:0 + \sum_{j \in S_{t + 1}}^{}{p_{t}\left( j \middle| i,seguir \right)f_{t + 1}(j)} \\
+Parar:c_{t}(i,parar)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+\end{Bmatrix}\forall\ t &lt; T\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{T}(i) = {min/max}\begin{Bmatrix}
+Seguir:c_{T}(i,seguir) \\
+Parar:c_{T}(i,parar)\ 
+\end{Bmatrix}\end{split}\]</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>El día de hoy usted posee una acción y quiere decidir
+cuándo es mejor venderla durante un lapso de 3 días. Usted conoce como
+el valor de la acción se comportará en los siguientes periodos:</p>
+<p><img alt="Figura 1" src="../../../_images/progDinamica1.png" /></p>
+<p>Usted desea maximizar el retorno que recibirá de la acción que posee. Si
+llega al tercer día y aún no ha vendido la acción, debe venderla en este
+periodo. Este es un problema de óptima parada, dado que tan pronto se
+vende la acción ya no necesitamos seguir observando el precio de la
+acción en el futuro y se recibirá el valor por la cual fue vendida.</p>
+<p>Definimos primero los componentes del problema:</p>
+<p><u><strong>Épocas:</strong></u> Días 1 al 3</p>
+<p><u><strong>Variable:</strong></u> Precio de la acción en el día <span class="math notranslate nohighlight">\(t \in E\)</span></p>
+<p><u><strong>Espacio de estados:</strong></u> <span class="math notranslate nohighlight">\(S_{1} = \left\{ 5 \right\},\ S_{2} = \left\{ 3,8 \right\},\ {\ S}_{3} = \{ 1,2,6,9\}\)</span></p>
+<p><u><strong>Decisiones:</strong></u> <span class="math notranslate nohighlight">\(A = \{ Vender\ (V),\ Esperar\ (E)\}\)</span></p>
+<p><u><strong>Retornos Inmediatos:</strong></u></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C_{1} = \begin{matrix}
+Precio/Decisión &amp; \begin{matrix}
+V &amp; E
+\end{matrix} \\
+\$ 5 &amp; \begin{bmatrix}
+5 &amp; 0
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}C_{2} = \begin{matrix}
+Precio/Decisión &amp; \begin{matrix}
+V &amp; E
+\end{matrix} \\
+\begin{matrix}
+\$ 3 \\
+\$ 8
+\end{matrix} &amp; \begin{bmatrix}
+3 &amp; 0 \\
+8 &amp; 0
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}C_{3} = \begin{matrix}
+Precio/Decisión &amp; \begin{matrix}
+V &amp; E
+\end{matrix} \\
+\begin{matrix}
+\$ 1 \\
+\$ 2 \\
+\$ 6 \\
+\$ 9
+\end{matrix} &amp; \begin{bmatrix}
+1 &amp; 0 \\
+2 &amp; 0 \\
+6 &amp; 0 \\
+9 &amp; 0
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p><u><strong>Probabilidades:</strong></u></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_{1,Esperar} = \begin{matrix}
+\  &amp; \begin{matrix}
+\$ 3 &amp; \$ 8
+\end{matrix} \\
+\$ 5 &amp; \begin{bmatrix}
+2/3 &amp; 1/3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_{2,Esperar} = \begin{matrix}
+\  &amp; \begin{matrix}
+\ \$ 1\ \  &amp; \$ 2\ \ \  &amp; \$ 6\ \ \  &amp; \$ 9
+\end{matrix} \\
+\begin{matrix}
+\$ 3 \\
+\$ 8
+\end{matrix} &amp; \begin{bmatrix}
+1/3 &amp; 0 &amp; 2/3 &amp; 0 \\
+0 &amp; 1/2 &amp; 0 &amp; 1/2
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Para todos los demás casos las probabilidades serán cero.</p>
+<p>Solucionemos la programación dinámica estocástica definiendo las
+ecuaciones de Bellman de este problema y utilizando inducción hacia
+atrás. Por tal motivo arrancamos en la última etapa de decisión:</p>
+<div class="math notranslate nohighlight">
+\[f_{3}(\$ 9) = max\left\{ Vender:\$ 9 \right.\ \]</div>
+<div class="math notranslate nohighlight">
+\[f_{3}(\$ 6) = max\left\{ Vender:\$ 6 \right.\ \]</div>
+<div class="math notranslate nohighlight">
+\[f_{3}(\$ 2) = max\left\{ Vender:\$ 2 \right.\ \]</div>
+<div class="math notranslate nohighlight">
+\[f_{3}(\$ 1) = max\left\{ Vender:\$ 1 \right.\ \]</div>
+<p>Dado que en último periodo debe vender, no existe la decisión de
+esperar.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{2}(\$ 8) = max\left\{ \begin{matrix}
+Vender:\$ 8* \\
+Esperar:\$ 0 + \frac{1}{2}f_{3}(\$ 2) + \frac{1}{2}f_{3}(\$ 9) = \$ 5.5
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{2}(\$ 3) = max\left\{ \begin{matrix}
+Vender:\$ 3 \\
+Esperar:\$ 0 + \frac{1}{3}f_{3}(\$ 1) + \frac{2}{3}f_{3}(\$ 6) = \$ 4.33*
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Finalmente, para la etapa 1, tenemos lo siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{1}(\$ 5) = max\left\{ \begin{matrix}
+Vender:\$ 5 \\
+Esperar:\$ 0 + \frac{2}{3}f_{2}(\$ 3) + \frac{1}{3}f_{2}(\$ 8) = \$ 5.55*
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Podemos reconstruir la política óptima a partir de los resultados:</p>
+<p>En el primer periodo es preferible esperar. En el segundo periodo, si la
+acción vale $8, se vende y si vale $3, se espera. Si se decidió
+esperar en el día dos, toca vender en el día 3. Esta política de
+decisión genera un valor esperado de $5.55 por vender la acción.</p>
+</div>
+</section>
+<section id="programacion-dinamica-estocastica-maximizacion-de-probabilidades">
+<h2>Programación Dinámica Estocástica: Maximización de Probabilidades<a class="headerlink" href="#programacion-dinamica-estocastica-maximizacion-de-probabilidades" title="Link to this heading">#</a></h2>
+<p>Otro modelo interesante de programación dinámica estocástica es aquel
+que se utiliza para maximizar la probabilidad de un evento que se desea
+que ocurra. No existen en este caso retornos inmediatos sino hasta el
+último periodo de decisión, donde se observa la probabilidad que este
+evento realmente ocurra. Por tal motivo el siguiente cambio aparece en
+los componentes de este modelo:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_{t}(i,a) = 0\)</span> y <span class="math notranslate nohighlight">\(c_{T}(i,a) \geq 0\)</span></p></li>
+</ul>
+<p>Las ecuaciones de Bellman se comportan exactamente igual que en la
+definición general.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Usted tiene $2 para ir a un casino y jugar en la ruleta.
+Cada turno usted puede apostar solo $1 y si puede decidir si jugar de
+una forma conservadora o agresiva. Si juega de una forma conservadora,
+se ganará un dólar adicional (le regresan $2) con una probabilidad de
+1/2. Si juega de una forma agresiva, se ganará $2 adicionales (Le
+regresan $3$) con una probabilidad de 1/3. Si pierde, perderá el dólar
+que apostó. Tenga en cuenta que, si se queda sin plata, no puede jugar
+más. Usted jugará 3 veces y quiere maximizar la probabilidad que al
+final de los tres juegos, tenga $4 dólares o más.</p>
+<p>Este problema se define de la siguiente forma:</p>
+<p><u><strong>Épocas:</strong></u> Las tres apuestas <span class="math notranslate nohighlight">\(E = \{ 1,\ 2,\ 3\}\)</span></p>
+<p><u><strong>Variable:</strong></u> <span class="math notranslate nohighlight">\(X_{t} = \text{Dinero disponible antes de la apuesta}\ t\)</span>.</p>
+<p>Dado que se quiere maximizar la probabilidad de tener $4 dólares o más,
+en la variable siempre está la meta que se quiere cumplir.</p>
+<p><u><strong>Estados:</strong></u>
+<span class="math notranslate nohighlight">\(S_{1} = \left\{ 2 \right\},\ S_{2} = \left\{ 4,3,1 \right\},\ S_{3} = \{ 6,5,4,3,2,0\}\)</span></p>
+<p><u><strong>Decisiones:</strong></u> Jugar agresivo o conservador.</p>
+<p><u><strong>Retornos Inmediatos:</strong></u> Como este modelo es de maximización de
+probabilidades, todos los retornos son 0, excepto en la última época,
+donde se busca la probabilidad que cumpla lo deseado:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C_{3} = \begin{matrix}
+Dinero/Decisión &amp; \begin{matrix}
+\ A &amp; \ \ C
+\end{matrix} \\
+\begin{matrix}
+\$ 0 \\
+\$ 2 \\
+\$ 3 \\
+\$ 4 \\
+\$ 5 \\
+\$ 6
+\end{matrix} &amp; \begin{bmatrix}
+0 &amp; 0 \\
+1/3 &amp; 0 \\
+1/3 &amp; 1/2 \\
+1/3 &amp; 1/2 \\
+1 &amp; 1 \\
+1 &amp; 1
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Dado que, aunque pierda en el último periodo cuando tiene $5 o $6,
+sigue teniendo $4 o más, entonces la probabilidad que se cumpla el
+cometido es 1.</p>
+<p>Probabilidades: Es obvio como las probabilidades afectan los estados
+cuando se toma alguna de las dos decisiones.</p>
+<p>Utilizando programación dinámica con inducción hacia atrás, se encuentra
+que:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 0) = max\left\{ \begin{matrix}
+A:0* \\
+C:0*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 2) = max\left\{ \begin{matrix}
+A:1/3* \\
+C:0
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 3) = max\left\{ \begin{matrix}
+A:1/3\ \ \  \\
+C:1/2*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 4) = max\left\{ \begin{matrix}
+A:1/3\ \ \  \\
+C:1/2*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 5) = max\left\{ \begin{matrix}
+A:1* \\
+C:1*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{3}(\$ 6) = max\left\{ \begin{matrix}
+A:1* \\
+C:1*
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Para los periodos 1 y 2, no tenemos retornos inmediatos por lo que:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{2}(\$ 1) = max\left\{ \begin{matrix}
+A:\frac{1}{3}f_{3}(\$ 3) + \frac{2}{3}f_{3}(\$ 0) = \frac{1}{6}*\ \  \\
+C:\frac{1}{2}f_{3}(\$ 2) + \frac{1}{2}f_{3}(\$ 0) = \frac{1}{6}*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{2}(\$ 3) = max\left\{ \begin{matrix}
+A:\frac{1}{3}f_{3}(\$ 5) + \frac{2}{3}f_{3}(\$ 2) = \frac{5}{9}*\ \  \\
+C:\frac{1}{2}f_{3}(\$ 4) + \frac{1}{2}f_{3}(\$ 2) = \frac{5}{12}
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{2}(\$ 4) = max\left\{ \begin{matrix}
+A:\frac{1}{3}f_{3}(\$ 6) + \frac{2}{3}f_{3}(\$ 3) = \frac{2}{3}\  \\
+C:\frac{1}{2}f_{3}(\$ 5) + \frac{1}{2}f_{3}(\$ 3) = \frac{3}{4}*
+\end{matrix} \right.\ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{1}(\$ 2) = max\left\{ \begin{matrix}
+A:\frac{1}{3}f_{2}(\$ 4) + \frac{2}{3}f_{2}(\$ 1) = \frac{13}{36}\  \\
+C:\frac{1}{2}f_{2}(\$ 3) + \frac{1}{2}f_{2}(\$ 1) = \frac{13}{36}*
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Entonces podemos construir el siguiente árbol de decisión que representa
+la política óptima:</p>
+<p><img alt="Figura 2" src="../../../_images/progDinamica2.png" /></p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter16.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Principio de Optimalidad y Ecuaciones de Bellman</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../complementarias/Complementaria1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componentes">Componentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuaciones-de-bellman">Ecuaciones de Bellman</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#politicas-optimas">Políticas Óptimas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-dinamica-estocastica-parada-optima">Programación Dinámica Estocástica: Parada Óptima</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-dinamica-estocastica-maximizacion-de-probabilidades">Programación Dinámica Estocástica: Maximización de Probabilidades</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

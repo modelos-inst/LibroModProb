@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cadenas de Markov &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter3';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Análisis transitorio de cadenas de Markov" href="chapter4.html" />
+    <link rel="prev" title="Procesos de Poisson" href="chapter2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter3.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cadenas de Markov</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-de-tiempo-discreto-cmtd">Cadenas de Markov de tiempo discreto (CMTD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion">Definición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-probabilidades-de-transicion-mathbf-p">Matriz de probabilidades de transición <span class="math notranslate nohighlight">\(\mathbf{P}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-transicion-de-una-cmtd">Diagrama de transición de una CMTD</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-de-tiempo-continuo-cmtc">Cadenas de Markov de tiempo continuo (CMTC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-generadora-mathbf-q">Matriz generadora <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-tasas-de-una-cmtc">Diagrama de tasas de una CMTC</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cadenas-de-markov">
+<h1>Cadenas de Markov<a class="headerlink" href="#cadenas-de-markov" title="Link to this heading">#</a></h1>
+<p>En este capítulo se introducen los procesos estocásticos conocidos como
+Cadenas de Markov. Se presentan las generalidades sobre este tipo de
+procesos estocásticos, y se define su clasificación dependiendo de la
+temporalidad del proceso. Se exponen las propiedades de no memoria y de
+homogeneidad en el tiempo, y finalmente se presentan las matrices que
+permiten caracterizar la evolución del sistema en el tiempo.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Las cadenas de Markov son un tipo de proceso estocástico introducido en
+1906 por el matemático Andréi Markov, de quien reciben su nombre.</p>
+<p>Específicamente, una cadena de Markov es un proceso estocástico de
+espacio de estados discreto en el que la evolución futura del proceso
+sólo depende de su estado presente y es independiente de la evolución
+pasada del proceso. Es decir, es un proceso que cumple con la propiedad
+de no memoria.</p>
+<p>A continuación, presentamos la caracterización de las cadenas de Markov
+de acuerdo a la temporalidad del proceso estocástico.</p>
+</section>
+<section id="cadenas-de-markov-de-tiempo-discreto-cmtd">
+<h2>Cadenas de Markov de tiempo discreto (CMTD)<a class="headerlink" href="#cadenas-de-markov-de-tiempo-discreto-cmtd" title="Link to this heading">#</a></h2>
+<p>Una cadena de Markov de tiempo discreto es un proceso estocástico en el
+que se modelan sistemas que evolucionan de la siguiente manera. El
+sistema entra al estado <span class="math notranslate nohighlight">\(i\)</span> en el tiempo <span class="math notranslate nohighlight">\(n\)</span>, y luego de una unidad de
+tiempo (definida por el índice del proceso estocástico) pasa al estado
+<span class="math notranslate nohighlight">\(j\)</span> en el tiempo <span class="math notranslate nohighlight">\(n + 1\)</span> con probabilidad <span class="math notranslate nohighlight">\(p_{ij}\)</span> sin importar la
+evolución del sistema del tiempo <span class="math notranslate nohighlight">\(0\)</span> hasta el tiempo <span class="math notranslate nohighlight">\(n - 1\)</span>.</p>
+<p>A continuación, se presenta una definición formal de este
+comportamiento.</p>
+<section id="definicion">
+<h3>Definición<a class="headerlink" href="#definicion" title="Link to this heading">#</a></h3>
+<p>Un proceso estocástico en tiempo discreto <span class="math notranslate nohighlight">\(\{ X_{n},n \geq 0\}\)</span> con
+espacio de estados discreto <span class="math notranslate nohighlight">\(S\)</span> es una cadena de Markov de tiempo
+discreto (CMTD) si cumple que:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X_{n + 1} = j\  \right|\ X_{n} = i,{\ X}_{n - 1} = i_{1},\ {\ X}_{n - 2} = i_{2},\ldots,\ {\ X}_{0} = i_{0}\rbrack = P\lbrack X_{n + 1} = j\ |\ X_{n} = i\rbrack\]</div>
+<p>para todos los estados <span class="math notranslate nohighlight">\(i,j \in S\)</span> y todo índice <span class="math notranslate nohighlight">\(n \geq 0\)</span>. Es decir,
+la probabilidad de que el proceso esté en el estado <span class="math notranslate nohighlight">\(j\)</span> en el momento
+<span class="math notranslate nohighlight">\(n + 1\)</span> solo depende del estado del proceso en el momento inmediatamente
+anterior <span class="math notranslate nohighlight">\(n\)</span>, y no de los estados por los que ha pasado antes. Esto se
+conoce como la propiedad Markoviana o propiedad de no memoria.</p>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>La evolución del proceso depende solo del ÚLTIMO estado observado,
+lo cual no es necesariamente el ÚLTIMO estado de la cadena. Es decir,
+supongamos haber observado el estado del proceso Markoviano
+<span class="math notranslate nohighlight">\(\{ X_{n},n \geq 0\}\)</span> por los valores del índice <span class="math notranslate nohighlight">\(n = 0,\ 1,\ 2,\ 3\)</span> y
+querer estimar la probabilidad de que en el momento 6 el valor del
+estado sea igual a <span class="math notranslate nohighlight">\(j\)</span>. Estaríamos entonces interesados en determinar
+<span class="math notranslate nohighlight">\(P\lbrack X_{6} = j\rbrack\)</span> dado que conocemos una parte de la historia
+del proceso. Gracias a la propiedad de no memoria, esta probabilidad
+condicional se simplifica de la siguiente manera:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X_{6} = j\  \right|\ X_{3} = i_{3},{\ X}_{2} = i_{2},\ {\ X}_{1} = i_{1},{\ X}_{0} = i_{0}\rbrack = P\left\lbrack X_{6} = j\  \right|\ X_{3} = i_{3}\rbrack\]</div>
+</div>
+<p>Adicionalmente, cuando la cadena de Markov también cumple con:</p>
+<div class="math notranslate nohighlight">
+\[P\lbrack X_{n + 1} = j\ |\ X_{n} = i\rbrack = P\left\lbrack X_{1} = j\  \right|\ X_{0} = i\rbrack\]</div>
+<p>para todos los estados <span class="math notranslate nohighlight">\(i,j \in S\)</span> y todo índice <span class="math notranslate nohighlight">\(n \geq 0\ \)</span>se dice que
+es homogénea en el tiempo, lo cual significa que la probabilidad de que
+el proceso pase de un estado a otro no depende del tiempo en el cual se
+hace la observación.</p>
+<p>Las cadenas de Markov que estudiaremos de ahora en adelante se supondrán
+homogéneas en el tiempo y, por definición, cumplen la propiedad de no
+memoria, tal como se mencionó al inicio del capítulo.</p>
+</section>
+<section id="matriz-de-probabilidades-de-transicion-mathbf-p">
+<h3>Matriz de probabilidades de transición <span class="math notranslate nohighlight">\(\mathbf{P}\)</span><a class="headerlink" href="#matriz-de-probabilidades-de-transicion-mathbf-p" title="Link to this heading">#</a></h3>
+<p>Ya que una CMTD cumple las propiedades presentadas en la sección
+anterior, para estudiarlas es de interés conocer las probabilidades
+condicionales dadas por <span class="math notranslate nohighlight">\(P\lbrack X_{n + 1} = j\ |\ X_{n} = i\rbrack\)</span>.
+Estas probabilidades, que no dependen del valor particular del índice
+<span class="math notranslate nohighlight">\(n\)</span> por la propiedad de homogeneidad, se denotan como <span class="math notranslate nohighlight">\(p_{ij}\)</span> y
+determinan la evolución del sistema en una sola transición. Así,
+denotaremos como <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> a la matriz que contiene <span class="math notranslate nohighlight">\(p_{ij}\)</span> para
+todo <span class="math notranslate nohighlight">\(i,j \in S\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P} = \begin{bmatrix}
+p_{11} &amp; p_{12} &amp; \begin{matrix}
+\ldots &amp; p_{1m}
+\end{matrix} \\
+p_{21} &amp; p_{22} &amp; \begin{matrix}
+\ldots &amp; p_{2m}
+\end{matrix} \\
+\begin{matrix}
+ \vdots \\
+p_{m1}
+\end{matrix} &amp; \begin{matrix}
+ \vdots \\
+p_{m2}
+\end{matrix} &amp; \begin{matrix}
+ \ddots &amp; \vdots \\
+\ldots &amp; p_{mm}
+\end{matrix}
+\end{bmatrix}\end{split}\]</div>
+<p>Note que <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> es una matriz cuadrada, donde cada fila (y
+columna) está asociada a un estado en <span class="math notranslate nohighlight">\(S\)</span>, y el componente de la fila
+<span class="math notranslate nohighlight">\(i\)</span> y columna <span class="math notranslate nohighlight">\(j\)</span> representa la probabilidad que el sistema vaya de <span class="math notranslate nohighlight">\(i\)</span>
+a <span class="math notranslate nohighlight">\(j\)</span> en un paso. Además, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> es una matriz estocástica (la
+suma de cada una de sus filas es 1).</p>
+<p>Entonces, ¿una CMTD está completamente caracterizada por la matriz de
+transiciones <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>? Recordemos que <span class="math notranslate nohighlight">\(X_{n}\)</span> es una variable
+aleatoria, por lo que nos interesa conocer su distribución. En
+particular, nos puede interesar determinar la distribución de <span class="math notranslate nohighlight">\(X_{0}\)</span>,
+sin embargo, esto no es posible pues <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> contiene
+probabilidades condicionales. Entonces, también es necesario conocer el
+estado inicial del proceso. Para esto, se define
+<span class="math notranslate nohighlight">\(a_{i} = P\lbrack X_{0} = i\rbrack\)</span>, la probabilidad de que el estado
+inicial del proceso sea <span class="math notranslate nohighlight">\(i\)</span>, y el vector
+<span class="math notranslate nohighlight">\(\mathbf{a =}\left( a_{i} \right)_{i \in S}\)</span>. Entonces, la matriz
+<span class="math notranslate nohighlight">\(\mathbf{P}\)</span> y el vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> son suficientes para caracterizar
+una CMTD.</p>
+</section>
+<section id="diagrama-de-transicion-de-una-cmtd">
+<h3>Diagrama de transición de una CMTD<a class="headerlink" href="#diagrama-de-transicion-de-una-cmtd" title="Link to this heading">#</a></h3>
+<p>Una forma alternativa de representar la matriz <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> es a través
+de un grafo conocido como diagrama de transición. Este diagrama está
+compuesto por nodos y arcos, donde cada nodo representa el estado
+<span class="math notranslate nohighlight">\(i \in S\)</span> y el arco <span class="math notranslate nohighlight">\((i,j)\)</span> solo existe si es posible que el proceso
+pase del estado <span class="math notranslate nohighlight">\(i\)</span> al estado <span class="math notranslate nohighlight">\(j\)</span> en una sola transición (es decir, si
+<span class="math notranslate nohighlight">\(p_{ij} &gt; 0\)</span>), y tiene asociado un peso <span class="math notranslate nohighlight">\(p_{ij}\)</span> así:</p>
+<p><img alt="Diagrama de transición CMTD" src="../../../_images/cadenasMarkov1.png" /></p>
+<p>Por ejemplo, la Figura 2 muestra el diagrama de transición asociado a la
+siguiente matriz:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P}_{1} = \begin{bmatrix}
+0.2 &amp; 0.1 &amp; \begin{matrix}
+\ \ \ 0 &amp; \ \ \ \ 0.7
+\end{matrix} \\
+0.5 &amp; 0.3 &amp; \begin{matrix}
+\ \ \ 0.2 &amp; \ \ \ \ 0\ \ \ 
+\end{matrix} \\
+\begin{matrix}
+0 \\
+0.5
+\end{matrix} &amp; \begin{matrix}
+0.4 \\
+0
+\end{matrix} &amp; \begin{matrix}
+\begin{matrix}
+\ \ \ 0\ \ \ \  \\
+0.3
+\end{matrix} &amp; \begin{matrix}
+0.6 \\
+0.2
+\end{matrix}
+\end{matrix}
+\end{bmatrix}\end{split}\]</div>
+<p><img alt="Diagrama de transición CMTD" src="../../../_images/cadenasMarkov2.png" /></p>
+<p>Figura 2: Diagrama de transición asociado a la matriz
+<span class="math notranslate nohighlight">\(\mathbf{P}_{\mathbf{1}}\)</span></p>
+<p>Note que de la misma manera que la suma de las filas de la matriz
+<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>, la suma de los arcos que salen de todos los nodos también
+debe ser exactamente 1.</p>
+</section>
+</section>
+<section id="cadenas-de-markov-de-tiempo-continuo-cmtc">
+<h2>Cadenas de Markov de tiempo continuo (CMTC)<a class="headerlink" href="#cadenas-de-markov-de-tiempo-continuo-cmtc" title="Link to this heading">#</a></h2>
+<p>Las cadenas de Markov de tiempo continuo modelan sistemas que se
+comportan de la siguiente manera. El sistema entra al estado <span class="math notranslate nohighlight">\(i\)</span> y
+permanece en él por una cantidad aleatoria de tiempo antes de pasar al
+estado <span class="math notranslate nohighlight">\(j\)</span> con una probabilidad <span class="math notranslate nohighlight">\(p_{ij}\)</span>, que es independiente del
+tiempo en que el sistema estuvo en <span class="math notranslate nohighlight">\(i.\)</span></p>
+<p>Note que, a diferencia del caso discreto, donde el sistema podía
+permanecer en el mismo estado por más de una unidad de tiempo (es decir
+<span class="math notranslate nohighlight">\(p_{ii} \geq 0\)</span>), en el caso continuo es de interés observar los cambios
+de estado del sistema, por lo que siempre será <span class="math notranslate nohighlight">\(p_{ii} = 0,\ \ i \in S\)</span>.</p>
+<section id="id1">
+<h3>Definición<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Un proceso estocástico en tiempo continuo
+<span class="math notranslate nohighlight">\(\left\{ X(t),\ t \geq 0 \right\}\)</span> con espacio de estados discreto <span class="math notranslate nohighlight">\(S\)</span>
+es una cadena de Markov de tiempo continuo (CMTC) si cumple que:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X(s + t) = j\  \right|\ X(s) = i,\ X(u) = k\rbrack = P\left\lbrack X(s + t) = j\  \right|\ X(s) = i\rbrack\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0 \leq u &lt; s\]</div>
+<p>para todos los estados <span class="math notranslate nohighlight">\(i,j \in S\)</span> y tiempos <span class="math notranslate nohighlight">\(t,s \geq 0\)</span>. Es decir,
+éste es un proceso estocástico que tiene la propiedad de no memoria.
+Además, las CMTC pueden ser homogéneas en el tiempo, si cumplen con:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X(s + t) = j\  \right|\ X(s) = i\rbrack = P\left\lbrack X(t) = j\  \right|\ X(0) = i\rbrack\]</div>
+<p>para todos los estados <span class="math notranslate nohighlight">\(i,j \in S\)</span> y tiempos <span class="math notranslate nohighlight">\(t,s \geq 0\)</span>.</p>
+</section>
+<section id="matriz-generadora-mathbf-q">
+<h3>Matriz generadora <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span><a class="headerlink" href="#matriz-generadora-mathbf-q" title="Link to this heading">#</a></h3>
+<p>Similarmente al caso discreto, para las CMTC es de interés conocer la
+distribución de probabilidad de <span class="math notranslate nohighlight">\(X(t)\)</span>. Entonces, además de las
+probabilidades de que el sistema pase de un estado a otro (dadas por
+<span class="math notranslate nohighlight">\(p_{ij}\)</span>) también es necesario conocer la distribución del tiempo que
+permanece el sistema en un estado antes de realizar un salto. Por otro
+lado, para que el proceso estocástico cumpla con la propiedad Markoviana
+el tiempo que el sistema permanece en el estado <span class="math notranslate nohighlight">\(i\)</span> debe ser una
+variable aleatoria exponencial con parámetro <span class="math notranslate nohighlight">\(r_{i}\)</span>. Entonces, dado que
+<span class="math notranslate nohighlight">\(p_{ij}\ \forall\ i,j \in S\)</span> y <span class="math notranslate nohighlight">\(r_{i}\ \forall\ i \in S\)</span> contienen toda
+la información necesaria para caracterizar la CMTC, se define la matriz
+<span class="math notranslate nohighlight">\(\mathbf{Q = \lbrack}q_{ij}\mathbf{\rbrack}\)</span> como sigue:</p>
+<p><img alt="Elementos matriz de tasas" src="../../../_images/cadenasMarkov3.png" /></p>
+<p>Al igual que la matriz <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> para el caso discreto, la matriz
+<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> es una matriz cuadrada con una fila por cada estado en el
+espacio de estados, sin embargo, en este caso la suma de cada fila es
+cero. Adicionalmente, note que <span class="math notranslate nohighlight">\(q_{ij}\)</span> es la tasa a la que el sistema
+se mueve del estado <span class="math notranslate nohighlight">\(i\)</span> al estado <span class="math notranslate nohighlight">\(j\)</span>, para <span class="math notranslate nohighlight">\(i \neq j\)</span>.</p>
+</section>
+<section id="diagrama-de-tasas-de-una-cmtc">
+<h3>Diagrama de tasas de una CMTC<a class="headerlink" href="#diagrama-de-tasas-de-una-cmtc" title="Link to this heading">#</a></h3>
+<p>Al igual que en el caso discreto, la matriz <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> también se
+puede representar de forma gráfica a través de un diagrama de tasas,
+donde existe un nodo por cada estado de <span class="math notranslate nohighlight">\(S\)</span>, y existe un arco entre los
+nodos <span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(j\)</span>, si <span class="math notranslate nohighlight">\(q_{ij} &gt; 0\)</span>, tal como se observa en la figura 3.</p>
+<p><img alt="Componentes de un diagrama de tasas" src="../../../_images/cadenasMarkov4.png" /></p>
+<p>Ya que el objetivo del diagrama de tasas es presentar los saltos de un
+estado a otro, no existen arcos asociados a <span class="math notranslate nohighlight">\(q_{ii}\)</span>, pues esto no
+representa un cambio en el estado del modelo (es decir, un diagrama de
+tasas no tiene arcos con la cabeza y la cola en el mismo nodo), pero
+dentro de la matriz si debe existir un valor, tal como se observa en la
+ecuación 1. Este elemento <span class="math notranslate nohighlight">\(q_{ii}\)</span>, asociado al tiempo de permanencia en
+el estado <span class="math notranslate nohighlight">\(\forall i \in S\)</span>, se encuentra como:</p>
+<div class="math notranslate nohighlight">
+\[q_{ii} = - r_{i} = - \sum_{j \in S}^{}q_{ij}\]</div>
+<p>Lo anterior implica que, en términos prácticos, para una matriz de tasas
+<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, la suma de todas sus filas es igual a 0. Para ejemplificar
+lo anterior, en la figura 4 se muestra el diagrama asociado a la
+siguiente matriz de tasas de transición.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q}_{1} = \begin{bmatrix}
+ - 3.5 &amp; \ \ \ 2 &amp; \ \ 1.5 \\
+\ \ \ 3 &amp; - 8 &amp; \ \ \ 5 \\
+\ \ \ 7 &amp; \ \ \ 0 &amp; - 7
+\end{bmatrix}\end{split}\]</div>
+<p><img alt="Componentes de un diagrama de tasas" src="../../../_images/cadenasMarkov5.png" /></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Procesos de Poisson</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Análisis transitorio de cadenas de Markov</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-de-tiempo-discreto-cmtd">Cadenas de Markov de tiempo discreto (CMTD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion">Definición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-probabilidades-de-transicion-mathbf-p">Matriz de probabilidades de transición <span class="math notranslate nohighlight">\(\mathbf{P}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-transicion-de-una-cmtd">Diagrama de transición de una CMTD</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-de-tiempo-continuo-cmtc">Cadenas de Markov de tiempo continuo (CMTC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-generadora-mathbf-q">Matriz generadora <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-tasas-de-una-cmtc">Diagrama de tasas de una CMTC</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

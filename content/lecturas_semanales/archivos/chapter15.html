@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Procesos de decisión en el tiempo &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter15';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Principio de Optimalidad y Ecuaciones de Bellman" href="chapter16.html" />
+    <link rel="prev" title="Procesos de Decisión Markovianos" href="chapter18.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter15.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Procesos de decisión en el tiempo</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componentes">Componentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-de-los-problemas-de-decision-en-el-tiempo">Clasificación de los problemas de decisión en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-las-cadenas-de-markov">Relación con las cadenas de Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-politica-optima">La política óptima</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-un-problema-de-decision-en-el-tiempo">Estructura de un problema de decisión en el tiempo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-de-solucion">Métodos de solución</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="procesos-de-decision-en-el-tiempo">
+<h1>Procesos de decisión en el tiempo<a class="headerlink" href="#procesos-de-decision-en-el-tiempo" title="Link to this heading">#</a></h1>
+<p>En este capítulo trataremos el problema de toma de decisiones óptimas,
+cuando no todas las decisiones tienen que ser tomadas en el mismo
+instante del tiempo. Discutiremos sobre cuáles problemas de optimización
+tienen una estructura que permite definirlos como procesos de decisión
+en el tiempo y sobre cuáles son los aspectos que caracterizan un
+problema de decisión en el tiempo. Luego hablaremos de cómo solucionar
+estos problemas y encontrar la solución óptima.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Un proceso de decisión en el tiempo es un tipo de problema donde una
+secuencia de decisiones debe ser tomada para optimizar un resultado que
+se obtiene a partir del estado de un sistema que varía con el tiempo. Un
+ejemplo muy clásico es la gestión de inventarios, donde en una secuencia
+de periodos se debe decidir cuándo y cuánto ordenar para mantener un
+nivel adecuado de inventario cuyo valor cambia en el tiempo. El valor de
+las decisiones que se toman dependerá no solo de las decisiones mismas
+(cantidad ordenada), sino del valor del inventario, ya que, por ejemplo,
+se incurrirá en costos de almacenamiento o incluso en costos por
+faltantes.</p>
+<p>La variación del estado del sistema ocurre como consecuencia de las
+decisiones, así como puede también tener un componente asociado a
+factores externos. Por ejemplo, en el caso de la gestión de un
+inventario, las decisiones obviamente cambian el estado del sistema,
+dado que al recibir las órdenes el número de productos en el inventario
+sube. Pero, el nivel de inventario puede ser afectado por factores
+externos, como la demanda.</p>
+<p>La dinámica de la variación del estado del sistema puede ser de
+naturaleza determinística o estocástica. En algunos escenarios, el
+resultado de las decisiones contempla certidumbre. Por ejemplo,
+consideramos el proceso de decisión de un inversionista en bolsa, que
+decide cuando vender sus acciones. Dado el estado del sistema, o sea el
+valor de la acción, si se decide vender cierta cantidad de acciones se
+obtendrá una ganancia que es totalmente predecible y que no afecta al
+estado del sistema (para pequeños accionistas). Por el contrario,
+existen casos donde una decisión genera variaciones del estado del
+sistema que solo son predecibles en términos probabilísticos. Por
+ejemplo, la venta de cantidades importantes de acciones podría generar
+un impacto sobre la bolsa. Así mismo, la dinámica del sistema podría ser
+inherentemente estocástica: por ejemplo, las variaciones en el
+inventario de un producto que resultan de una demanda no determinística.</p>
+<p>Finalmente, consideraremos exclusivamente procesos de decisión
+discretos, o sea cuando el problema del tomador de decisión es
+seleccionar, entre un conjunto discreto de posibles alternativas de
+decisión, la mejor a tomar en un conjunto de instantes de tiempo
+discreto.</p>
+<p>En la siguiente sección vamos a formalizar las componentes de un
+problema de decisión en el tiempo, que caracterizan los momentos en los
+cuales es necesario tomar decisiones, el conjunto de decisiones que son
+posibles, así como la información necesaria para entender y predecir la
+variación del estado del sistema y el valor que las decisiones otorgan
+al decisor.</p>
+<p>La idea detrás de un proceso de decisión es tomar aquella decisión,
+según la época y el estado del sistema que optimice los retornos. Cada
+vez que se toma una decisión, se genera un retorno <span class="math notranslate nohighlight">\(c_{t}(i,a)\)</span>, que
+puede ser negativo, positivo o cero.</p>
+</section>
+<section id="componentes">
+<h2>Componentes<a class="headerlink" href="#componentes" title="Link to this heading">#</a></h2>
+<p>Los procesos de decisión discretos en el tiempo son caracterizados a
+través de las siguientes componentes:</p>
+<ol class="arabic simple">
+<li><p>Conjunto de épocas <span class="math notranslate nohighlight">\(E = \{ 1,\ldots,\ T\}\)</span> discreto donde se
+observará el sistema y se tomarán decisiones. En cada época se toma
+una (y una sola) decisión para optimizar en ese periodo el valor
+para el tomador de decisión. Usualmente no se toman decisiones en la
+última época.</p></li>
+<li><p>Variable de estado <span class="math notranslate nohighlight">\(X_{t}\)</span> que representa el sistema en cada periodo
+<span class="math notranslate nohighlight">\(t \in E\)</span>. Nótese que la definición de la variable de estado es
+particularmente importante, dado que tiene que ser suficientemente
+informativa para que sea posible determinar el valor que se obtiene
+al tomar cada una de las posibles decisiones, así como predecir el
+nuevo estado del sistema. La variable de estado puede ser
+multi-dimensional.</p></li>
+<li><p>Conjunto <span class="math notranslate nohighlight">\(S_{t}\)</span> de posibles valores (estados) que puede tomar la
+variable en la época de observación <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>Conjunto <span class="math notranslate nohighlight">\(A_{t}(i)\)</span> de decisiones posibles, entre las cuales se
+elige la acción a tomar, cuando el sistema está en la época
+<span class="math notranslate nohighlight">\(t \in E\)</span> y la variable toma un valor <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>.</p></li>
+<li><p>Retorno inmediato <span class="math notranslate nohighlight">\(c_{t}(i,a)\)</span> dado que se toma la decisión
+<span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>, en la época <span class="math notranslate nohighlight">\(t \in E\)</span> y el sistema se encuentra en
+el estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>.</p></li>
+<li><p>Probabilidad <span class="math notranslate nohighlight">\(p_{t}(j|i,a)\)</span> que al tomar la decisión
+<span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>, en la época <span class="math notranslate nohighlight">\(t \in E\)</span>, cuando el sistema está en
+el estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span>, en la época <span class="math notranslate nohighlight">\(t + 1\)</span> el sistema pase a estar
+en el estado <span class="math notranslate nohighlight">\(j \in S_{t + 1}\)</span>.</p></li>
+</ol>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Considere que tomará la decisión sobre el tipo de ropa
+que usará cada día. Sabe que cada día su decisión es afectada por el
+estado del clima. Dependiendo de su decisión, pueden ocurrir diferentes
+sucesos. Si usted decidió no llevar chaqueta o paraguas y llueve o hace
+frio, sentirá incomodidad sobre cómo va vestido. Por otro lado, si lleva
+chaqueta y hace calor, también puede estar incómodo. Por tal motivo,
+dado el estado del clima y su vestimenta, quiere maximizar la comodidad
+que sentirá a lo largo del horizonte de observación.</p>
+<p>Para todo modelo de decisión, se debe caracterizar correctamente el
+modelo definiendo cada uno de sus componentes. En este caso tenemos que:</p>
+<p>1. Se tomará la decisión cada día por lo que las épocas son
+<span class="math notranslate nohighlight">\(E = \{\text{día}\ 1,\ \text{día}\ 2,\ \ldots\}\)</span>, o sea un conjunto
+discreto e infinito de épocas.</p>
+<p>2. Queremos observar el clima para tomar nuestra decisión, por lo que
+<span class="math notranslate nohighlight">\(X_{t} = \text{El clima en el }t - ésimo\ día\)</span>.</p>
+<p>3. El espacio de estados <span class="math notranslate nohighlight">\(S_{t}\)</span> sería los posibles valores que toma la
+variable. Dado que si estamos resolviendo este problema en una ciudad
+donde tengan estaciones (invierno, primavera, verano, otoño), puede
+ocurrir que, para algunos días, no exista el estado lluvia o el estado
+nieve y en otros sí.</p>
+<p>4. La decisión sería la vestimenta por utilizar. Del mismo modo, las
+posibles decisiones a tomar pueden variar según época y estado. Por
+ejemplo, seguro en un día de invierno está descartado sólo usar camiseta
+mientras que en un día de verano está descartado usar una chaqueta para
+nieve.</p>
+<p>5. Como retorno inmediato, se tendría la comodidad que percibiría al
+usar un tipo de vestimenta dado el clima de ese día. Entre mejor vestido
+esté para el clima, sentirá una mayor comodidad. Dado que en efecto el
+clima solo se conoce de manera probabilística, puede que el retorno no
+sea determinístico.</p>
+<p>6. El estado del clima es estocástico, por lo que época a época las
+probabilidades de que haga sol, viento, nieve, y demás varían.</p>
+</div>
+</section>
+<section id="clasificacion-de-los-problemas-de-decision-en-el-tiempo">
+<h2>Clasificación de los problemas de decisión en el tiempo<a class="headerlink" href="#clasificacion-de-los-problemas-de-decision-en-el-tiempo" title="Link to this heading">#</a></h2>
+<p>Los procesos de decisión en el tiempo pueden clasificarse de la
+siguiente forma:</p>
+<p><img alt="Figura 1" src="../../../_images/dectiempo1.png" /></p>
+<p>Los diferentes tipos de procesos de decisión los iremos abordando más
+adelante en el curso.</p>
+</section>
+<section id="relacion-con-las-cadenas-de-markov">
+<h2>Relación con las cadenas de Markov<a class="headerlink" href="#relacion-con-las-cadenas-de-markov" title="Link to this heading">#</a></h2>
+<p>Los procesos de decisión discretos como aquellos que estudiaremos tienen
+varios aspectos en común con las Cadenas de Markov en tiempo discreto.
+Primero, su estudio se basa en el concepto de estado. El estado de un
+proceso de decisión debe contener la información necesaria para que sea
+posible predecir el resultado de las decisiones y conocer el retorno y
+los posibles estados futuros del sistema. De manera muy parecida, el
+estado de una CMTD contiene toda la información necesaria para poder
+determinar las probabilidades de transición a estados futuros del
+sistema.</p>
+<p>Sin embargo, en un proceso de decisión existe un elemento adicional
+determinado por la decisión a tomar. El conjunto de posibles decisiones
+determina múltiples posibles evoluciones, que comparten el mismo
+conjunto de estados. Si fijamos para cada época la decisión, estas
+múltiples evoluciones se reducen a una sola, la cual es de hecho una
+Cadena de Markov en tiempo discreto. Consideremos por ejemplo el
+diagrama en la siguiente figura, que representa un proceso de decisión
+donde <span class="math notranslate nohighlight">\(E = \{ 1,\ 2,\ 3\}\)</span>, los estados son <span class="math notranslate nohighlight">\(S_{1} = \{ s1\}\)</span>,
+<span class="math notranslate nohighlight">\(S_{2} = \{ s2,s3\}\)</span>, <span class="math notranslate nohighlight">\(S_{3} = \{ s4,s5\}\)</span>, y en cada época y estado es
+posible tomar una decisión entre dos posibles decisiones, así que
+<span class="math notranslate nohighlight">\(A_{t}(i) = \{ a1,a2\}\)</span>, para todo <span class="math notranslate nohighlight">\(t\)</span> e <span class="math notranslate nohighlight">\(i\)</span>. El diagrama describe un
+escenario donde al tomar cualquiera de las dos decisiones en el estado
+<span class="math notranslate nohighlight">\(s1\)</span>, se conoce con certeza el nuevo estado del sistema en la época 2.
+Por ejemplo, al tomar la decisión <span class="math notranslate nohighlight">\(a1\)</span> en el estado <span class="math notranslate nohighlight">\(s1\)</span>, dado que es
+<span class="math notranslate nohighlight">\(p_{1}\left( s2 \middle| s1,a1 \right) = 1\)</span>, el nuevo estado en la época
+2 será <span class="math notranslate nohighlight">\(s2\)</span>. Por lo contrario, en la época 2, si se toma la decisión
+<span class="math notranslate nohighlight">\(a1\)</span> en el estado <span class="math notranslate nohighlight">\(s2\)</span>, el nuevo estado del sistema en la época 3 será
+<span class="math notranslate nohighlight">\(s4\)</span> o <span class="math notranslate nohighlight">\(s5\)</span>, de acuerdo con las probabilidades
+<span class="math notranslate nohighlight">\(p_{2}\left( s4 \middle| s2,a1 \right)\)</span> y
+<span class="math notranslate nohighlight">\(p_{2}\left( s5 \middle| s2,a1 \right)\)</span>, respectivamente. Note que en la
+última época (época 3) no se toman decisiones.</p>
+<p><img alt="Figura 2" src="../../../_images/dectiempo2.png" /></p>
+<p>Ahora bien, si consideramos una política cualquiera, o sea fijamos la
+decisión de la época 1 y de la época 2, algunas de las transiciones en
+el diagrama anterior no existirán más. Por ejemplo, si la decisión fuese
+<span class="math notranslate nohighlight">\(a1\)</span> en ambas épocas, el diagrama sería como se ilustra en la siguiente
+figura, que es el diagrama de estado transición para una cadena de
+Markov en tiempo discreto (solo hace falta agregar el reciclo con
+probabilidad 1 a los estados de la última época).</p>
+<p><img alt="Figura 3" src="../../../_images/dectiempo3.png" /></p>
+<p>En un proceso de decisión en el tiempo, los mismos estados del sistema
+pueden repetirse en diferentes épocas. Por ejemplo, consideremos el
+problema de gestión de un inventario. En cada época, podría ser posible
+por ejemplo encontrar el estado igual a la capacidad máxima del
+inventario, así como todos los demás estados entre 0 y el valor máximo.
+En estos casos, puede ser conveniente agrupar las probabilidades de
+transición <span class="math notranslate nohighlight">\(p_{t}(j|i,a)\)</span> en matrices, una por cada decisión. Por
+ejemplo, consideremos el diagrama que se muestra a la izquierda en la
+siguiente figura, la cual muestra la información sobre las transiciones
+que se dan entre los estados de la época <span class="math notranslate nohighlight">\(i - 1\)</span> y aquellos de la época
+<span class="math notranslate nohighlight">\(i\)</span> al tomar la decisión <span class="math notranslate nohighlight">\(a1\)</span>:</p>
+<p><img alt="Figura 4" src="../../../_images/dectiempo4.png" /></p>
+<p>Es posible agrupar las probabilidades en la forma matricial que se
+ilustra a la derecha. En particular, si las probabilidades de transición
+asociadas a las decisiones no dependen de la época, esta representación
+matricial es muy conveniente. En este caso, con respecto a cada
+decisión, la Cadena de Markov en tiempo continuo es homogénea en el
+tiempo, dado que las probabilidades de transición no cambian con la
+época.</p>
+</section>
+<section id="la-politica-optima">
+<h2>La política óptima<a class="headerlink" href="#la-politica-optima" title="Link to this heading">#</a></h2>
+<p>Se conoce como una política <span class="math notranslate nohighlight">\(\pi\)</span> a una combinación de las posibles
+decisiones que es posible tomar por estado y por época (no confundir con
+los vectores de distribución de probabilidad en estado estacionario
+ <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span>). Existen muchas políticas diferentes, todas
+aquellas que son posibles obtener con una secuencia de decisiones, y
+cada una genera un retorno diferente. La política óptima se conoce como
+<span class="math notranslate nohighlight">\(\pi^{*}\)</span>, y es aquella que optimice los retornos totales del tomador de
+decisiones, que corresponden a la suma de los retornos inmediatos
+acumulados en todas las épocas.</p>
+<p>Ahora bien, existen varias metodologías para encontrar la política
+óptima de un problema. Pero para esto debemos considerar la estructura
+que genera un problema de decisión en el tiempo.</p>
+<section id="estructura-de-un-problema-de-decision-en-el-tiempo">
+<h3>Estructura de un problema de decisión en el tiempo<a class="headerlink" href="#estructura-de-un-problema-de-decision-en-el-tiempo" title="Link to this heading">#</a></h3>
+<p>Dadas las características con las que cuenta un problema de decisión en
+el tiempo, una de las posibles formas de representarlo es una red o un
+grafo orientado, donde:</p>
+<ul class="simple">
+<li><p>Existe un conjunto de nodos por cada época;</p></li>
+<li><p>Cada nodo es un posible estado del sistema, en una época de
+decisión;</p></li>
+<li><p>Un arco siempre conecta nodos que están en épocas consecutivas, y
+representa la posibilidad de que el sistema transite del estado en
+la época <span class="math notranslate nohighlight">\(t\)</span> a un estado en la época <span class="math notranslate nohighlight">\(t + 1\)</span>, como consecuencia de
+una decisión;</p></li>
+<li><p>Los arcos tienen etiquetas que representan el retorno inmediato
+asociado a la decisión.</p></li>
+</ul>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Usted es dueño de una tienda donde vende un tipo de
+producto. Cada semana quiere decidir cuántos productos producir para
+tener en inventario, teniendo en cuenta que para la semana 1 le
+demandarán máximo 2 unidades y para la semana 2 le demandará 1 unidad.
+Además, su inventario tiene una capacidad de 3 unidades y en todo
+momento debe tener suficiente inventario para suplir la demanda de la
+semana. Finalmente usted produce al principio de la semana, antes de que
+la tienda abra, por lo que debe tener suficiente inventario para la
+demanda de esa semana y en ningún momento puede tener más de la
+capacidad en inventario. Sabe que por cada unidad en inventario que
+quede al final de la semana le genera un costo de <span class="math notranslate nohighlight">\(\$ c\)</span>, que producir
+cada unidad tiene un costo de <span class="math notranslate nohighlight">\(\$ k\)</span>, que producir genera un costo fijo
+de <span class="math notranslate nohighlight">\(\$ m\)</span> y cada unidad vendida le genera una ganancia <span class="math notranslate nohighlight">\(\$ v\)</span>. Además,
+hoy tiene 1 unidad en inventario y quiere encontrar la política óptima
+de producción durante estas 2 semanas.</p>
+<p>Este problema se puede representar como una red de la siguiente forma:</p>
+<p><img alt="Figura 5" src="../../../_images/dectiempo5.png" /></p>
+<p>Aunque el último momento para tomar una decisión es la semana 2, es
+preferible mostrar que pasa al tomar la última decisión y a qué estados
+llegaría la red en la siguiente época. Una posible política de decisión
+en este caso sería producir 1 unidad en la semana 1 con una ganancia
+<span class="math notranslate nohighlight">\(2v - k - m\)</span> y producir 1 unidad en la semana 2, con una ganancia de
+<span class="math notranslate nohighlight">\(v - k - m\)</span>. No obstante, otra posible política sería producir 2
+unidades en la semana 1 con una ganancia de <span class="math notranslate nohighlight">\(2v - 2k - m - c\)</span> y no
+producir nada en la semana 2 con una ganancia de <span class="math notranslate nohighlight">\(v\)</span>. La política óptima
+es aquella que maximice las ganancias de la tienda en todo el horizonte
+del problema de decisión (todas las épocas).</p>
+<p>En el modelo anterior no existe incertidumbre, es un problema de
+decisión determinístico. Sin embargo, es sencillo y muy natural
+extenderlo para considerar casos donde por ejemplo la demanda sea
+conocida solo a través de una distribución de probabilidad. Por ejemplo,
+suponga que tenemos una unidad en inventario y que la demanda puede ser
+1 o 2 en la semana 1 con la misma probabilidad. De esta forma, la
+combinación de las decisiones con los posibles valores de la demanda
+resulta en múltiples arcos que conectan los estados. En la figura
+siguiente, se utilizan colores diferentes para distinguir las
+transiciones de estado cuando se tome la decisión de producir 1 unidad
+de producto (arcos en azul) y 2 unidades de producto (arcos en negro).</p>
+<p><img alt="Figura 6" src="../../../_images/dectiempo6.png" /></p>
+<p>Pueden existir faltantes y no es seguro a qué estado pasaría. estopor
+consiguiente, la red crece y el método de solución cambia.</p>
+</div>
+</section>
+<section id="metodos-de-solucion">
+<h3>Métodos de solución<a class="headerlink" href="#metodos-de-solucion" title="Link to this heading">#</a></h3>
+<p>Un problema de decisión en el tiempo se beneficia por su estructura de
+red. Y para solucionarlo, existen diferentes metodologías.</p>
+<p>La primera metodología se conoce como <em>enumeración exhaustiva</em>, en la
+cual se identifican todas las posibles políticas existentes, se estima
+su valor en términos de la función objetivo del problema y se comparan
+unas tras otras hasta encontrar la mejor. Es una metodología sencilla,
+pero a su vez puede requerir de una gran cantidad de tiempo para
+encontrar el óptimo dado que en general el número de posibles políticas
+crece rápidamente con el número de épocas, estados y decisiones. Esto
+hace a la <em>enumeración exhaustiva</em> una metodología ineficiente para
+problemas a gran escala. Asumiendo que en total son <span class="math notranslate nohighlight">\(T\)</span> épocas, <span class="math notranslate nohighlight">\(S\)</span>
+estados en cada época y que el número de decisiones en cada estado es a
+su vez <span class="math notranslate nohighlight">\(S\)</span>, podrían existir hasta <span class="math notranslate nohighlight">\(s^{T}\)</span> políticas diferentes. En el
+ejemplo 2, se contemplan hasta 6 políticas diferentes y, para aplicar
+esta metodología, se debe comparar una a una hasta encontrar la mejor.</p>
+<p>La segunda metodología utiliza un modelo de <em>optimización lineal</em>
+asociado al problema de decisión en el tiempo. En efecto, la estructura
+en red se puede modelar como un modelo lineal, y existen varios paquetes
+de software especializados que permiten solucionar modelos de gran
+tamaño de forma eficiente. Sin embargo, no es sencillo incluir en los
+modelos de optimización lineal los aspectos de incertidumbre. Si bien es
+posible, ello se realiza a costa de complicar la estructura del modelo.</p>
+<p>La última metodología se conoce como <em>inducción hacia atrás</em>, y esto es
+el enfoque que manejaremos a lo largo de los siguientes capítulos. Esta
+metodología ahorra tiempo de solución, teniendo en cuenta que se puede
+resolver problemas más pequeños del problema general y así construir la
+política óptima a partir de las soluciones de los subproblemas.
+Adicionalmente, tiene la ventaja de poder tratar la incertidumbre de
+forma muy natural. Por ende, esta técnica de solución para problemas
+determinísticos es esencialmente igual a la técnica de solución para el
+caso estocástico.</p>
+<p>En el siguiente ejemplo se explica el principio que fundamenta la
+técnica de <em>inducción hacia atrás</em>. La idea fundamental es que el
+problema de decisión en el tiempo puede ser solucionado de forma
+sencilla explorando primero las consecuencias de las decisiones que es
+posible tomar en la última época del horizonte. Una vez determinadas las
+posibles ganancias en la última época, se procede a explorar las
+posibles ganancias en la penúltima época, y así de forma iterativa hasta
+llegar a la primera. En este proceso iterativo, se determinan soluciones
+parciales para subproblemas que se reutilizan en la solución de
+problemas más complejos.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 3</p>
+<p>Continuando con el ejemplo anterior, asignamos valores
+concretos a los costos y ganancias. Supongamos que sea
+<span class="math notranslate nohighlight">\(c = 3,\ k = 2,\ m = 4\ y\ v = 5\)</span>. Entonces la red es la siguiente:</p>
+<p><img alt="Figura 7" src="../../../_images/dectiempo7.png" /></p>
+<p>Para aplicar la metodología de inducción hacia atrás, comenzamos con
+analizar las posibles decisiones en la última época (semana 2). Si
+estamos en el estado 0 en la semana 2 de decisión, es menos costoso
+producir sólo 1 unidad y tener un costo de -1, dado que cualquier otra
+decisión genera más costos. Así que podemos marcar en la red el
+resultado de esa decisión, anotando en el estado 0 el valor de la
+decisión optima (-1) y marcando en gris las decisiones que ya no
+interesan.</p>
+<p><img alt="Figura 8" src="../../../_images/dectiempo8.png" /></p>
+<p>Así mismo, en el estado 1 de la semana 2, la mejor decisión es no
+producir, dado que este caso la ganancia es 5 y para las demás
+decisiones es negativa. Anotamos otra vez en la red el resultado de esta
+decisión, como sigue. Ahora el problema de decisión se reduce de una
+época, como sigue.</p>
+<p><img alt="Figura 9" src="../../../_images/dectiempo9.png" /></p>
+<p>Ahora el problema de decisión se ha reducido, dado que para la última
+época ya encontramos las decisiones óptimas, dependiendo del estado de
+la red. De esta manera, ya quitamos muchas de las varias rutas posibles,
+reduciendo significativamente la complejidad. Ahora nos queda por
+examinar las posibles decisiones en la semana 1. Son solo dos, dado que
+el estado de la red es solo 1:</p>
+<p>1) Producir 1 unidad en la semana 1, lo cual genera un valor de 4, y
+lleva la red al estado 0, donde ya sabemos que con la mejor decisión se
+genera un costo de -1, por un total de 3.</p>
+<p>2) Producir 2 unidades en la semana 1 (valor -1), y por consecuencia
+llegar al estado 1 en la semana 2, donde el valor óptimo es 5 (decisión
+no producir), por un total de ganancia de 4.</p>
+<p>La mejor decisión corresponde a la segunda, es decir, aquella que
+maximiza el valor de la ganancia. Para la semana 1 es mejor producir dos
+unidades, y para la semana 2 no producir. Esta es la política óptima
+para el problema, que encontramos con la técnica de inducción hacia
+atrás. Podemos representar la política óptima en la red, como se ilustra
+en la siguiente figura, donde se muestran las mejores decisiones, los
+estados que estas generan en la dinámica del sistema, y las ganancias
+(inmediatas y acumuladas).</p>
+<p><img alt="Figura 10" src="../../../_images/dectiempo10.png" /></p>
+<p>Es importante observar como la complejidad del problema de decisión ha
+sido tratada a través del análisis secuencial de las posibles épocas, de
+la última a la primera. Recorrer las posibles decisiones hacia atrás en
+el tiempo simplifica el problema, mientras que intentar de solucionarlo
+empezando de la primera época hacia adelante nos deja con el problema de
+evaluar simultáneamente todos los posibles futuros (posibles decisiones)
+para el valor de la función objetivo. Gracias a inducción hacia atrás,
+se comparan menos políticas encontrando mucho más rápido la política
+óptima.</p>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter18.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Procesos de Decisión Markovianos</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter16.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Principio de Optimalidad y Ecuaciones de Bellman</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componentes">Componentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-de-los-problemas-de-decision-en-el-tiempo">Clasificación de los problemas de decisión en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-las-cadenas-de-markov">Relación con las cadenas de Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-politica-optima">La política óptima</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-un-problema-de-decision-en-el-tiempo">Estructura de un problema de decisión en el tiempo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-de-solucion">Métodos de solución</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

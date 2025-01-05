@@ -1,0 +1,872 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Teoría de Colas &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter12';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter12.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Teoría de Colas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-kendall-lee">Notación Kendall-Lee</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-1-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-1-gd-c-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/c/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-s-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/s/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-r-gd-k-k">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/R/GD/K/K}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-g-1-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/G/1/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-g-g-infty-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{G/G/\infty/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-infty-gd-infty-infty-o-mathbf-m-m-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty/GD/\infty/\infty}\)</span> (o <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty}\)</span>)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="teoria-de-colas">
+<h1>Teoría de Colas<a class="headerlink" href="#teoria-de-colas" title="Link to this heading">#</a></h1>
+<p>En este capítulo se presenta el desarrollo de las medidas de desempeño
+para algunos procesos de nacimiento y muerte, también conocidos como
+filas en Teoría de Colas.</p>
+<section id="notacion-kendall-lee">
+<h2>Notación Kendall-Lee<a class="headerlink" href="#notacion-kendall-lee" title="Link to this heading">#</a></h2>
+<p>Para poder analizar las medidas de desempeño de algunas de las
+diferentes configuraciones de filas que se pueden presentar en un
+sistema, resulta de utilidad abordar primero el concepto de notación
+Kendall-Lee. En dicha notación se encuentran 6 posiciones:</p>
+<div class="math notranslate nohighlight">
+\[A/B/C/D/E/F\]</div>
+<p>Donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span>: Representa el tipo de proceso estocástico o distribución de
+probabilidad asociada a la llegada de entidades al sistema.</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span>: Representa el tipo de proceso estocástico o distribución de
+probabilidad asociada a la atención o servicio de entidades en el
+sistema.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>: Representa el número de servidores con los que cuenta el
+sistema para la atención de las entidades.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: Representa la disciplina o el comportamiento en la atención de
+las entidades en el sistema.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E\)</span>: Representa la capacidad máxima de entidades que pueden
+encontrarse al mismo tiempo el sistema, tanto en fila como en
+servicio.</p></li>
+<li><p><span class="math notranslate nohighlight">\(F\)</span>: Representa el tamaño de la población de la cual provienen las
+entidades por fuera del sistema.</p></li>
+</ul>
+<blockquote>
+<div><p>En general, para los elementos <span class="math notranslate nohighlight">\(A\)</span> y <span class="math notranslate nohighlight">\(B\)</span>, se utiliza una letra <span class="math notranslate nohighlight">\(M\)</span>
+cuando el proceso correspondiente sigue un Proceso de Poisson con una
+tasa respectiva. Para cualquier otra distribución que no siga un
+Proceso de Poisson, se utiliza una letra <span class="math notranslate nohighlight">\(G\)</span> que representa una
+distribución general (i.e. una distribución uniforme continua para los
+procesos de arribo y/o atención de entidades). Para el parámetro D, se
+utiliza suelen especificar las letras <span class="math notranslate nohighlight">\(GD\)</span> para hacer referencia a una
+disciplina general de atención de entidades, siendo esta disciplina
+“primero en entrar, primero en salir” (o FIFO, por sus siglas en
+inglés). Por último, para los parámetros <span class="math notranslate nohighlight">\(C,\ E\)</span> y <span class="math notranslate nohighlight">\(F\)</span>, se puede
+especificar un número natural correspondiente para cada parámetro o,
+si dichos parámetros no están acotados por un número específico, se
+puede representar cada valor con el símbolo <span class="math notranslate nohighlight">\(\infty\)</span> seg´´un
+corresponda.</p>
+</div></blockquote>
+</section>
+<section id="la-fila-mathbf-m-m-1-gd-infty-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/\infty/\infty}\)</span><a class="headerlink" href="#la-fila-mathbf-m-m-1-gd-infty-infty" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, esta es una fila en la cual el tiempo entre
+arribos y el tiempo de servicio siguen una distribución exponencial (con
+tasas que denotaremos <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> respectivamente), sólo hay un
+servidor, y tanto la capacidad del sistema como el tamaño de la
+población son infinitos. La notación resumida de Kendall para esta cola
+es <span class="math notranslate nohighlight">\(M/M/1\)</span>, ya que los últimos tres términos normalmente se omiten.</p>
+<p>Así, la fila descrita se puede modelar como una Cadena de Markov de
+tiempo continuo con variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>. El
+espacio de estados de la cadena es el conjunto infinito de los números
+enteros no-negativos <span class="math notranslate nohighlight">\(S = \{ 0,1,2,\ldots\}\)</span>. Así, la Figura 1 muestra
+el diagrama de tasas de transición correspondiente.</p>
+<p><img alt="Figura 1" src="../../../_images/colas1.png" /></p>
+<p>Note que esta cadena es un proceso de nacimiento y muerte, por lo que
+las probabilidades de estado estable (si existen) tienen la forma:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = c_{j}\pi_{0}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(c_{j}\)</span> se calcula a partir de <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> así:</p>
+<div class="math notranslate nohighlight">
+\[c_{j} = \frac{\lambda_{0}\lambda_{1}{\cdots\lambda}_{j - 1}}{\mu_{1}\mu_{2}\cdots{\ \mu}_{j}} = \frac{\lambda^{j}}{\mu^{j}} = \left( \frac{\lambda}{\mu} \right)^{j}\]</div>
+<p>Así mismo, para conocer todas las probabilidades de estado estable sólo
+es necesario encontrar <span class="math notranslate nohighlight">\(\pi_{0}\)</span> como en cualquier proceso de nacimiento
+y muerte:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( 1 + \sum_{j = 1}^{\infty}\left( \frac{\lambda}{\mu} \right)^{j} \right)^{- 1} = \left( \sum_{j = 0}^{\infty}\left( \frac{\lambda}{\mu} \right)^{j} \right)^{- 1}\]</div>
+<p>La existencia de <span class="math notranslate nohighlight">\(\pi_{0}\)</span>, y por lo tanto, de todas las probabilidades
+de estado estable, dependen de la serie infinita
+<span class="math notranslate nohighlight">\(\sum_{j = 0}^{\infty}\left( \frac{\lambda}{\mu} \right)^{j}\)</span>, que
+converge solo si <span class="math notranslate nohighlight">\(\left( \frac{\lambda}{\mu} \right) &lt; 1\)</span>. Esta
+condición es consistente con la interpretación física de la fila, porque
+si <span class="math notranslate nohighlight">\(\mu &lt; \lambda\)</span>, las entidades llegan a la fila más rápido de lo que
+el servidor las puede atender, por lo que en el largo plazo la fila
+tendrá una longitud infinita. En este caso, todos los estados de la
+cadena serán transitorios, y por la tanto, si bien la cadena es
+irreducible, no es ergódica, y las probabilidades de estado estable no
+existirán. Así, denotaremos como <span class="math notranslate nohighlight">\(\rho = \frac{\lambda}{\mu}\)</span> la
+relación entre las tasas de llegada y servicio, y calculamos las
+probabilidades en estado estable en función de <span class="math notranslate nohighlight">\(\rho:\)</span></p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( \sum_{j = 0}^{\infty}\rho^{j} \right)^{- 1} = \left( \frac{1}{1 - \rho} \right)^{- 1} = 1 - \rho\]</div>
+<p>La segunda igualdad en la expresión de arriba se obtiene de las
+propiedades de las series geométricas, las cuales, cuando la razón de la
+serie (en este caso el <span class="math notranslate nohighlight">\(\rho\)</span>) es estrictamente menor a 1, convergen al
+valor finito <span class="math notranslate nohighlight">\((1 - \rho)^{- 1}\)</span></p>
+<p>Ahora, es de interés conocer la utilización del servidor, es decir, la
+fracción de tiempo que el servidor está ocupado en el largo plazo:</p>
+<div class="math notranslate nohighlight">
+\[Utilización = \pi_{1} + \pi_{2} + \ldots = \sum_{j = 1}^{\infty}\pi_{j} = \sum_{j = 0}^{\infty}\pi_{j} - \pi_{0} = 1 - \pi_{0} = 1 - (1 - \rho) = \rho\]</div>
+<p>Entonces, las probabilidades de estado estable tienen la forma
+<span class="math notranslate nohighlight">\(\pi_{j} = (1 - \rho)\rho^{j},\ \ j \geq 0\)</span>. Así, es posible conocer el
+número esperado de entidades en el sistema <span class="math notranslate nohighlight">\((L)\)</span> como sigue:</p>
+<div class="math notranslate nohighlight">
+\[L = \sum_{j = 0}^{\infty}j\pi_{j} = \sum_{j = 0}^{\infty}j(1 - \rho)\rho^{j} = (1 - \rho)\sum_{j = 0}^{\infty}j\rho^{j} = (1 - \rho)\frac{\rho}{(1 - \rho)^{2}} = \frac{\rho}{1 - \rho}\]</div>
+<p>De forma similar se puede encontrar el número esperado de entidades en
+servicio <span class="math notranslate nohighlight">\((L_{s})\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[L_{s} = 0 \cdot \pi_{0} + \sum_{j = 1}^{\infty}{1 \cdot \pi_{j}} = \sum_{j = 1}^{\infty}\pi_{j} = 1 - \pi_{0} = 1 - (1 - \rho) = \rho\]</div>
+<p>Es también posible obtener <span class="math notranslate nohighlight">\(L_{s}\)</span> a través de la aplicación de la Ley
+de Little al subsistema constituido por el servidor de la cola. Como se
+ilustra en la Figura 1, dado que la <span class="math notranslate nohighlight">\(M/M/1\)</span> es ergódica, el flujo de
+entidades que salen del sistema debe ser igual en intensidad al flujo de
+entidades que ingresan al sistema, es decir, ambos tienen que ser de
+tasa <span class="math notranslate nohighlight">\(\lambda\)</span>. Dada la naturaleza secuencial del modelo, primero la
+espera y después el servidor, también el flujo de entidades que pasan de
+esperar a servicio debe ser de tasa <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p><img alt="Figura 2" src="../../../_images/colas2.png" /></p>
+<p>Entonces, aplicando la Ley de Little (<span class="math notranslate nohighlight">\(L_{s} = \lambda{\cdot W}_{s}\)</span>) al
+sistema encerrado en el rectángulo con línea discontinua, podemos
+obtener que en el estado estacionario el número promedio de entidades en
+servicio es igual a la tasa de llegada <span class="math notranslate nohighlight">\(\lambda\)</span> por el tiempo promedio
+que cada una de ellas pasa en servicio, lo cual es
+<span class="math notranslate nohighlight">\(W_{s} = \frac{1}{\mu}\)</span>. Se obtiene que:</p>
+<div class="math notranslate nohighlight">
+\[L_{s} = \lambda{\cdot W}_{s} = \frac{\lambda}{\mu} = \rho\]</div>
+<p>El número esperado de entidades en fila <span class="math notranslate nohighlight">\((L_{q})\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[L_{q} = L - L_{s} = \frac{\rho}{1 - \rho} - \rho = \frac{\rho^{2}}{1 - \rho}\]</div>
+<p>Finalmente, usando la ley de Little se pueden encontrar los tiempos
+promedio de permanencia en el sistema <span class="math notranslate nohighlight">\((W)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[W = \frac{L}{\lambda} = \frac{\frac{\rho}{1 - \rho}}{\lambda} = \frac{1}{\mu(1 - \frac{\lambda}{\mu})\ } = \frac{1}{\mu - \lambda}\]</div>
+<p>Dado que el tiempo promedio en servicio es <span class="math notranslate nohighlight">\(W_{s} = \frac{1}{\mu}\)</span>,
+podemos calcular el tiempo promedio en espera de cada entidad como
+sigue:</p>
+<div class="math notranslate nohighlight">
+\[W_{q} = W - W_{s} = \frac{1}{\mu - \lambda} - \frac{1}{\mu} = \frac{\lambda}{\mu(\mu - \lambda)}\]</div>
+</section>
+<section id="la-fila-mathbf-m-m-1-gd-c-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/c/\infty}\)</span><a class="headerlink" href="#la-fila-mathbf-m-m-1-gd-c-infty" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, ésta es una fila en la cual el tiempo entre
+arribos y el tiempo de servicio siguen una distribución exponencial (con
+tasas que denotaremos <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> respectivamente), sólo hay un
+servidor, el tamaño de la población es infinito, y el sistema tiene
+capacidad de <span class="math notranslate nohighlight">\(c\)</span> entidades en total, es decir, en fila y en servicio. La
+notación resumida para esta cola es <span class="math notranslate nohighlight">\(M/M/1/c\)</span>.</p>
+<p>Así, la fila descrita se puede modelar como una Cadena de Markov de
+tiempo continuo con variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>.
+Así, la Figura 2 muestra el diagrama de tasas de transición
+correspondiente.</p>
+<p><img alt="Figura 2" src="../../../_images/colas3.png" /></p>
+<p>Note que esta cadena es un proceso de nacimiento y muerte, y qué además
+siempre es ergódica ya que tiene espacio de estados finito, por lo que
+las probabilidades de estado estable siempre existen y tienen la forma:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = c_{j}\pi_{0}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(c_{j}\)</span> se calcula a partir de <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> así:</p>
+<div class="math notranslate nohighlight">
+\[c_{j} = \frac{\lambda_{0}\lambda_{1}{\cdots\lambda}_{j - 1}}{\mu_{1}\mu_{2}\cdots{\ \mu}_{j}} = \frac{\lambda^{j}}{\mu^{j}} = \left( \frac{\lambda}{\mu} \right)^{j} = \rho^{j}\]</div>
+<p>Entonces, para conocer todas las probabilidades de estado estable solo
+es necesario encontrar <span class="math notranslate nohighlight">\(\pi_{0}\)</span> como en cualquier proceso de nacimiento
+y muerte:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( 1 + \sum_{j = 1}^{c}\rho^{j} \right)^{- 1} = \left( \sum_{j = 0}^{c}\rho^{j} \right)^{- 1} = \frac{1 - \rho}{1 - \rho^{c + 1}}\]</div>
+<p>Es importante observar que para este modelo el <span class="math notranslate nohighlight">\(\rho\)</span> no corresponde a
+la utilización del sistema, y que puede asumir valores arbitrariamente
+grandes. En efecto, para calcular la utilización de este sistema se debe
+considerar que cuando el sistema está en el estado <span class="math notranslate nohighlight">\(c\)</span> (es decir, hay
+<span class="math notranslate nohighlight">\(c - 1\ \)</span>entidades en fila) las llegadas se pierden. Por esto, se
+calcula una <em>tasa efectiva</em> de entrada al sistema <span class="math notranslate nohighlight">\((\lambda_{e})\)</span> de la
+siguiente forma:</p>
+<div class="math notranslate nohighlight">
+\[\lambda_{e} = \lambda\pi_{0} + \lambda\pi_{1} + \ldots + \lambda\pi_{c - 1} + 0\pi_{c} = \lambda(\pi_{0} + \pi_{1} + \ldots + \pi_{c - 1}) = \lambda(1 - \pi_{c})\]</div>
+<p>Y la utilización del sistema es
+<span class="math notranslate nohighlight">\(\frac{\lambda\left( 1 - \pi_{c} \right)}{\mu} = \rho(1 - \pi_{c})\)</span>.</p>
+<p>Finalmente, se calculan los números esperados de entidades y tiempos
+promedio de forma similar a la fila
+<span class="math notranslate nohighlight">\(M\text{/}M\text{/}1\text{/}GD\text{/}\infty\text{/}\infty\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[L = \sum_{j = 0}^{c}{j\rho^{j}\frac{1 - \rho}{1 - \rho^{c + 1}}} = \frac{\rho\lbrack 1 - (c + 1) \cdot \rho^{c} + c \cdot \rho^{c + 1}\rbrack}{(1 - \rho^{c + 1})(1 - \rho)}\]</div>
+<div class="math notranslate nohighlight">
+\[L_{s} = \rho(1 - \pi_{c})\]</div>
+<div class="math notranslate nohighlight">
+\[L_{q} = L - L_{s}\]</div>
+<div class="math notranslate nohighlight">
+\[W = \frac{L}{\lambda_{e}}\]</div>
+<div class="math notranslate nohighlight">
+\[W_{s} = \frac{1}{\mu}\]</div>
+<div class="math notranslate nohighlight">
+\[W_{q} = W - W_{s}\]</div>
+<p>Note que las fórmulas mencionadas fallan cuando <span class="math notranslate nohighlight">\(\rho = 1\)</span>, sin embargo,
+en este caso se tiene que:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( 1 + \sum_{j = 1}^{c}\rho^{j} \right)^{- 1} = \left( 1 + \sum_{j = 1}^{c}1 \right)^{- 1} = \frac{1}{1 + c}\]</div>
+<p>Además, ya que para cualquier estado <span class="math notranslate nohighlight">\(j\ \)</span>se tiene que <span class="math notranslate nohighlight">\(c_{j} = 1\)</span>,
+todos los <span class="math notranslate nohighlight">\(\pi_{j} = \pi_{0}\)</span>. Esto quiere decir que, en estado estable,
+el sistema estará en cualquier estado con la misma probabilidad. A
+partir de esta definición de <span class="math notranslate nohighlight">\(\pi_{j}\)</span> se pueden calcular las demás
+medidas de desempeño como se hizo anteriormente. En particular, se puede
+mostrar que cuando <span class="math notranslate nohighlight">\(\rho = 1\)</span> se tiene que <span class="math notranslate nohighlight">\(L = \frac{c}{2}\)</span>.</p>
+</section>
+<section id="la-fila-mathbf-m-m-s-gd-infty-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/s/GD/\infty/\infty}\)</span><a class="headerlink" href="#la-fila-mathbf-m-m-s-gd-infty-infty" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, esta es una fila en la cual el tiempo entre
+arribos y el tiempo de servicio siguen una distribución exponencial (con
+tasas que denotaremos <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> respectivamente), hay múltiples
+servidores, y tanto la capacidad del sistema como el tamaño de la
+población son infinitos. La notación de Kendall resumida para esta fila
+es <span class="math notranslate nohighlight">\(M/M/s\)</span>.</p>
+<p>Así, la fila descrita se puede modelar como una Cadena de Markov de
+tiempo continuo con variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>.
+Así, la Figura 3 muestra el diagrama de tasas de transición
+correspondiente.</p>
+<p><img alt="Figura 3" src="../../../_images/colas4.png" /></p>
+<p>Para analizar esta fila en estado estable, es necesario que todos los
+estados sean recurrentes, lo que se cumple siempre y cuando
+<span class="math notranslate nohighlight">\(\frac{\lambda}{s \cdot \mu} &lt; 1\)</span>. Esta cantidad se denota como
+<span class="math notranslate nohighlight">\(\rho_{s}\)</span> y es la utilización del sistema.</p>
+<p>Note que esta cadena es un proceso de nacimiento y muerte, por lo que
+las probabilidades de estado estable (si existen) tienen la forma:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = c_{j}\pi_{0}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(c_{j}\)</span> se calcula a partir de <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> así:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}c_{j} = \left\{ \begin{matrix}
+\frac{\left( s\rho_{s} \right)^{j}}{j!} &amp; j &lt; s \\
+\frac{\left( s\rho_{s} \right)^{j}}{s!s^{j - s}} &amp; j \geq s
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Y <span class="math notranslate nohighlight">\(\pi_{0}:\)</span></p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( \sum_{j = 0}^{s - 1}\frac{\left( s\rho_{s} \right)^{j}}{j!} + \sum_{j = s}^{\infty}\frac{\left( s\rho_{s} \right)^{j}}{s!s^{j - s}} \right)^{- 1} = \left( \sum_{j = 0}^{s - 1}\frac{\left( s\rho_{s} \right)^{j}}{j!} + \frac{\left( s\rho_{s} \right)^{s}}{s!(1 - \rho_{s})} \right)^{- 1}\]</div>
+<p>Entonces, es posible calcular el número esperado de entidades en cola:</p>
+<div class="math notranslate nohighlight">
+\[L_{q} = P\lbrack j \geq s\rbrack\frac{\rho_{s}}{1 - \rho_{s}} = \frac{\left( s\rho_{s} \right)^{s}}{s!(1 - \rho_{s})}\pi_{0}\frac{\rho_{s}}{1 - \rho_{s}}\]</div>
+<p>Además, se conoce que <span class="math notranslate nohighlight">\(W_{s} = \frac{1}{\mu}\)</span> y usando la ley de Little
+se obtiene <span class="math notranslate nohighlight">\(L_{s} = s{\cdot \rho}_{s} = \frac{\lambda}{\mu}.\)</span> Es
+importante observar que, para este modelo, la cantidad
+<span class="math notranslate nohighlight">\(\frac{\lambda}{\mu}\)</span> no corresponde a la utilización sino al número
+promedio de entidades en servicio en estado estacionario.</p>
+<p>Entonces, la cantidad esperada de entidades en el sistema es:</p>
+<div class="math notranslate nohighlight">
+\[L = L_{q} + L_{s} = \frac{\left( s\rho_{s} \right)^{s}}{s!(1 - \rho_{s})}\pi_{0}\frac{\rho_{s}}{1 - \rho_{s}} + s\rho_{s}\]</div>
+<p>Finalmente, <span class="math notranslate nohighlight">\(W\)</span> y <span class="math notranslate nohighlight">\(W_{q}\)</span> se pueden encontrar a partir de <span class="math notranslate nohighlight">\(L\)</span> y <span class="math notranslate nohighlight">\(L_{q}\)</span>
+respectivamente usando la ley de Little.</p>
+</section>
+<section id="la-fila-mathbf-m-m-r-gd-k-k">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/R/GD/K/K}\)</span><a class="headerlink" href="#la-fila-mathbf-m-m-r-gd-k-k" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, ésta es una fila en la cual el tiempo entre
+arribos y el tiempo de servicio siguen una distribución exponencial (con
+tasas que denotaremos <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span> respectivamente), hay múltiples
+servidores, y tanto la capacidad del sistema como el tamaño de la
+población son finitos.</p>
+<p>Así, la fila descrita se puede modelar como una Cadena de Markov de
+tiempo continuo con variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>.
+Así, la Figura 4 muestra el diagrama de tasas de transición
+correspondiente.</p>
+<p><img alt="Figura 4" src="../../../_images/colas5.png" /></p>
+<p>Note que esta cadena es un proceso de nacimiento y muerte, y qué además
+siempre es ergódica, por lo que las probabilidades de estado estable
+siempre existen y tienen la forma:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = c_{j}\pi_{0}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(c_{j}\)</span> se calcula a partir de <span class="math notranslate nohighlight">\(\rho = \frac{\lambda}{\mu}\)</span> así:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}c_{j} = \left\{ \begin{matrix}
+\begin{pmatrix}
+K \\
+j
+\end{pmatrix}\rho^{j}\ \ \ \ \ \ \ \ \ 0 \leq j \leq R \\
+\begin{pmatrix}
+K \\
+j
+\end{pmatrix}\frac{\rho^{j}j!}{R!R^{j - R}}\ \ \ \ \ \ \ \ R &lt; j \leq K
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Para esta fila no existen fórmulas para <span class="math notranslate nohighlight">\(\pi_{0},\)</span> y por lo tanto
+tampoco existen para <span class="math notranslate nohighlight">\(L\)</span> o <span class="math notranslate nohighlight">\(L_{q}\)</span>, que se deben calcular a partir de
+las probabilidades de estado estable:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( \sum_{j = 0}^{K}c_{j} \right)^{- 1}\]</div>
+<div class="math notranslate nohighlight">
+\[L = \sum_{j = 0}^{K}j\pi_{j}\]</div>
+<div class="math notranslate nohighlight">
+\[L_{q} = \sum_{j = R + 1}^{K}{(j - R)\pi_{j}}\]</div>
+<p>Por otro lado, <span class="math notranslate nohighlight">\(L_{s}\)</span> se puede calcular a partir de
+<span class="math notranslate nohighlight">\(W_{s} = \frac{1}{\mu}\)</span> usando la ley de Little. Sin embargo, para poder
+usar la ley de Little (y calcular la utilización del sistema) se debe
+encontrar una tasa promedio de entrada de entidades al sistema que se
+denotará como <span class="math notranslate nohighlight">\(\overline{\lambda}\)</span> (note en la Figura 4 que la tasa de
+entrada depende del estado).</p>
+<div class="math notranslate nohighlight">
+\[\overline{\ \lambda} = \sum_{j = 0}^{K}{(K - j)\lambda\pi_{j} = \sum_{j = 0}^{K}{{K\lambda\pi}_{j} - \sum_{j = 0}^{K}{{j\lambda\pi}_{j} =}}}K\lambda - \lambda L = \lambda(K - L)\]</div>
+<p>Con el valor de <span class="math notranslate nohighlight">\(\overline{\lambda}\)</span> y encontrando <span class="math notranslate nohighlight">\(L\)</span> y <span class="math notranslate nohighlight">\(L_{q}\)</span> como se
+mencionó anteriormente, es posible encontrar <span class="math notranslate nohighlight">\(W\)</span> y <span class="math notranslate nohighlight">\(W_{q}.\)</span></p>
+</section>
+<section id="la-fila-mathbf-m-g-1-gd-infty-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/G/1/GD/\infty/\infty}\)</span><a class="headerlink" href="#la-fila-mathbf-m-g-1-gd-infty-infty" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, esta es una fila en la cual el tiempo entre
+arribos sigue una distribución exponencial (con tasa que denotaremos
+<span class="math notranslate nohighlight">\(\lambda\)</span>), hay un único servidor, tanto la capacidad del sistema como
+el tamaño de la población son infinitos, y el tiempo de servicio sigue
+alguna distribución de probabilidad. La notación de Kendall resumida
+para esta fila es <span class="math notranslate nohighlight">\(M/G/1\)</span>.</p>
+<p>Así, la fila descrita se puede modelar como un proceso estocástico con
+variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>.
+Sin embargo, dado que el tiempo de servicio no necesariamente cumple la
+propiedad Markoviana, <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span> no será en general una
+Cadena de Markov. Aunque para este modelo no es posible encontrar
+probabilidades en estado estable como se ha hecho hasta ahora, si es
+posible realizar ciertos análisis sobre las medidas de desempeño del
+sistema.</p>
+<p>Para esto, es necesario conocer por lo menos la media <span class="math notranslate nohighlight">\((\frac{1}{\mu})\)</span>
+y la varianza <span class="math notranslate nohighlight">\((\sigma^{2})\)</span> del tiempo de servicio. Así, es posible
+calcular la utilización del servidor usando la ley de Little sobre el
+subsistema compuesto únicamente por el servidor así:
+<span class="math notranslate nohighlight">\(\rho = L = \lambda W = \frac{\lambda}{\mu}\)</span>.</p>
+<p>Además, usando la fórmula de Pollaczek–Khinchine es posible encontrar
+el número esperado de clientes en espera en el sistema en el largo
+plazo:</p>
+<div class="math notranslate nohighlight">
+\[L_{q} = \frac{\lambda^{2}\sigma^{2} + \rho^{2}}{2(1 - \rho)}\]</div>
+<p>Entonces, también es posible conocer <span class="math notranslate nohighlight">\(L:\)</span></p>
+<div class="math notranslate nohighlight">
+\[L = L_{q} + L_{s} = L_{q} + \frac{\lambda}{\mu}\]</div>
+<p>Luego, <span class="math notranslate nohighlight">\(W\)</span> y <span class="math notranslate nohighlight">\(W_{q}\)</span> se calculan a partir de la ley de Little. Note que
+el valor de <span class="math notranslate nohighlight">\(L_{q}\)</span> (y por lo tanto de <span class="math notranslate nohighlight">\(L\)</span>) incrementan con la varianza
+del tiempo de servicio, lo cual es un ejemplo de un resultado general
+para los sistemas con filas:</p>
+<blockquote>
+<div><p><em>Al aumentar la varianza de los tiempos de llegada y de servicio, los
+indicadores de rendimiento de un sistema con fila empeoran, es decir
+que el número promedio de entidades (en fila y totales) así como los
+tiempos (de espera y de permanencia en el sistema) aumentan.</em></p>
+</div></blockquote>
+<p>Finalmente, note que la fórmula de Pollaczek–Khinchine es una
+generalización del cálculo del <span class="math notranslate nohighlight">\(L_{q}\)</span> pues, si se reemplaza
+<span class="math notranslate nohighlight">\(\sigma^{2}\)</span> por la varianza de una distribución exponencial con tasa
+<span class="math notranslate nohighlight">\(\mu\)</span>, la fórmula del <span class="math notranslate nohighlight">\(L_{q}\)</span> se reduce al caso de una fila <span class="math notranslate nohighlight">\(M/M/1\)</span>.</p>
+</section>
+<section id="la-fila-mathbf-g-g-infty-gd-infty-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{G/G/\infty/GD/\infty/\infty}\)</span><a class="headerlink" href="#la-fila-mathbf-g-g-infty-gd-infty-infty" title="Link to this heading">#</a></h2>
+<p>De su notación de Kendall, esta es una fila en la cual el tiempo entre
+arribos y el tiempo de servicio siguen alguna distribución de
+probabilidad (con tasas que denotaremos <span class="math notranslate nohighlight">\(\lambda\)</span> y <span class="math notranslate nohighlight">\(\mu\)</span>
+respectivamente), hay infinitos servidores, y tanto la capacidad del
+sistema como el tamaño de la población son infinitos. La notación de
+Kendall resumida para esta cola es <span class="math notranslate nohighlight">\(G/G/\infty\)</span>.</p>
+<p>Así, la fila descrita se puede modelar como un proceso estocástico con
+variable de estado
+<span class="math notranslate nohighlight">\(X(t) = número\ de\ entidades\ en\ el\ sistema\ en\ el\ instante\ t\)</span>.
+Sin embargo, dado que ni el tiempo entre llegadas ni el tiempo de
+servicio necesariamente cumplen la propiedad Markoviana,
+<span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span> no será en general una Cadena de Markov. Aunque
+para este sistema no es posible encontrar probabilidades en estado
+estable como se ha hecho hasta ahora, sí es posible realizar ciertos
+análisis sobre las medidas de desempeño del sistema.</p>
+<p>Ya que el número de servidores es infinito, la utilización de este
+sistema es cero, pues todas las entidades que lleguen encontrarán un
+servidor disponible y el número de servidores ocupados será siempre
+despreciable con respecto al número total de servidores disponibles (que
+es infinito). Además, nunca se formará una fila, por lo que
+<span class="math notranslate nohighlight">\(L_{q} = W_{q} = 0\)</span>.</p>
+<p>Finalmente, <span class="math notranslate nohighlight">\(W_{s} = \frac{1}{\mu}\)</span> y usando la ley de Little
+<span class="math notranslate nohighlight">\(L_{s} = \frac{\lambda}{\mu}.\)</span></p>
+</section>
+<section id="la-fila-mathbf-m-m-infty-gd-infty-infty-o-mathbf-m-m-infty">
+<h2>La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty/GD/\infty/\infty}\)</span> (o <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty}\)</span>)<a class="headerlink" href="#la-fila-mathbf-m-m-infty-gd-infty-infty-o-mathbf-m-m-infty" title="Link to this heading">#</a></h2>
+<p>El análisis para esta fila es similar al de la fila
+<span class="math notranslate nohighlight">\(G\text{/}G\text{/}\infty/GD\text{/}\infty\text{/}\infty\)</span>, y las medidas
+de desempeño se calculan de la misma forma. Sin embargo, dado que en
+este caso los tiempos involucrados en el sistema siguen una distribución
+exponencial, el proceso estocástico subyacente sí es una Cadena de
+Markov, por lo que se pueden encontrar las probabilidades en estado
+estable así:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = c_{j}\pi_{0}\]</div>
+<div class="math notranslate nohighlight">
+\[\pi_{j} = \frac{\rho^{j}}{j!}\pi_{0}\]</div>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( \sum_{j = 0}^{\infty}\frac{\rho^{j}}{j!} \right)^{- 1} = e^{- \rho}\]</div>
+<p>Ya que el número de servidores es infinito, la utilización de este
+sistema es cero, pues todas las entidades que lleguen encontrarán un
+servidor disponible y el número de servidores ocupados será siempre
+despreciable con respecto al número total de servidores disponibles (que
+es infinito). Además, nunca se formará una fila, por lo que
+<span class="math notranslate nohighlight">\(L_{q} = W_{q} = 0\)</span>, igual que su contraparte
+<span class="math notranslate nohighlight">\(G\text{/}G\text{/}\infty/GD\text{/}\infty\text{/}\infty\)</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-kendall-lee">Notación Kendall-Lee</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-1-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-1-gd-c-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/1/GD/c/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-s-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/s/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-r-gd-k-k">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/R/GD/K/K}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-g-1-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/G/1/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-g-g-infty-gd-infty-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{G/G/\infty/GD/\infty/\infty}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-fila-mathbf-m-m-infty-gd-infty-infty-o-mathbf-m-m-infty">La fila <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty/GD/\infty/\infty}\)</span> (o <span class="math notranslate nohighlight">\(\mathbf{M/M/\infty}\)</span>)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

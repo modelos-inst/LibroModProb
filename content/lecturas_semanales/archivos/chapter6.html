@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Probabilidades en estado estable &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter6';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Cadenas embebidas" href="chapter7.html" />
+    <link rel="prev" title="Clasificación de estados" href="chapter5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter6.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Probabilidades en estado estable</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculo-de-las-probabilidades-en-estado-estable-para-cmtd">Cálculo de las probabilidades en estado estable para CMTD</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedad"><strong>Propiedad:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-en-estado-estable-para-cmtc">Probabilidades en estado estable para CMTC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Propiedad:</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="probabilidades-en-estado-estable">
+<h1>Probabilidades en estado estable<a class="headerlink" href="#probabilidades-en-estado-estable" title="Link to this heading">#</a></h1>
+<p>En este capítulo se presenta la definición, cálculo y uso de las
+probabilidades en estado estable. Tanto para cadenas de Markov de tiempo
+continuo como para cadenas de Markov de tiempo discreto, se presentarán
+ejemplos prácticos y usos frecuentes de estas probabilidades.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Un sistema, al momento de ser observado por primera vez, está en sus
+condiciones iniciales. Por ejemplo, un banco vacío cuando abre, una
+planta de producción recibiendo las órdenes a producir durante el día o
+un call center donde los trabajadores están esperando las llamadas. A
+partir del estado inicial, un sistema evoluciona en el tiempo, y puede
+llegar a alcanzar una condición denominada <em>estabilidad</em> o <em>estado
+estacionario</em> (en inglés, <em>steady-state</em> o <em>stationary state</em>).</p>
+<p>Los modelos de cadena de Markov (en tiempo discreto o continuo) pueden
+igualmente evolucionar en el tiempo hasta alcanzar el estado
+estacionario. Es posible demostrar que la propiedad de ergodicidad es
+suficiente para que una cadena de Markov tenga estado estable.</p>
+<p>Hasta que una cadena de Markov no llegue a un punto en donde esté en
+condiciones de estabilidad, su comportamiento es de tipo transitorio y
+debe ser analizado utilizando las técnicas del análisis transitorio. El
+tiempo que se demora para llegar a esta estabilidad se conoce como
+<em>tiempo de calentamiento</em>, y cada sistema/modelo tiene un tiempo de
+calentamiento diferente. Por ejemplo, el número promedio de personas en
+un banco puede tener el siguiente comportamiento:</p>
+<p><img alt="Gráfica 1" src="../../../_images/estEstable1.png" /></p>
+<p>Se puede apreciar que el número de personas se estabiliza alrededor del
+valor de 6 personas en el banco. Desde este punto se determina la
+estabilidad. Ahora bien, como cada sistema se comporta de forma
+diferente se puede concluir que, para el modelo de un sistema que admita
+estado estable, cuando el tiempo tiende a infinito el modelo llega
+seguramente a una estabilidad.</p>
+<p>En particular, si una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span> admite
+estado estable, se observa que, en el largo plazo, cuando el tiempo
+(discreto o continuo) tiende al infinito, existen los siguientes
+límites:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\lim_{t \rightarrow \infty}{P\left\lbrack X(t) = j \middle| X(0) = i \right\rbrack = \pi_{j}\ ,\ \forall\ i,j \in S}\)</span>     si la cadena es continua</p>
+</div></blockquote>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\lim_{n \rightarrow \infty}{P\left\lbrack X_{n} = j \middle| X_{0} = i \right\rbrack = \pi_{j}\ ,\ \forall\ i,j \in S}\)</span>   si la cadena es discreta</p>
+</div></blockquote>
+<p>Observamos que no solo los límites <span class="math notranslate nohighlight">\(\pi_{j}\)</span> existen por cada estado,
+sino que son independientes del estado inicial de la cadena de Markov.
+Esta independencia del estado inicial resulta de la ergodicidad del
+modelo, en particular de la irreducibilidad. Cuando una cadena es
+ergódica, las probabilidades límite <span class="math notranslate nohighlight">\(\pi_{j}\)</span>, <span class="math notranslate nohighlight">\(j \in S\)</span>, son
+equivalentes a las probabilidades de estado estable, y el vector
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> de las probabilidades de estado estable es el
+<em>vector de distribución estacionaria de estado</em> (<em>steady-state
+probability distribution vector</em>, en inglés). Al ser un vector de
+probabilidades, la suma de los elementos de <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> tiene
+que ser unitaria, es decir:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i \in S}^{}\pi_{i} = 1\]</div>
+</section>
+<section id="calculo-de-las-probabilidades-en-estado-estable-para-cmtd">
+<h2>Cálculo de las probabilidades en estado estable para CMTD<a class="headerlink" href="#calculo-de-las-probabilidades-en-estado-estable-para-cmtd" title="Link to this heading">#</a></h2>
+<p>Para una cadena de Markov de tiempo discreto se puede calcular las
+probabilidades en estado estable conociendo que:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty}P\left\lbrack X_{n} = j \middle| X_{0} = i \right\rbrack = \lim_{n \rightarrow \infty}\mathbb{P}_{ij}^{n}\]</div>
+<p>Pero esto quiere decir que se debería elevar la matriz <span class="math notranslate nohighlight">\(\mathbb{P\ }\)</span>al
+infinito, o, si se acepta una aproximación, por lo menos calcular una
+potencia muy grande de <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>. Dado que este cálculo puede ser muy
+costoso en términos computacionales, es necesario utilizar otro
+procedimiento. La siguiente propiedad de las CMTD proporciona una manera
+más efectiva de calcular la distribución de estado estable.</p>
+<section id="propiedad">
+<h3><strong>Propiedad:</strong><a class="headerlink" href="#propiedad" title="Link to this heading">#</a></h3>
+<p>Para una CMTD <span class="math notranslate nohighlight">\(\{ X_{n},n \geq 0\}\)</span> ergódica, con espacio de estados <span class="math notranslate nohighlight">\(S\)</span>
+y matriz de probabilidades de transición a un paso <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, las
+probabilidades en estado estable son calculadas resolviendo el siguiente
+sistema de ecuaciones:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\overrightarrow{\pi}\mathbb{P =}\overrightarrow{\pi}\)</span> (Ecuaciones
+de balance)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_{i \in S}^{}\pi_{i} = 1\)</span> (Ecuación de normalización)</p></li>
+</ol>
+<p>La primera expresión se puede interpretar así: Si una cadena se
+encuentra en estado estable, es decir, si la cadena se encuentra en el
+estado <span class="math notranslate nohighlight">\(i\)</span> con probabilidad <span class="math notranslate nohighlight">\(\pi_{i}\)</span> para todo <span class="math notranslate nohighlight">\(i \in S\)</span>, tras una
+transición de acuerdo con la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, la cadena seguirá en
+cada estado con la misma probabilidad, i.e., en cada estado <span class="math notranslate nohighlight">\(i \in S\)</span>
+estará con probabilidad <span class="math notranslate nohighlight">\(\pi_{i}\)</span>. La segunda afirmación hace referencia
+al hecho de que <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> es un vector estocástico, y por
+ende la suma de todos sus elementos debe ser igual a uno.
+Adicionalmente, cabe resaltar que existen tantas ecuaciones de balance
+como estados en la cadena, <span class="math notranslate nohighlight">\(n = \ |S|\)</span>, y que estas son linealmente
+dependientes entre si (el sistema tiene infinitas soluciones). Por esta
+razón, a la hora de calcular las probabilidades se deben usar <span class="math notranslate nohighlight">\(n - 1\)</span>
+ecuaciones de balance, más la ecuación de normalización.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo</p>
+<p>Una tienda de televisores tiene una capacidad para mantener
+en inventario máximo 3 unidades. Si al final de la semana (domingo) no
+tiene televisores en inventario, se piden nuevas unidades hasta llenar
+el inventario. Este pedido llega al principio de la semana siguiente
+(lunes) a primera hora.</p>
+<p>Se sabe que la demanda de televisores por semana se comporta de la
+siguiente forma: 0 televisores con probabilidad de <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span>, 1
+televisor con probabilidad de <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> y 2 televisores con
+probabilidad de <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span>. Si la demanda no puede ser abastecida en
+una semana, aun así, vende la mayor cantidad de televisores posibles.
+Determine las probabilidades en estado estable del inventario.</p>
+</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Solución Ejemplo</p>
+<p>Se define la variable como
+<span class="math notranslate nohighlight">\(X_{n} = El\ número\ de\ televisores\ en\ inventario\ al\ principio\ de\ la\ n - \text{ésima semana}\)</span>.
+Por lo que el espacio de estados es <span class="math notranslate nohighlight">\(S = \{ 1,2,3\}\)</span>. Este no contiene
+el 0, dado que, al definir el periodo de observación de la variable al
+inicio de la semana, si el domingo no hay unidades en el inventario, se
+pedirán 3 unidades hasta saturar el sistema. En caso que haya una o más
+unidades en inventario al final de la semana (domingo), no se pedirán
+unidades. Esto muestra que, de acuerdo con la definición de la
+temporalidad de <span class="math notranslate nohighlight">\(X_{n}\)</span>, el estado <span class="math notranslate nohighlight">\(X_{n} = 0\)</span> nunca se observará.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Nota:</strong>
+Considere que, si la definición de la variable cambia, y ahora se
+observara al final de la semana, sería posible observar el estado
+<span class="math notranslate nohighlight">\(X_{n} = 0\)</span>. Reflexione sobre cómo cambiaría la matriz de
+probabilidades con esta nueva variable.</p>
+</div>
+<p>Por ejemplo, si el domingo se finalizara con una unidad, no se
+realizaría ningún pedido, y se iniciaría el lunes <span class="math notranslate nohighlight">\(n\)</span> con dicha unidad.
+Para que el siguiente lunes <span class="math notranslate nohighlight">\((n + 1)\)</span> siga existiendo una unidad en
+inventario, en la semana no se debe demandar ninguna unidad, lo cual
+sucede con probabilidad de <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span>. Adicionalmente, la transición
+de tener 1 unidad en el inventario y pasar a 3 unidades requiere que la
+demanda en la semana haya sido de 1 o más unidades, lo que lleva a tener
+cero unidades en el inventario, y realizar el pedido el día domingo. Lo
+anterior se puede resumir como: <span class="math notranslate nohighlight">\(p_{1,1} = \frac{1}{4},\ \)</span> y
+<span class="math notranslate nohighlight">\(p_{1,3} = \frac{3}{4}\)</span>.</p>
+<p>Siguiendo la misma lógica para el resto de los casos, se tiene entonces
+que la matriz de probabilidades de transición está expresada por:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P = \ }\begin{matrix}
+\  &amp; \begin{matrix}
+1\ \  &amp; \ 2\  &amp; \ \ 3
+\end{matrix} \\
+\begin{matrix}
+1 \\
+2 \\
+3
+\end{matrix} &amp; \begin{bmatrix}
+1/4 &amp; 0 &amp; 3/4 \\
+1/2 &amp; 1/4 &amp; 1/4 \\
+1/4 &amp; 1/2 &amp; 1/4
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Para calcular las probabilidades en estado estable, primero hay que
+formular las ecuaciones de balance
+<span class="math notranslate nohighlight">\(\left( \overrightarrow{\pi}\mathbb{P =}\overrightarrow{\pi} \right)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\overrightarrow{\pi}\mathbb{P =}\overrightarrow{\pi} = &gt; \ \begin{bmatrix}
+\pi_{1} &amp; \pi_{2} &amp; \pi_{3}
+\end{bmatrix}\begin{bmatrix}
+1/4 &amp; 0 &amp; 3/4 \\
+1/2 &amp; 1/4 &amp; 1/4 \\
+1/4 &amp; 1/2 &amp; 1/4
+\end{bmatrix} = \begin{bmatrix}
+\pi_{1} &amp; \pi_{2} &amp; \pi_{3}
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{1}{4}\pi_{1} + \frac{1}{2}\pi_{2} + \frac{1}{4}\pi_{3} = \pi_{1}\]</div>
+<div class="math notranslate nohighlight">
+\[0\pi_{1} + \frac{1}{4}\pi_{2} + \frac{1}{2}\pi_{3} = \pi_{2}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{3}{4}\pi_{1} + \frac{1}{4}\pi_{2} + \frac{1}{4}\pi_{3} = \pi_{3}\]</div>
+<p>Adicionalmente, se debe agregar la ecuación de normalización:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{1} + \pi_{2} + \pi_{3} = 1\]</div>
+<p>Dado que las ecuaciones de balance son linealmente dependientes entre
+sí, se debe escoger 2 de estas ecuaciones más la de normalización para
+resolver el sistema. Al resolver el sistema de ecuaciones, las
+probabilidades en estado estable resultantes son:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{1} = \frac{7}{22},\ \pi_{2} = \frac{6}{22},\ \pi_{3} = \frac{9}{22}
+\]</div>
+<p>El anterior resultado implica que, en estado estable, la probabilidad de
+que en una semana cualquiera se inicie con 1,2 y 3 televisores en
+inventario, es de <span class="math notranslate nohighlight">\(\frac{7}{22}\)</span>, <span class="math notranslate nohighlight">\(\frac{6}{22}\)</span> y <span class="math notranslate nohighlight">\(\frac{9}{22}\)</span>,
+respetivamente.</p>
+</div>
+</section>
+</section>
+<section id="probabilidades-en-estado-estable-para-cmtc">
+<h2>Probabilidades en estado estable para CMTC<a class="headerlink" href="#probabilidades-en-estado-estable-para-cmtc" title="Link to this heading">#</a></h2>
+<p>Para una cadena de Markov de tiempo continuo, a diferencia de una de
+tiempo discreto, se cuenta con una matriz generadora conocida como
+<span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>. Para las CMTC, el cálculo de las probabilidades de estado
+estable se basa en la siguiente propiedad:</p>
+<section id="id1">
+<h3><strong>Propiedad:</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Para una CMTC <span class="math notranslate nohighlight">\(\{ X(t),t \geq 0\}\)</span> ergódica, con espacio de estados <span class="math notranslate nohighlight">\(S\)</span>
+y matriz generadora <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>, las probabilidades en estado estable
+son calculadas resolviendo el siguiente sistema de ecuaciones</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\overrightarrow{\pi}\mathbb{Q =}\overrightarrow{0}\)</span> (Ecuaciones de
+balance)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_{i \in S}^{}\pi_{i} = 1\)</span> (Ecuación de normalización)</p></li>
+</ol>
+<p>En la primera expresión, considere la primera entrada del producto
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}\mathbb{Q}\)</span>, que es el resultado de multiplicar el
+vector fila <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> por la primera columna de
+<span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>. La primera columna contiene la tasa de salida del primer
+estado (negativa) y las tasas de entrada al primer estado desde
+cualquier otro estado. El producto de <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> por la
+primera columna de <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> tiene entonces una suma positiva de
+tasas de entrada al primer estado, más la tasa de salida (negativa),
+ponderados por la probabilidad de estado estable asociada a cada estado.
+Si este producto es igual a cero, la tasa de salida es igual a la tasa
+entrada, y por lo tanto no se esperan cambios en la probabilidad. Así,
+la distribución de estado estable logra balancear las probabilidades
+para que las tasas de entrada y salida sean iguales en estado estable.
+La segunda condición captura que <span class="math notranslate nohighlight">\(\overrightarrow{\pi}\)</span> es un vector
+estocástico, luego sus entradas deben sumar uno.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo</p>
+<p>Un banco cuenta con dos cajeros donde cada uno tiene un
+tiempo de atención que se distribuye exponencial con tasa de 10 personas
+por hora. Por otro lado, llegan clientes al banco en promedio cada 12
+minutos. Se conoce que el banco tiene espacio a lo sumo de 1 persona en
+fila y que el tiempo entre llegadas de clientes se distribuye
+exponencial. Determine las probabilidades en estado estable del número
+de personas en el banco.</p>
+</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Solución Ejemplo</p>
+</div>
+<p><em>Solución.</em></p>
+<p>Se define la variable como
+<span class="math notranslate nohighlight">\(X(t) = \ El\ número\ de\ personas\ en\ el\ banco\ en\ cualquier\ momento\ t\)</span>.
+Considerando que como máximo se pueden estar atendiendo dos personas,
+más la que se encuentra en la fila, el espacio de estados se define como
+<span class="math notranslate nohighlight">\(S = \{ 0,1,2,3\}\)</span>. Ahora, aplicando el concepto de mínimo de
+exponenciales (visto en la lectura <em>2-Procesos de Poisson</em>), y usando la
+tasa de llegada y la tasa de atención, se sabe entonces que la matriz
+generadora se puede representar como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{Q =}\begin{matrix}
+\  &amp; \begin{matrix}
+0 &amp; \ \ \ 1\ \  &amp; \ \ \begin{matrix}
+\ \ \ 2\  &amp; \ \ \ 3
+\end{matrix}
+\end{matrix} \\
+\begin{matrix}
+0 \\
+1 \\
+\begin{matrix}
+2 \\
+3
+\end{matrix}
+\end{matrix} &amp; \begin{bmatrix}
+ - 5 &amp; 5 &amp; \begin{matrix}
+\ \ 0\ \ \  &amp; 0
+\end{matrix} \\
+10 &amp; - 15 &amp; \ \ \begin{matrix}
+5\ \ \  &amp; 0
+\end{matrix} \\
+\begin{matrix}
+0 \\
+0
+\end{matrix} &amp; \begin{matrix}
+20 \\
+0
+\end{matrix} &amp; \begin{matrix}
+\begin{matrix}
+ - 25 \\
+20
+\end{matrix} &amp; \begin{matrix}
+5 \\
+ - 20
+\end{matrix}
+\end{matrix}
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Para calcular las probabilidades en estado estable, primero hay que
+formular las ecuaciones de balance
+<span class="math notranslate nohighlight">\(\left( \overrightarrow{\pi}\mathbb{Q =}\overrightarrow{0} \right)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\overrightarrow{\pi}\mathbb{Q =}\overrightarrow{0} = &gt; \begin{bmatrix}
+\begin{matrix}
+\pi_{0} &amp; \pi_{1}
+\end{matrix} &amp; \pi_{2} &amp; \pi_{3}
+\end{bmatrix}\begin{bmatrix}
+ - 5 &amp; 5 &amp; \begin{matrix}
+\ \ 0\ \ \  &amp; 0
+\end{matrix} \\
+10 &amp; - 15 &amp; \ \ \begin{matrix}
+5\ \ \  &amp; 0
+\end{matrix} \\
+\begin{matrix}
+0 \\
+0
+\end{matrix} &amp; \begin{matrix}
+20 \\
+0
+\end{matrix} &amp; \begin{matrix}
+\begin{matrix}
+ - 25 \\
+20
+\end{matrix} &amp; \begin{matrix}
+5 \\
+ - 20
+\end{matrix}
+\end{matrix}
+\end{bmatrix} = \begin{bmatrix}
+\begin{matrix}
+0 &amp; 0
+\end{matrix} &amp; 0 &amp; 0
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[- 5\pi_{0} + 10\pi_{1} = 0\]</div>
+<div class="math notranslate nohighlight">
+\[5\pi_{0} - 15\pi_{1} + 20\pi_{2} = 0\]</div>
+<div class="math notranslate nohighlight">
+\[5\pi_{1} - 25\pi_{2} + 20\pi_{3} = 0\]</div>
+<div class="math notranslate nohighlight">
+\[5\pi_{2} - 20\pi_{3} = 0\]</div>
+<p>Aparte se debe agregar la ecuación de normalización:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} + \pi_{1} + \pi_{2} + \pi_{3} = 1\]</div>
+<p>Dado que las ecuaciones de balance son linealmente dependientes entre
+sí, se debe escoger 3 de estas ecuaciones más la de normalización para
+resolver el sistema. Al resolver el sistema de ecuaciones, las
+probabilidades en estado estable resultantes son:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \frac{32}{53},\ \pi_{1} = \frac{16}{53},\ \pi_{2} = \frac{4}{53},\ \pi_{3} = \frac{1}{53}\]</div>
+<p>Esto implica que, en el largo plazo, la probabilidad de que el banco se
+encuentre vacío en cualquier momento del tiempo es de <span class="math notranslate nohighlight">\(\frac{32}{53}\)</span>,
+mientras la probabilidad de que haya 1 cliente es <span class="math notranslate nohighlight">\(\frac{16}{53}\)</span>, 2
+clientes <span class="math notranslate nohighlight">\(\frac{4}{53}\)</span>, y finalmente 3 clientes <span class="math notranslate nohighlight">\(\frac{1}{53}\)</span>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Clasificación de estados</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter7.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cadenas embebidas</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculo-de-las-probabilidades-en-estado-estable-para-cmtd">Cálculo de las probabilidades en estado estable para CMTD</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedad"><strong>Propiedad:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-en-estado-estable-para-cmtc">Probabilidades en estado estable para CMTC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Propiedad:</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
