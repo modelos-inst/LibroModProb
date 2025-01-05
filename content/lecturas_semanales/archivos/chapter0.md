@@ -67,7 +67,7 @@ Se define $X$ como una variable aleatoria que sigue una distribución Erlang si 
 Sea $Y_{i}$ un conjunto de variables aleatoria distribuidas exponencialmente con parámetro $\lambda$, independientes e identicamente distribuidas.
 
 $$X = \sum_{i=1}^{N} Y_{i}$$
-$$X ~ Erlang(k=N, \lambda)$$
+$$X \sim \text{Erlang}(k=N, \lambda)$$
 
 En caso en que $Y_{i}$ no sean variables aleatorias **iid**, la distribución de probabilidad de $X$ **no** será Erlang. 
 
