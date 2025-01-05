@@ -1,0 +1,44 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+format: jb-book
+root: intro
+parts:
+- caption: Lecturas Semanales
+  numbered: false
+  chapters:
+  - file: content/lecturas_semanales/Modulo1
+    sections:
+    - file: content/lecturas_semanales/archivos/chapter0
+    - file: content/lecturas_semanales/archivos/chapter1
+  - file: content/lecturas_semanales/Modulo2
+    sections:
+    - file: content/lecturas_semanales/archivos/chapter2
+    - file: content/lecturas_semanales/archivos/chapter3
+    - file: content/lecturas_semanales/archivos/chapter4
+    - file: content/lecturas_semanales/archivos/chapter5
+    - file: content/lecturas_semanales/archivos/chapter6
+    - file: content/lecturas_semanales/archivos/chapter7
+    - file: content/lecturas_semanales/archivos/chapter8
+    - file: content/lecturas_semanales/archivos/chapter9
+  - file: content/lecturas_semanales/Modulo3
+    sections:
+    - file: content/lecturas_semanales/archivos/chapter10
+    - file: content/lecturas_semanales/archivos/chapter11
+    - file: content/lecturas_semanales/archivos/chapter13
+    - file: content/lecturas_semanales/archivos/chapter14
+  - file: content/lecturas_semanales/Modulo4
+    sections:
+    - file: content/lecturas_semanales/archivos/chapter18
+    - file: content/lecturas_semanales/archivos/chapter15
+    - file: content/lecturas_semanales/archivos/chapter16
+    - file: content/lecturas_semanales/archivos/chapter17
+- caption: Complementarias
+  numbered: false
+  chapters:
+  - file: content/complementarias/Complementaria1.ipynb
+  - file: content/complementarias/Complementaria2.ipynb
+  - file: content/complementarias/Complementaria3.ipynb
+  - file: content/complementarias/Complementaria4/Complementaria4.ipynb
+  - file: content/complementarias/Complementaria5/Complementaria5_IntroDash.ipynb
+  - file: content/complementarias/Complementaria6.ipynb
+  - file: content/complementarias/Complementaria9.ipynb

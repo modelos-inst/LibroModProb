@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Análisis transitorio de cadenas de Markov &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter4';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Clasificación de estados" href="chapter5.html" />
+    <link rel="prev" title="Cadenas de Markov" href="chapter3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter4.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Análisis transitorio de cadenas de Markov</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-discreto">Análisis transitorio de cadenas de Markov en tiempo discreto</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1">Ejercicio 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2">Ejercicio 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3">Ejercicio 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-continuo">Análisis transitorio de cadenas de Markov en tiempo continuo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4">Ejercicio 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5">Ejercicio 5</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-transitorio-de-cadenas-de-markov">
+<h1>Análisis transitorio de cadenas de Markov<a class="headerlink" href="#analisis-transitorio-de-cadenas-de-markov" title="Link to this heading">#</a></h1>
+<p>En este documento se explican los fundamentos matemáticos del análisis
+transitorio de las cadenas de Markov en tiempo discreto y continuo. A
+partir de algunos casos de modelos de sistemas, se presentan los
+resultados del análisis transitorio que permiten cuantificar indicadores
+sobre el rendimiento del sistema.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Definir un modelo de un sistema cumple generalmente con múltiples
+objetivos. El proceso mismo de modelado es una actividad de la que
+normalmente surgen preguntas relevantes sobre varios aspectos del
+sistema de interés, y que permite profundizar en su funcionamiento.
+Modelar un sistema permite la caracterización de muchos elementos
+cualitativos y cuantitativos para responder diferentes preguntas de
+interés sobre su desempeño.</p>
+<p>Los modelos de cadenas de Markov son modelos dinámicos, en el sentido
+que incorporan de forma natural la dimensión temporal de la evolución,
+por lo cual es pertinente querer contestar preguntas que hacen
+referencia a estados futuros del sistema. Por la propiedad de no memoria
+de las cadenas de Markov (sea en tiempo discreto o en tiempo continuo),
+el conocimiento de un estado inicial y las probabilidades de transición
+a un paso es suficiente para poder determinar las distribuciones de
+probabilidad de estado en tiempos futuros.</p>
+<p>Hay dos distintos tipos de análisis a realizar para modelos dinámicos de
+sistemas, utilizando cadenas de Markov:</p>
+<ul class="simple">
+<li><p>El análisis <em>transitorio</em> (también se dice <em>en el transitorio</em>, en
+inglés <em>transient analysis</em>), que busca determinar el estado del
+sistema en un punto (o en una secuencia de puntos) determinado en el
+tiempo.</p></li>
+<li><p>El análisis en el largo plazo, que pretende determinar el estado que
+el sistema alcanza después de un tiempo muy largo, más precisamente
+cuando el tiempo tiende al infinito.</p></li>
+</ul>
+<p>En este documento nos concentramos en el análisis transitorio de cadenas
+de Markov.</p>
+</section>
+<section id="analisis-transitorio-de-cadenas-de-markov-en-tiempo-discreto">
+<h2>Análisis transitorio de cadenas de Markov en tiempo discreto<a class="headerlink" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-discreto" title="Link to this heading">#</a></h2>
+<p>Consideramos una cadena de Markov en tiempo discreto (CMTD)
+<span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span>, con espacio de estados <span class="math notranslate nohighlight">\(S\)</span> y matriz de
+probabilidades de transición a un paso <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>.</p>
+<p>Como ya se explicó en lecturas anteriores, la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> es una
+matriz de probabilidades condicionales, que permite conocer la
+probabilidad de alcanzar un estado <span class="math notranslate nohighlight">\(j\)</span> en un paso, dado que el estado
+actual de la cadena de Markov es el estado <span class="math notranslate nohighlight">\(i\)</span>. En una fórmula:</p>
+<p><span class="math notranslate nohighlight">\(p_{ij} = P\left\lbrack Z_{n + 1} = j \middle| Z_{n} = i \right\rbrack\)</span>.</p>
+<p>Recuerde que, por la propiedad de homogeneidad, el que aparezca en la
+fórmula anterior el índice <span class="math notranslate nohighlight">\(n\)</span> no quiere decir que la probabilidad sea
+definida para un paso específico de la evolución. Los elementos de la
+matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> proporcionan directamente una manera de calcular la
+distribución de probabilidad del estado de la cadena en el futuro.</p>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>El elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> de una CMTD es la
+probabilidad de que el proceso en la próxima observación se encuentre en
+el estado <span class="math notranslate nohighlight">\(j\)</span> dado que en la observación actual se encuentra en el
+estado <span class="math notranslate nohighlight">\(i\)</span>. Es importante recordar que el índice de la <strong>fila</strong> es el
+índice que identifica la observación actual, y la <strong>columna</strong> la
+observación futura.</p>
+</div>
+<p>Puede que el estado inicial (o actual) de la CMTD no sea conocido con
+certeza, pero se conozca la distribución de probabilidad. En otras
+palabras, se conoce, por cada estado <span class="math notranslate nohighlight">\(i \in S\)</span>, la probabilidad
+<span class="math notranslate nohighlight">\(P\lbrack Z_{0} = i\rbrack\)</span>. Llamamos a esta probabilidad <span class="math notranslate nohighlight">\(\alpha_{i}\)</span>,
+y denotamos con <span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\)</span> el vector que proporciona la
+probabilidad de que el proceso se encuentre en los estados <span class="math notranslate nohighlight">\(S\)</span>, lo que
+se llama distribución de probabilidad de estado (en inglés <em>state
+probability distribution</em>), en el tiempo <span class="math notranslate nohighlight">\(n = 0\)</span>.</p>
+<p>A partir del vector de distribución de probabilidad de estado en el
+tiempo <span class="math notranslate nohighlight">\(0\)</span>, es posible calcular el vector de distribución de
+probabilidad de estado en el tiempo <span class="math notranslate nohighlight">\(1\ \)</span>(que denotamos con
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{1})\)</span> a través del siguiente producto:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{1} = \overrightarrow{\alpha} \bullet P.\]</div>
+<p>El resultado de la multiplicación entre el vector
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\ \)</span>y la matriz <span class="math notranslate nohighlight">\(P\)</span> es otro vector de
+probabilidades, <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{1}\)</span>, el cual proporciona la
+distribución de probabilidad de estado al paso 1. De la misma manera,
+cuando se conozca la distribución de probabilidad de estado en el paso
+<span class="math notranslate nohighlight">\(n\)</span>, es posible calcular la distribución de probabilidad de estado en el
+paso <span class="math notranslate nohighlight">\(n + 1\)</span>, como sigue:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{n + 1} = {\overrightarrow{\pi}}^{n} \bullet P.\]</div>
+<section id="ejercicio-1">
+<h3>Ejercicio 1<a class="headerlink" href="#ejercicio-1" title="Link to this heading">#</a></h3>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejercicio 1</p>
+<p>Consideramos la CMTD <span class="math notranslate nohighlight">\(\{ Z_{n},\ n \geq 0\}\)</span> con espacio de estados <span class="math notranslate nohighlight">\(S = \{ A,B,C\}\)</span>, cuya matriz de transición
+de probabilidad a un paso <span class="math notranslate nohighlight">\(P\)</span> y diagrama de transición de estados, son los siguientes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P} = \begin{bmatrix}
+1-p &amp; p &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0\\
+\end{bmatrix}\end{split}\]</div>
+<p><img alt="Diagrama Ejercicio 1" src="../../../_images/ATrans1.png" /></p>
+<p>Supongamos que la cadena se encuentre en el estado <span class="math notranslate nohighlight">\(A\)</span> en el paso (u observación) <span class="math notranslate nohighlight">\(n\)</span>, y determinamos la
+probabilidad de que se encuentre en cada uno de los estados de <span class="math notranslate nohighlight">\(S\)</span> en el paso <span class="math notranslate nohighlight">\(n + 1\)</span>. De un análisis
+directo del diagrama de transición se obtiene que:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P\left\lbrack Z_{n + 1} = A \middle| Z_{n} = A \right\rbrack = 1 - p\)</span>  la cadena recicla en A</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left\lbrack Z_{n + 1} = B \middle| Z_{n} = A \right\rbrack = p\)</span>  la cadena transita de A a B</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left\lbrack Z_{n + 1} = C \middle| Z_{n} = A \right\rbrack = 0\)</span> no es posible alcanzar C en un solo paso</p></li>
+</ul>
+<p>Estas probabilidades corresponden a los tres elementos de la primera fila de la matriz de transición <span class="math notranslate nohighlight">\(P\)</span>, y se
+encuentran en la primera fila porque el estado inicial (el estado <span class="math notranslate nohighlight">\(A\)</span>) es el primero en el orden.</p>
+<p>El vector inicial de distribución de probabilidad de estado en este ejemplo corresponde a <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} = (1,0,0)\)</span>,
+el vector que asigna probabilidad 1 al primer estado (<span class="math notranslate nohighlight">\(A\)</span>) y 0 a los demás, ya que en este caso el estado inicial es conocido.</p>
+<p>Si calculamos el producto <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} \bullet P\)</span> obtenemos:</p>
+<p>$<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} \bullet P =  (1,0,0) \bullet \begin{bmatrix}
+1-p &amp; p &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0\\
+\end{bmatrix}
+= (1-p, p, 0) = \overrightarrow{\pi}^{n+1}\)</span></p>
+<p>O sea, el producto <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} \bullet P\)</span> selecciona las probabilidades de la primera fila de la
+matriz <span class="math notranslate nohighlight">\(P\)</span>, tal como obtuvimos al calcular la distribución de probabilidad de estado directamente a partir del
+diagrama de transición.</p>
+</div>
+</section>
+<section id="ejercicio-2">
+<h3>Ejercicio 2<a class="headerlink" href="#ejercicio-2" title="Link to this heading">#</a></h3>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejercicio 2</p>
+<p>Para la misma CMTD del ejemplo anterior, consideremos ahora que en el paso <span class="math notranslate nohighlight">\(n\)</span>, la cadena puede ocupar cualquier estado de
+<span class="math notranslate nohighlight">\(S\)</span> con igual probabilidad, y calculamos la distribución de probabilidad de estado en el paso <span class="math notranslate nohighlight">\(n + 1\)</span>. Observamos que la
+suposición de una distribución de probabilidad de estado uniforme es común cuando no se pueda hacer ninguna predicción
+sensata acerca del estado real del proceso estocástico. Para la distribución inicial <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} = \left( \frac{1}{3},\frac{1}{3},\frac{1}{3} \right)\)</span>,
+el cálculo a través del producto con la matriz <span class="math notranslate nohighlight">\(P\)</span> nos permite obtener:</p>
+<p><span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n} \bullet P = \left( \frac{1}{3},\frac{1}{3},\ \frac{1}{3} \right) \bullet \ \begin{bmatrix} 
+1 - p &amp; p &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0
+\end{bmatrix} = \left( \frac{1}{3}(1 - p) + \frac{1}{3} ,\frac{1}{3}p,\frac{1}{3} \right) = {\overrightarrow{\pi}}^{n + 1}\)</span></p>
+<p>Observamos que llevar a cabo este cálculo por inspección directa del diagrama de transición es mucho más laborioso que a través
+de su forma matricial, ya que se necesita sumar todas las probabilidades de todas las posibles evoluciones del modelo que llevan
+a cada estado. Por ejemplo, para el primer elemento <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}_{A}^{n + 1}\)</span> del vector, se suma la probabilidad
+de dos evoluciones:</p>
+<ul class="simple">
+<li><p>La probabilidad de que la cadena empiece en <span class="math notranslate nohighlight">\(A\)</span> (prob. <span class="math notranslate nohighlight">\(1/3\)</span>) y que no transite a <span class="math notranslate nohighlight">\(B\)</span> (prob. <span class="math notranslate nohighlight">\(1 - p\)</span>);</p></li>
+<li><p>La probabilidad de que empiece en <span class="math notranslate nohighlight">\(C\)</span> (prob. <span class="math notranslate nohighlight">\(1/3\)</span>) y transite a <span class="math notranslate nohighlight">\(A\)</span> (prob. <span class="math notranslate nohighlight">\(1\)</span>)</p></li>
+</ul>
+<p>Además, el cálculo a partir de la forma algébrica puede ser fácilmente automatizado en una herramienta computacional.</p>
+</div>
+<p>La predicción que podemos determinar con la fórmula
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n + 1} = {\overrightarrow{\pi}}^{n} \bullet P\)</span>
+es extensible en el tiempo. Si consideramos el vector
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{n + 1}\)</span> como una nueva distribución inicial de
+probabilidad de estado, podemos determinar la distribución de
+probabilidad de estado en la observación <span class="math notranslate nohighlight">\(n + 2\)</span> usando la misma
+fórmula:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{n + 2} = {\overrightarrow{\pi}}^{n + 1} \bullet P.\]</div>
+<p>Entonces podemos obtener:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{n + 2} = {\overrightarrow{\pi}}^{n + 1} \bullet P = \left( {\overrightarrow{\pi}}^{n} \bullet P \right) \bullet P = {\overrightarrow{\pi}}^{n} \bullet (P \bullet P) = {\overrightarrow{\pi}}^{n} \bullet P^{2}.\]</div>
+<p>Y en general:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{n + m} = {\overrightarrow{\pi}}^{n} \bullet P^{m}.\]</div>
+<p>A través de las potencias de la matriz <span class="math notranslate nohighlight">\(P\)</span> y de una distribución inicial
+es por ende posible determinar la distribución de probabilidad de estado
+para cualquier índice en el futuro. Las potencias de la matriz P son
+todavía matrices de probabilidad condicionales (y por lo tanto la suma
+de los elementos de cada una de sus filas es 1). <u>El
+elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz <span class="math notranslate nohighlight">\(P^{m}\)</span> de una
+CMTD es la probabilidad de que el proceso, después de <span class="math notranslate nohighlight">\(m\)</span>
+pasos de evolución, se encuentre en el estado <span class="math notranslate nohighlight">\(j\)</span> dado
+que su estado inicial era el estado <span class="math notranslate nohighlight">\(i\)</span> .</u></p>
+<p>La última expresión que se proporciona es la base para el análisis
+transitorio de las cadenas de Markov de tiempo discreto, ya que permite
+obtener la distribución de probabilidad de estado para cualquier índice
+en el futuro del proceso.</p>
+<p>Desde un punto de vista estrictamente matemático, es igual calcular la
+distribución de la probabilidad de estado en el tiempo <span class="math notranslate nohighlight">\(m\)</span>,
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{m}\)</span>, a partir de aquella inicial
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\)</span> con la fórmula
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{m} = \overrightarrow{\alpha} \bullet P^{m}\)</span>, o
+calcular toda la secuencia de distribuciones
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{1},\ {\overrightarrow{\pi}}^{2},\ \ldots,\ {\overrightarrow{\pi}}^{m}\)</span>
+multiplicando cada vez el vector por la matriz <span class="math notranslate nohighlight">\(P\)</span> en un proceso
+iterativo. Por el contrario, dependiendo del valor del <span class="math notranslate nohighlight">\(m\)</span> y de la
+cardinalidad del espacio <span class="math notranslate nohighlight">\(S\)</span>, una forma puede resultar mucho más
+eficiente que la otra en términos del tiempo de cálculo necesario.</p>
+</section>
+<section id="ejercicio-3">
+<h3>Ejercicio 3<a class="headerlink" href="#ejercicio-3" title="Link to this heading">#</a></h3>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejercicio 3</p>
+<p>En una línea de producción de gaseosas existen dos máquinas embotelladoras idénticas, cada una con capacidad para
+embotellar 2,000 botellas/hora de funcionamiento. Cada máquina puede sufrir problemas mecánicos, por lo cual cada
+hora con probabilidad de 0.1 se daña. Si la máquina se daña, podrá ser reparada solo en la noche, cuando la línea
+termina su actividad. La producción empieza a las 6AM, y termina a las 5PM. ¿Cuál es la probabilidad de que ambas
+máquinas paren en un día? ¿Cuál es el número promedio de botellas procesadas en un día en la línea?</p>
+<p>Para la primera pregunta dado que:</p>
+<ul class="simple">
+<li><p>Las máquinas son idénticas</p></li>
+<li><p>Las máquinas son independientes</p></li>
+<li><p>Cuando una máquina para no es reparada en el día</p></li>
+</ul>
+<p>Es posible estudiar el comportamiento de una de ellas, y la probabilidad de que ambas máquinas paren en un día será el cuadrado   |
+de la probabilidad de que una de las máquinas pare.</p>
+<p>Definimos la cadena de Markov en tiempo discreto
+<span class="math notranslate nohighlight">\(\{ X_{n},\ 0 \leq n \leq 11\}\)</span>, donde <span class="math notranslate nohighlight">\(X_{n}\)</span> es el estado de la
+máquina en la hora <span class="math notranslate nohighlight">\(n\)</span>-ésima. El espacio de estados es
+<span class="math notranslate nohighlight">\(S = \left\{ \text{OK},\ \text{DOWN} \right\},\ \)</span>considerando que
+cada máquina puede estar operativa (OK), o no (DOWN). La matriz de
+probabilidades de transición a un paso es la siguiente:</p>
+<p><span class="math notranslate nohighlight">\(P = \begin{bmatrix}
+1 - p &amp; p \\
+0 &amp; 1
+\end{bmatrix}\)</span></p>
+<p>La distribución inicial de probabilidad es
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha} = (1,0)\)</span>, ya que la máquina empieza el día
+funcionando. La probabilidad de que la máquina pare en el día es la
+probabilidad de que a la hora 5PM (la hora 11 desde el inicio de la
+operación a las 6AM) la máquina se encuentre en el estado <span class="math notranslate nohighlight">\(DOWN\)</span>, lo
+cual podemos calcular a través de la distribución:</p>
+<div class="math notranslate nohighlight">
+\[{\overrightarrow{\pi}}^{11} = \overrightarrow{\alpha}P^{11} = \left( {(1 - p)}^{11},\ 1 - (1 - p)^{11} \right),\]</div>
+<p>seleccionando la segunda componente del vector (la que corresponde al
+estado de interés, <span class="math notranslate nohighlight">\(DOWN\)</span>), se tiene que la probabilidad solicitada
+es de <span class="math notranslate nohighlight">\(1 - (1 - p)^{11}\sim 0.68\)</span>. Por ende, la probabilidad de que
+ambas máquinas paren es aproximadamente igual a <span class="math notranslate nohighlight">\(0.47\)</span>.</p>
+<p>Para calcular el número promedio de botellas procesadas en un día en
+la línea de producción, podemos multiplicar por 2 el número de
+botellas procesadas en promedio por cada máquina, lo cual será dado
+por el producto entre el número promedio de horas de funcionamiento
+de la máquina en un día y el número de botellas embotelladas por
+hora. El número promedio de horas de funcionamiento, que denotamos
+con <span class="math notranslate nohighlight">\(N\)</span>, se puede calcular a partir de la distribución de
+probabilidad de estado, de la siguiente manera:</p>
+<ul class="simple">
+<li><p>En la primera hora, la máquina trabaja 1 hora con probabilidad 1
+(la primera componente del vector <span class="math notranslate nohighlight">\(\overrightarrow{\alpha}\)</span>)</p></li>
+<li><p>En la segunda hora, la máquina trabaja 1 hora con una
+probabilidad <span class="math notranslate nohighlight">\(1 - p\)</span> (la primera componente del vector
+<span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{1}\)</span>)</p></li>
+<li><p>En la hora <span class="math notranslate nohighlight">\(i\)</span>-ésima, hasta <span class="math notranslate nohighlight">\(i = 12\)</span>, la máquina trabaja 1 hora
+con una probabilidad <span class="math notranslate nohighlight">\({(1 - p)}^{i - 1}\)</span> (la primera componente
+del vector <span class="math notranslate nohighlight">\({\overrightarrow{\pi}}^{i - 1}\)</span>)</p></li>
+</ul>
+<p>Para calcular <span class="math notranslate nohighlight">\(N\)</span> sumamos todas las contribuciones, obteniendo:
+<span class="math notranslate nohighlight">\(N = \sum_{j = 0
+}^{11}{(1 - p)}^{j} = \frac{1 - {(1 - p)}^{12}}{p}\sim 7.17\ horas,\)</span></p>
+<p>donde la última igualdad se obtiene de las propiedades de las series
+geométricas. Entonces, el número promedio de botellas producidas es
+<span class="math notranslate nohighlight">\(7.17 \times 2,000 = 14,340\)</span>, por cada máquina, y <span class="math notranslate nohighlight">\(28,680\)</span> en la
+línea, por día.</p>
+</div>
+</section>
+</section>
+<section id="analisis-transitorio-de-cadenas-de-markov-en-tiempo-continuo">
+<h2>Análisis transitorio de cadenas de Markov en tiempo continuo<a class="headerlink" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-continuo" title="Link to this heading">#</a></h2>
+<p>Consideramos una cadena de Markov en tiempo continuo (o CMTC)
+<span class="math notranslate nohighlight">\(\{ X(t),t \geq 0\}\)</span>, con espacio de estados <span class="math notranslate nohighlight">\(S\)</span> y matriz de tasas de
+transición (también llamada matriz generadora) <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p>A diferencia del caso discreto, la matriz <span class="math notranslate nohighlight">\(Q\)</span> no es una matriz de
+probabilidades condicionales, sino de tasas. Es posible calcular la
+probabilidad de alcanzar cualquier estado <span class="math notranslate nohighlight">\(j\)</span> en un intervalo de tiempo
+<span class="math notranslate nohighlight">\(\lbrack 0,t\rbrack\ \)</span>dado que el estado de la cadena de Markov al
+tiempo 0 es el estado <span class="math notranslate nohighlight">\(i\)</span>, es decir, calcular la probabilidad
+condicional</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X(t) = j \middle| X(0) = i \right\rbrack.\]</div>
+<p>Observamos que la probabilidad condicional arriba es una función
+continua del tiempo <span class="math notranslate nohighlight">\(t\)</span>, por ende, el análisis necesita utilizar las
+técnicas del análisis del continuo, es decir límites y derivadas.</p>
+<p>Las tasas de transición en la matriz <span class="math notranslate nohighlight">\(Q\)</span> corresponden a probabilidades
+cuando el intervalo de tiempo <span class="math notranslate nohighlight">\(\lbrack 0,t\rbrack\)</span> es muy pequeño. Es
+decir, si consideramos un tiempo <span class="math notranslate nohighlight">\(\delta\)</span> cercano a 0, tendremos que</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack X(\delta) = j \middle| X(0) = i \right\rbrack\sim\delta q_{ij}\]</div>
+<p>Esta propiedad, que no demostraremos, se obtiene por las distribuciones
+exponenciales de los tiempos de permanencia en los estados en las CMTC.
+Recuerde que, por la homogeneidad del proceso, el hecho que en la
+fórmula de arriba aparezcan valores específicos de los tiempos (en este
+caso 0 y <span class="math notranslate nohighlight">\(\delta\)</span>) no quiere decir que esta relación solo sea válida
+para esa ventana especifica de la evolución del proceso.</p>
+<p>De esta forma y análogamente al caso discreto, tendremos que, si
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}(0)\)</span> es el vector de la distribución de
+probabilidad de estado en el tiempo 0, la distribución de probabilidad
+de estado en el tiempo <span class="math notranslate nohighlight">\(\delta\)</span> será aproximadamente</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\pi}(\delta)\sim\overrightarrow{\pi}(0)Q\delta \Rightarrow \frac{\overrightarrow{\pi}(\delta)}{\delta}\sim\overrightarrow{\pi}(0)Q.\]</div>
+<p>Cuando se considere el límite cuando <span class="math notranslate nohighlight">\(\delta \rightarrow 0^{+}\)</span>, la
+aproximación arriba se vuelve exacta, como sigue:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{\delta \rightarrow 0^{+}}{\frac{\overrightarrow{\pi}(\delta)}{\delta} = \overrightarrow{\pi}(0)Q}.\]</div>
+<p>Ahora bien, observamos que el límite en la parte izquierda de la
+ecuación de arriba es exactamente la derivada de la función del tiempo
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}(\delta)\)</span>, por lo cual obtenemos que</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{d\delta}\overrightarrow{\pi}(\delta) = \overrightarrow{\pi}(0)Q\]</div>
+<p>Esta ecuación está representando un conjunto de ecuaciones diferenciales
+lineales. Existe una ecuación por cada estado de la cadena de Markov en
+tiempo continuo, cuya solución es una función del tiempo que describe la
+probabilidad condicional de que el proceso ocupe el estado dado que
+empezó como especifica <span class="math notranslate nohighlight">\(\overrightarrow{\pi}(0)\)</span>. Por la forma de la
+ecuación diferencial (nótese que la función incógnita
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}( \bullet )\)</span> aparece en ambos lados), la solución
+involucra funciones exponenciales. Más precisamente, es posible
+demostrar que</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\pi}(t) = \overrightarrow{\pi}(0)e^{Qt},\]</div>
+<p>donde <span class="math notranslate nohighlight">\(e^{Qt}\)</span> es el exponencial de la matriz <span class="math notranslate nohighlight">\(Qt\)</span>. El exponencial de
+una matriz A se define como</p>
+<div class="math notranslate nohighlight">
+\[e^{A} = \sum_{k = 0}^{\infty}\frac{A^{k}}{k!}.\]</div>
+<p>Entonces, el análisis transitorio de las cadenas de Markov de tiempo
+continuo se realiza a través del cálculo del exponencial de la matriz de
+tasas <span class="math notranslate nohighlight">\(Q\)</span>. Este cálculo es muy laborioso y solo puede ser llevado a cabo
+(excepto en casos muy particulares) por herramientas computacionales.</p>
+<section id="ejercicio-4">
+<h3>Ejercicio 4<a class="headerlink" href="#ejercicio-4" title="Link to this heading">#</a></h3>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejercicio 4</p>
+<p>Consideramos la CMTC <span class="math notranslate nohighlight">\(\{ X(t),\ n \geq 0\}\)</span> con espacio de estados <span class="math notranslate nohighlight">\(S = \{ 1,2,3\}\)</span>,
+cuya matriz de tasas de transición es la siguiente:</p>
+<p><span class="math notranslate nohighlight">\(Q = \begin{bmatrix}
+ -\alpha -\beta &amp; \alpha &amp; \beta \\
+0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0
+\end{bmatrix}\)</span></p>
+<p>El diagrama de transición de esta cadena se ilustra en la siguiente figura:
+<img alt="Diagrama Ejercicio 4" src="../../../_images/ATrans2.png" /></p>
+<p>Para esta cadena, es muy sencillo determinar la evolución en el
+transitorio. Supongamos que la distribución de probabilidad de estado
+inicial sea <span class="math notranslate nohighlight">\(\overrightarrow{\pi}(0) = (1,0,0)\)</span>, o sea el proceso
+empieza en el estado 1. Entonces se obtiene:</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\pi}(t) = (e^{- (\alpha + \beta)t},\frac{\alpha}{\alpha + \beta}\left( 1 - e^{- (\alpha + \beta)t} \right),\frac{
+\beta}{\alpha + \beta}\left( 1 - e^{- (\alpha + \beta)t} \right)\ )\]</div>
+<p>La primera componente es la probabilidad de que ninguna de las dos
+transiciones con distribución exponencial haya ocurrido hasta el
+tiempo <span class="math notranslate nohighlight">\(t\)</span>; la segunda es la probabilidad de que la primera
+transición que ocurra sea aquella de tasa <span class="math notranslate nohighlight">\(\alpha\)</span> y que la
+transición ocurra antes del tiempo <span class="math notranslate nohighlight">\(t\)</span>; la tercera es la probabilidad
+de que la primera transición que ocurra sea aquella de tasa <span class="math notranslate nohighlight">\(\beta\)</span> y
+que la transición ocurra antes del tiempo <span class="math notranslate nohighlight">\(t\)</span>. Notamos que aquí se
+utilizan las propiedades de las distribuciones exponenciales, en
+particular la distribución del mínimo entre exponenciales y la
+probabilidad de que una exponencial sea menor que otra. En este caso
+sencillo, el exponencial de la matriz <span class="math notranslate nohighlight">\(Qt\)</span> es la siguiente matriz:</p>
+<p><span class="math notranslate nohighlight">\(e^{Qt} = \begin{bmatrix}
+e^{- (\alpha + \beta)t} &amp; \frac{\alpha}{\alpha + \beta}\left( 1 - e^{- (\alpha + \beta)t} \right) &amp; \frac{\beta}{\alpha + \beta}\left( 1 - e^{- (\alpha + \beta)t} \right) \\ |
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}\)</span></p>
+<p>Observamos que la primera fila de la matriz <span class="math notranslate nohighlight">\(e^{Qt}\)</span> es igual al
+vector <span class="math notranslate nohighlight">\(\overrightarrow{\pi}(t)\)</span>, y las demás solo contienen un 1 en
+la diagonal. Si el vector inicial fuese
+<span class="math notranslate nohighlight">\(\overrightarrow{\pi}(0) = (0,1,0)\)</span>, o sea si el proceso empezara en
+el estado 2, el producto <span class="math notranslate nohighlight">\(\overrightarrow{\pi}(0)e^{Qt}\)</span> nos daría el
+vector <span class="math notranslate nohighlight">\(\overrightarrow{\pi}(t) = (0,1,0)\)</span>, es decir la distribución
+de probabilidad de estado no cambiaría.</p>
+</div>
+</section>
+<section id="ejercicio-5">
+<h3>Ejercicio 5<a class="headerlink" href="#ejercicio-5" title="Link to this heading">#</a></h3>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejercicio 5</p>
+<p>Consideramos ahora la CMTC <span class="math notranslate nohighlight">\(\{ X(t),\ t \geq 0\}\)</span> con espacio de estados <span class="math notranslate nohighlight">\(S = \{ 1,2,3\}\)</span>,
+cuya matriz de tasas transición es la siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Q = \ \begin{bmatrix}
+- \alpha - \beta &amp; \alpha &amp; \beta \\
+\gamma &amp; - \gamma &amp; 0 \\
+0 &amp; 0 &amp; 0
+\end{bmatrix}\end{split}\]</div>
+<p>El diagrama de transición de esta cadena se ilustra en la siguiente figura:</p>
+<p><img alt="Diagrama Ejercicio 5" src="../../../_images/ATrans3.png" /></p>
+<p>Por ende, el análisis no es sencillo como en el caso anterior, y
+resulta practico utilizar algún software para dicho calculo</p>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cadenas de Markov</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Clasificación de estados</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-discreto">Análisis transitorio de cadenas de Markov en tiempo discreto</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1">Ejercicio 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2">Ejercicio 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3">Ejercicio 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-transitorio-de-cadenas-de-markov-en-tiempo-continuo">Análisis transitorio de cadenas de Markov en tiempo continuo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4">Ejercicio 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5">Ejercicio 5</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Procesos de Decisión Markovianos &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter18';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Procesos de decisión en el tiempo" href="chapter15.html" />
+    <link rel="prev" title="Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)" href="../Modulo4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter18.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Procesos de Decisión Markovianos</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdp-homogeneo-de-epocas-infinitas">MDP homogéneo de épocas infinitas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solucion-mdp-de-epocas-infinitas">Solución MDP de épocas infinitas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-valor"><strong>Iteración de Valor</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-politica"><strong>Iteración de política</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-de-solucion-de-mdps-basado-en-programacion-lineal"><strong>Método de solución de MDPs basado en Programación Lineal</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valor-esperado-de-la-politica"><strong>Valor esperado de la política</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="procesos-de-decision-markovianos">
+<h1>Procesos de Decisión Markovianos<a class="headerlink" href="#procesos-de-decision-markovianos" title="Link to this heading">#</a></h1>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Consideremos un problema de decisión aleatorio en el tiempo con épocas
+<span class="math notranslate nohighlight">\(E = \{ 1,2,3,\ldots n\}\)</span>, <span class="math notranslate nohighlight">\(S_{t}\)</span> el espacio de estados, <span class="math notranslate nohighlight">\(A_{t}(i)\)</span> el
+espacio de decisiones para el estado <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(c_{t}(i,a)\)</span> el costo
+inmediato en el estado <span class="math notranslate nohighlight">\(i\)</span> tomando la decisión <span class="math notranslate nohighlight">\(a\)</span> y <span class="math notranslate nohighlight">\(p_{t}(j|i,a)\)</span> la
+probabilidad de estar en el estado <span class="math notranslate nohighlight">\(j\)</span> en el siguiente periodo dado que
+en el periodo actual se está en <span class="math notranslate nohighlight">\(i\)</span> y se toma la decisión <span class="math notranslate nohighlight">\(a\)</span>. Este
+problema se conoce como un proceso de decisión markoviano finito. Este
+tipo de problemas se resuelven utilizando programación dinámica
+estocástica (SDP). Sin embargo, en ciertos casos los componentes del
+problema de decisión no dependen de la época, <strong>i.e.</strong> <span class="math notranslate nohighlight">\(S,\)</span> <span class="math notranslate nohighlight">\(A(i)\)</span>,
+<span class="math notranslate nohighlight">\(c(i,a)\)</span> y <span class="math notranslate nohighlight">\(p(j|i,a)\)</span>. En este caso, se cumple la propiedad de
+homogeneidad en el tiempo. Por tanto, se denomina Proceso de Decisión
+markoviano homogéneo.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Se tiene un SDP donde se desea encontrar la política que
+minimice costos.</p>
+<div class="math notranslate nohighlight">
+\[\text{Épocas} = \{ 1,2,3 \}\]</div>
+<div class="math notranslate nohighlight">
+\[\left\{ X_{n},n \geq 0 \right\},\ S = \{ a,b\}\]</div>
+<div class="math notranslate nohighlight">
+\[A(i) = \left\{ d_{1},d_{2} \right\}\ \ \ \ \ \forall\ i \in S\]</div>
+<p>Retornos inmediatos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C = \begin{matrix}
+ &amp; \begin{matrix}
+d_{1} &amp; d_{2}
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+3 &amp; 1 \\
+2 &amp; 3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Probabilidades de transición</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P}_{d_{1}} = \begin{matrix}
+ &amp; \begin{matrix}
+a &amp; b
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+1/2 &amp; 1/2 \\
+1/3 &amp; 2/3
+\end{bmatrix}
+\end{matrix}\mathbb{\ \ \ \ \ \ \ P}_{d_{2}} = \begin{matrix}
+ &amp; \begin{matrix}
+a &amp; b
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+1/4 &amp; 3/4 \\
+2/3 &amp; 1/3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Observamos que la solución se realiza de la siguiente forma:</p>
+<p><span class="math notranslate nohighlight">\(f_{3}(a) = min\left\{ \begin{matrix}
+d_{1}:3\ \ \  \\
+d_{2}:1*
+\end{matrix} \right.\ \)</span> <span class="math notranslate nohighlight">\(f_{3}(b) = min\left\{ \begin{matrix}
+d_{1}:2* \\
+d_{2}:3\ \ \ 
+\end{matrix} \right.\ \)</span></p>
+<p><span class="math notranslate nohighlight">\(f_{2}(a) = min\left\{ \begin{matrix}
+d_{1}:3 + {\frac{1}{2}f}_{3}(a) + \frac{1}{2}f_{3}(b) = 4.5\ \ \  \\
+d_{2}:1 + \frac{1}{4}{\ f}_{3}(a) + \frac{3}{4}f_{3}(b) = 2.75*
+\end{matrix} \right.\ \)</span> <span class="math notranslate nohighlight">\(f_{2}(b) = min\left\{ \begin{matrix}
+d_{1}:2 + {\frac{1}{3}f}_{3}(a) + \frac{2}{3}f_{3}(b) = 3.66* \\
+d_{2}:3 + {\frac{2}{3}f}_{3}(a) + \frac{1}{3}f_{3}(b) = 4.33
+\end{matrix} \right.\ \)</span></p>
+<p><span class="math notranslate nohighlight">\(f_{1}(a) = min\left\{ \begin{matrix}
+d_{1}:3 + {\frac{1}{2}f}_{2}(a) + \frac{1}{2}f_{2}(b) = 6.205\ \ \  \\
+d_{2}:1 + \frac{1}{4}{\ f}_{2}(a) + \frac{3}{4}f_{2}(b) = 4.43*
+\end{matrix} \right.\ \)</span> <span class="math notranslate nohighlight">\(f_{1}(b) = min\left\{ \begin{matrix}
+d_{1}:2 + {\frac{1}{3}f}_{3}(a) + \frac{2}{3}f_{3}(b) = 5.36* \\
+d_{2}:3 + {\frac{2}{3}f}_{3}(a) + \frac{1}{3}f_{3}(b) = 6.05
+\end{matrix} \right.\ \)</span></p>
+<p>Entonces, sin importar la época, para el estado <span class="math notranslate nohighlight">\(a\)</span>, se toma la decisión
+<span class="math notranslate nohighlight">\(d_{2}\)</span> y para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{1}.\)</span></p>
+</div>
+<p>En los procesos de decisión markovianos, es interesante observar que
+podemos tomar decisiones cuando el número de épocas es infinito, gracias
+a la propiedad de homogeneidad.</p>
+</section>
+<section id="mdp-homogeneo-de-epocas-infinitas">
+<h2>MDP homogéneo de épocas infinitas<a class="headerlink" href="#mdp-homogeneo-de-epocas-infinitas" title="Link to this heading">#</a></h2>
+<p>Un proceso de decisión markoviano homogéneo de <strong>épocas infinitas</strong>
+cumple la propiedad markoviana (donde todo SDP la cumple), y la
+propiedad de homogeneidad en el tiempo. Dado esto, la ecuación de
+Bellman se denota como <span class="math notranslate nohighlight">\(V(i)\)</span> (valor de estar en el estado <span class="math notranslate nohighlight">\(i\)</span>) en vez
+de <span class="math notranslate nohighlight">\(f_{t}(i)\)</span>, dado que ahora la decisión óptima no se verá afectada por
+el período de decisión. La ecuación de Bellman se representa como:</p>
+<div class="math notranslate nohighlight">
+\[V_{i} = \underset{a \in A(i)}{\text{min/max}}{\ \left\{ c(i,a) + \right.\ \mathbb{E}\left( V_{j} \right)}\}\ \forall\ i \in S\]</div>
+<p>Dada la anterior expresión, ocurre un problema esencial, y es que para
+el cálculo de un <span class="math notranslate nohighlight">\(V(i)\)</span>, éste puede verse afectado por sí mismo. De la
+ecuación se puede observar que, si se acumulan épocas infinitas,
+entonces <span class="math notranslate nohighlight">\(V(i)\)</span> toma un valor infinito. Por tal motivo, se agrega a la
+ecuación de Bellman un término conocido como <span class="math notranslate nohighlight">\(\beta\)</span> o tasa de
+descuento, que determina el valor en el tiempo de las decisiones. Por lo
+que <span class="math notranslate nohighlight">\(\beta\)</span> debe tomar un valor mayor a <span class="math notranslate nohighlight">\(0\)</span> y menor a<span class="math notranslate nohighlight">\(\ 1\)</span>. Dado esto,
+se tiene que:</p>
+<div class="math notranslate nohighlight">
+\[V(i) = \underset{a \in A(i)}{\text{min/max}}{\ \left\{ c(i,a) + \right.\ \mathbf{\beta}\mathbb{E}\lbrack V(j)\rbrack}\}\]</div>
+<p>Entre más cercano el valor de <span class="math notranslate nohighlight">\(\beta\)</span> sea a<span class="math notranslate nohighlight">\(\ 1\)</span>, se le da más
+importancia al futuro y entre más cercano sea a<span class="math notranslate nohighlight">\(\ 0\)</span>, se le da más
+importancia al presente. Finalmente, al ser <span class="math notranslate nohighlight">\(\beta\)</span> un valor menor a 1,
+bajo una tendencia límite al infinito, el valor futuro tiende a<span class="math notranslate nohighlight">\(\ 0\)</span>,
+dado que la expresión queda como
+<span class="math notranslate nohighlight">\(\beta^{\# épocas} = \beta^{\infty} = 0\)</span>.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Se tiene un MDP donde se desea encontrar la política que
+minimice costos.</p>
+<div class="math notranslate nohighlight">
+\[\text{Épocas} = \{ 1,2,3,\ldots,\infty\}\]</div>
+<div class="math notranslate nohighlight">
+\[\left\{ X_{n},n \geq 0 \right\},\ S = \{ a,b\}\]</div>
+<div class="math notranslate nohighlight">
+\[A(i) = \left\{ d_{1},d_{2} \right\}\ \ \ \ \ \forall\ i \in S\]</div>
+<div class="math notranslate nohighlight">
+\[\beta = 0.5\]</div>
+<p>Costos inmediatos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C = \begin{matrix}
+ &amp; \begin{matrix}
+d_{1} &amp; d_{2}
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+3 &amp; 1 \\
+2 &amp; 3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Probabilidades de transición</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P}_{d_{1}} = \begin{matrix}
+ &amp; \begin{matrix}
+a &amp; b
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+1/2 &amp; 1/2 \\
+1/3 &amp; 2/3
+\end{bmatrix}
+\end{matrix}\mathbb{\ \ \ \ \ \ \ P}_{d_{2}} = \begin{matrix}
+ &amp; \begin{matrix}
+a &amp; b
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+1/4 &amp; 3/4 \\
+2/3 &amp; 1/3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>Ecuaciones de Bellman</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ V(a) = min\left\{ \begin{matrix}
+d_{1}:3 + 0.5\left( \frac{1}{2}V(a) + \frac{1}{2}V(b) \right)\ \ \  \\
+d_{2}:1 + 0.5\left( \frac{1}{4}V(a) + \frac{3}{4}V(b) \right)
+\end{matrix} \right.\ \ \ \ V(b) = min\left\{ \begin{matrix}
+d_{1}:2 + 0.5\left( \frac{1}{3}V(a) + \frac{2}{3}V(b) \right) \\
+d_{2}:3 + 0.5\left( \frac{2}{3}V(a) + \frac{1}{3}V(b) \right)
+\end{matrix} \right.\ \end{split}\]</div>
+</div>
+</section>
+<section id="solucion-mdp-de-epocas-infinitas">
+<h2>Solución MDP de épocas infinitas<a class="headerlink" href="#solucion-mdp-de-epocas-infinitas" title="Link to this heading">#</a></h2>
+<p>Con base en la definición de MDPs infinitos, podemos observar que las
+matrices de probabilidades de transición están cumpliendo dos
+propiedades: homogeneidad en el tiempo y markoviana. Una matriz
+<span class="math notranslate nohighlight">\(\mathbb{P}_{a}\)</span> donde <span class="math notranslate nohighlight">\(a \in A(i)\ \forall\ i \in S\)</span> representa una
+CMTD que puede ser o no ergódica.</p>
+<p>Si deseamos resolver un MDP homogéneo infinito, es posible observar el
+sistema en estado estable. Conociendo que en cada época de decisión se
+plantea una cadena de Markov, podemos utilizar las técnicas para
+resolver estado estable de una CMTD para resolver también el MDP
+homogéneo infinito.</p>
+<section id="iteracion-de-valor">
+<h3><strong>Iteración de Valor</strong><a class="headerlink" href="#iteracion-de-valor" title="Link to this heading">#</a></h3>
+<p>En una cadena de Markov, se puede resolver estado estable conociendo que
+cuando la matriz de transiciones <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, se eleva a un número muy
+grande puede llegar a estabilidad de acuerdo con sus características.
+Este mismo proceso se aplica en el MDP, en donde <span class="math notranslate nohighlight">\(\mathbb{P}^{1}\)</span>
+representa evaluar el proceso como un MDP homogéneo <strong>finito</strong>, es decir
+un SDP con 1 época; <span class="math notranslate nohighlight">\(\mathbb{P}^{2}\)</span> representa evaluar el proceso como
+un SDP de 2 épocas y <span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span> como un SDP de <span class="math notranslate nohighlight">\(n\)</span> épocas.</p>
+<p>Se encuentra estabilidad cuando la decisión óptima es igual para un
+estado, sin importar la época de decisión. Puede ocurrir que las
+decisiones varíen en las primeras épocas para un mismo estado; sin
+embargo, desde una época, el proceso llega a estabilidad y la regla de
+decisión para un mismo estado no varía de acuerdo con la época de
+decisión. Este proceso puede llegar a ser largo, dado que no se sabe con
+exactitud cuándo se puede estabilizar el MDP.</p>
+</section>
+<section id="iteracion-de-politica">
+<h3><strong>Iteración de política</strong><a class="headerlink" href="#iteracion-de-politica" title="Link to this heading">#</a></h3>
+<p>Tal y como existe un método para resolver MDP homogéneo e infinito
+siguiendo la lógica de <span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span>, también existe uno con
+ecuaciones de balance. Se supone que cada posible política que puede
+ocurrir tiene una CMTD detrás de la política. El método de Iteración por
+política evalúa el resultado de todas las <strong>posibles</strong> políticas y
+encuentra la política que optimiza el proceso de decisión. El ejemplo 3
+ilustra el método.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 3</p>
+<p><strong>Continuamos con el ejemplo 2.</strong></p>
+<p>Ecuaciones de Bellman</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ V(a) = min\left\{ \begin{matrix}
+d_{1}:3 + 0.5\left( \frac{1}{2}V(a) + \frac{1}{2}V(b) \right)\ \ \  \\
+d_{2}:1 + 0.5\left( \frac{1}{4}V(a) + \frac{3}{4}V(b) \right)
+\end{matrix} \right.\ \ \ \ V(b) = min\left\{ \begin{matrix}
+d_{1}:2 + 0.5\left( \frac{1}{3}V(a) + \frac{2}{3}V(b) \right) \\
+d_{2}:3 + 0.5\left( \frac{2}{3}V(a) + \frac{1}{3}V(b) \right)
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Listamos todas las <strong>posibles</strong> políticas de decisión:</p>
+<p><u>Política 1:</u> Para el estado <span class="math notranslate nohighlight">\(a\)</span> tomar la decisión <span class="math notranslate nohighlight">\(d_{1}\)</span> y
+para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{1}\)</span></p>
+<p><u>Política 2:</u> Para el estado <span class="math notranslate nohighlight">\(a\)</span> tomar la decisión <span class="math notranslate nohighlight">\(d_{1}\)</span> y
+para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{2}\)</span></p>
+<p><u>Política 3:</u> Para el estado <span class="math notranslate nohighlight">\(a\)</span> tomar la decisión <span class="math notranslate nohighlight">\(d_{2}\)</span> y
+para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{1}\)</span></p>
+<p><u>Política 4:</u> Para el estado <span class="math notranslate nohighlight">\(a\)</span> tomar la decisión <span class="math notranslate nohighlight">\(d_{2}\)</span> y
+para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{2}\)</span></p>
+<p>Cada política tiene asociada un set de ecuaciones que se puede resolver.
+Por ejemplo, la política 1 tiene asociadas las ecuaciones:</p>
+<div class="math notranslate nohighlight">
+\[V(a) = 3 + 0.5\left( \frac{1}{2}V(a) + \frac{1}{2}V(b) \right)\]</div>
+<div class="math notranslate nohighlight">
+\[V(b) = 2 + 0.5\left( \frac{1}{3}V(a) + \frac{2}{3}V(b) \right)\]</div>
+<p>Y al tener 2 incógnitas, se puede resolver y da como resultado:
+<span class="math notranslate nohighlight">\(V(a) = 5.45\)</span> y <span class="math notranslate nohighlight">\(V(b) = 4.36\)</span></p>
+<p>Si resolvemos para cada política, obtenemos que:</p>
+<p><u>Política 1:</u> <span class="math notranslate nohighlight">\(V(a) = 5.45\)</span> y <span class="math notranslate nohighlight">\(V(b) = 4.36\)</span></p>
+<p><u>Política 2:</u> <span class="math notranslate nohighlight">\(V(a) = 6\)</span> y <span class="math notranslate nohighlight">\(V(b) = 6\)</span></p>
+<p><u>Política 3:</u> <span class="math notranslate nohighlight">\(V(a) = 2.72\)</span> y <span class="math notranslate nohighlight">\(V(b) = 3.68\)</span></p>
+<p><u>Política 4:</u> <span class="math notranslate nohighlight">\(V(a) = 3.24\)</span> y <span class="math notranslate nohighlight">\(V(b) = 4.9\)</span></p>
+<p>La política que minimiza el resultado será la cual que
+<span class="math notranslate nohighlight">\(\sum_{i \in S}^{}{V(i)}\)</span> sea la menor. En este caso es la política 3.</p>
+</div>
+</section>
+<section id="metodo-de-solucion-de-mdps-basado-en-programacion-lineal">
+<h3><strong>Método de solución de MDPs basado en Programación Lineal</strong><a class="headerlink" href="#metodo-de-solucion-de-mdps-basado-en-programacion-lineal" title="Link to this heading">#</a></h3>
+<p>Supongamos un problema de decisión en el tiempo (MDP) donde se busca
+optimizar una función objetivo, en este caso con sentido de
+maximización. Las ecuaciones de Bellman son entonces:</p>
+<div class="math notranslate nohighlight">
+\[V(i) = \max_{a \in A(i)}\left\{ c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)} \right\}\ \forall\ i \in S\]</div>
+<p>Para cada estado, su valor óptimo <span class="math notranslate nohighlight">\(V^{*}(i)\)</span> cumple con la siguiente
+condición:</p>
+<div class="math notranslate nohighlight">
+\[V^{*}(i) \geq \max_{a \in A(i)}\left\{ c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)} \right\}\ \forall\ i \in S\]</div>
+<p>Si la anterior expresión se separa por acción se obtiene:</p>
+<div class="math notranslate nohighlight">
+\[V^{*}(i) \geq c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)}\ \forall\ a \in A(i),\ i \in S\]</div>
+<p>Entonces, para resolver el problema de decisión del MDP se utiliza
+programación lineal</p>
+<div class="math notranslate nohighlight">
+\[P = \min{\sum_{i \in S}^{}{V(i)}}\]</div>
+<p>s.a,</p>
+<div class="math notranslate nohighlight">
+\[V(i) \geq c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)}\ \forall\ a \in A(i),\ i \in S\]</div>
+<div class="math notranslate nohighlight">
+\[V(i) \geq 0\ \forall\ i \in S\ \]</div>
+<p>Observemos que, si el problema de decisión busca maximizar, el programa
+lineal tendrá sentido de minimización. Así mismo, si el problema de
+decisión busca minimizar, el programa lineal tendrá sentido de
+maximización. No obstante, con el programa lineal solo se encuentra la
+solución óptima <span class="math notranslate nohighlight">\(V^{*}(i)\)</span> de cada estado. Ahora, ¿cómo se obtiene cuál
+fue la acción que optimiza <span class="math notranslate nohighlight">\(V(i)\)</span> en cada estado (política óptima
+<span class="math notranslate nohighlight">\(\pi^{*}\)</span>)?</p>
+<p>Para responder a esta pregunta, se analiza el valor de las variables
+resultantes del programa dual asociado donde
+<span class="math notranslate nohighlight">\(\mu(i,a)\ \forall\ a \in A(i),\ \ i \in S\)</span> son las variables duales de
+cada restricción del problema primal.</p>
+<p>A continuación, se presenta el programa dual del MDP en mención:</p>
+<div class="math notranslate nohighlight">
+\[D = \max{\sum_{i \in S}^{}{\sum_{a \in A(i)}^{}{\mu(i,a) \cdot c(i,a)}}}\]</div>
+<p>s.a,</p>
+<div class="math notranslate nohighlight">
+\[\sum_{a \in A(j)}^{}{\mu(j,a)}\  = \beta \cdot \sum_{i \in S}^{}{\sum_{a \in A(i)}^{}{p\left( j \middle| i,a \right) \cdot \mu(i,a)}}\ \forall\ \ j \in S\]</div>
+<div class="math notranslate nohighlight">
+\[\mu(i,a) \geq 0\ \forall\ a\  \in A(i),\ i\  \in \ S\]</div>
+<p>Por dualidad fuerte se tiene que <span class="math notranslate nohighlight">\(P^{*} = D^{*}\)</span>. De esta manera, para
+saber las acciones correspondientes de política óptima para cada estado,
+se buscan las restricciones activas del problema primal <span class="math notranslate nohighlight">\(P\)</span> (donde las
+variables duales toman valor).</p>
+</section>
+<section id="valor-esperado-de-la-politica">
+<h3><strong>Valor esperado de la política</strong><a class="headerlink" href="#valor-esperado-de-la-politica" title="Link to this heading">#</a></h3>
+<p>Ahora bien, <span class="math notranslate nohighlight">\(V(i)\)</span> representa los retornos esperados en el estado <span class="math notranslate nohighlight">\(i\)</span>.
+Si deseamos calcular los retornos de la política, tenemos que calcular
+la probabilidad de estar en cada estado <span class="math notranslate nohighlight">\(i\)</span> del sistema, y ponderarlo
+por el valor de la política en ese estado <span class="math notranslate nohighlight">\(V(i)\)</span>. Para calcular el valor
+esperado de una política, se debe estimar la probabilidad de estar en el
+estado <span class="math notranslate nohighlight">\(i\ \)</span>en estado estable (únicamente válido para cadenas
+ergódicas). Por lo que el valor esperado de la política se puede
+expresar como:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i \in S}^{}{\pi_{i} \cdot V(i)}\]</div>
+<p>Entonces debemos calcular las <strong>probabilidades en estado estable</strong> <strong>de
+la política</strong>. Sabemos entonces que cualquier política de un MDP
+homogéneo e infinito se representa como una CMTD. Esta cadena representa
+las transiciones que genera la política encontrada. Dado esto, se pueden
+encontrar estas probabilidades y encontrar el valor esperado de la
+política.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 4</p>
+<p><strong>Continuando con el ejemplo 2.</strong></p>
+<p>Ecuaciones de Bellman</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ V(a) = min\left\{ \begin{matrix}
+d_{1}:3 + 0.5\left( \frac{1}{2}V(a) + \frac{1}{2}V(b) \right)\ \ \  \\
+d_{2}:1 + 0.5\left( \frac{1}{4}V(a) + \frac{3}{4}V(b) \right)
+\end{matrix} \right.\ \ \ \ V(b) = min\left\{ \begin{matrix}
+d_{1}:2 + 0.5\left( \frac{1}{3}V(a) + \frac{2}{3}V(b) \right) \\
+d_{2}:3 + 0.5\left( \frac{2}{3}V(a) + \frac{1}{3}V(b) \right)
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Y la política óptima es para el estado <span class="math notranslate nohighlight">\(a\)</span> tomar la decisión <span class="math notranslate nohighlight">\(d_{2}\)</span> y
+para el estado <span class="math notranslate nohighlight">\(b\)</span> la decisión <span class="math notranslate nohighlight">\(d_{1}\)</span> con valores <span class="math notranslate nohighlight">\(V(a) = 2.72\)</span> y
+<span class="math notranslate nohighlight">\(V(b) = 3.68\)</span>.</p>
+<p>Entonces se puede crear una CMTD con una matriz de transición con las
+probabilidades dadas de la política:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P}^{*} = \begin{matrix}
+ &amp; \begin{matrix}
+a &amp; b
+\end{matrix} \\
+\begin{matrix}
+a \\
+b
+\end{matrix} &amp; \begin{bmatrix}
+1/4 &amp; 3/4 \\
+1/3 &amp; 2/3
+\end{bmatrix}
+\end{matrix}\end{split}\]</div>
+<p>A esta CMTD se puede calcular estado estable y da como resultado:
+<span class="math notranslate nohighlight">\(\pi_{a} = 0.69\)</span> y <span class="math notranslate nohighlight">\(\pi_{b} = 0.31\)</span>. Entonces el valor esperado de la
+política es:</p>
+<div class="math notranslate nohighlight">
+\[Valor = \pi_{a}V(a) + \pi_{b}V(b) = 3.02\]</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Modulo4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter15.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Procesos de decisión en el tiempo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdp-homogeneo-de-epocas-infinitas">MDP homogéneo de épocas infinitas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solucion-mdp-de-epocas-infinitas">Solución MDP de épocas infinitas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-valor"><strong>Iteración de Valor</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-politica"><strong>Iteración de política</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-de-solucion-de-mdps-basado-en-programacion-lineal"><strong>Método de solución de MDPs basado en Programación Lineal</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valor-esperado-de-la-politica"><strong>Valor esperado de la política</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

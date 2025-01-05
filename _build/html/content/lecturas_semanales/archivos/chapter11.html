@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Procesos de nacimiento y muerte &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter11';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Redes de Jackson" href="chapter13.html" />
+    <link rel="prev" title="Ley de Little" href="chapter10.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter11.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Procesos de nacimiento y muerte</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-general-de-procesos-de-nacimiento-y-muerte">Forma general de procesos de nacimiento y muerte</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos">Análisis de procesos de nacimiento y muerte ergódicos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-finitos">Análisis de procesos de nacimiento y muerte ergódicos finitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-con-espacio-de-estados-infinito">Análisis de procesos de nacimiento y muerte ergódicos con espacio de estados infinito</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="procesos-de-nacimiento-y-muerte">
+<h1>Procesos de nacimiento y muerte<a class="headerlink" href="#procesos-de-nacimiento-y-muerte" title="Link to this heading">#</a></h1>
+<p>En este capítulo se introduce una clase de procesos estocásticos de
+tiempo continúo conocida como Procesos de nacimiento y muerte, muy
+comúnmente utilizados en el modelado de sistemas de cierta naturaleza.
+Por su estructura especial, es posible realizar el análisis de la
+distribución de probabilidades de estado estacionario de los procesos de
+nacimiento y muerte de forma muy sencilla. A continuación, se introducen
+primero los aspectos de diferentes tipos de sistemas que son
+susceptibles a ser modelados con procesos de nacimiento y muerte,
+después se proporciona una caracterización de esta clase de procesos, y
+finalmente se realiza el análisis en estado estacionario de la
+distribución de probabilidad correspondiente.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>A menudo, el estudio de un sistema pasa a través del análisis de la
+dinámica de una población de entidades. Por ejemplo, cuando es de
+interés estudiar el número de clientes en un banco, la cantidad de
+individuos de una especie de animal en su hábitat, o el número de
+equipos en reparación en un sistema de producción, tenemos que
+caracterizar los eventos que resultan en el aumento de la población (p.
+ej., llegadas, reproducciones o fallas), así como aquellos que
+determinan una disminución de la población (p. ej. salidas,
+fallecimientos o reparaciones). A los eventos de la primera categoría se
+les refiere como <em>nacimientos</em>, y a aquellos de la segunda como
+<em>muertes</em>. Es así como un proceso estocástico que considere eventos de
+nacimiento y muerte se presta para modelar de manera adecuada la
+dinámica de una población de entidades.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Consideremos la población de ballenas jorobadas del
+pacifico colombiano. Los individuos de esta especie son nómadas, y
+recorren largas distancias desdé los fríos océanos de la Antártida hacia
+las aguas al oeste de Colombia, donde se quedan por cierto periodo antes
+de empezar la vuelta al sur del planeta. Si quisiéramos definir un
+modelo que representara la dinámica de la población de ballenas en las
+aguas colombianas, sería pertinente considerar como nacimientos, es
+decir como eventos que incrementan el número de ballenas, las llegadas
+de individuos al pacifico colombiano, y como muertes las salidas de los
+individuos hacia la Antártida. Un posible modelo en tiempo continuo
+sería por ejemplo la Cadena de Markov en tiempo continuo
+<span class="math notranslate nohighlight">\(\left\{ X(t),t \geq 0 \right\}\)</span>, donde la variable de estado es:</p>
+<div class="math notranslate nohighlight">
+\[X(t) = \ número\ de\ ballenas\ en\ el\ pacifico\ colombiano\ en\ el\ tiempo\ t.\]</div>
+<p>Podemos suponer que no existe un límite superior para el número de
+ballenas, por lo cual el espacio de estados del proceso estocástico será
+<span class="math notranslate nohighlight">\(S_{X} = \{ 0,1,2,\ldots,\ \infty\}\)</span>. Supongamos ahora que las ballenas
+llegan de acuerdo con un proceso de Poisson de parámetro <span class="math notranslate nohighlight">\(\lambda\)</span>, y se
+quedan en promedio un tiempo que sigue una variable aleatoria
+exponencial de tasa <span class="math notranslate nohighlight">\(\mu\)</span>. Así, la tasa de transición <span class="math notranslate nohighlight">\(q_{ij}\)</span> entre el
+estado <span class="math notranslate nohighlight">\(i\)</span> y el estado <span class="math notranslate nohighlight">\(j\)</span>, tal que <span class="math notranslate nohighlight">\(i,j \in S_{X}\)</span>, <span class="math notranslate nohighlight">\(i \neq j\)</span> se
+define como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}q_{ij} = \left\{ \begin{matrix}
+\lambda &amp; j = i + 1 \\
+i \cdot \mu &amp; j = i - 1,\ i &gt; 0 \\
+0 &amp; \text{d.l.c.}
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Para este modelo, el diagrama de tasas transición está representado en
+la Figura 1:</p>
+<p><img alt="Figura 1" src="../../../_images/nym1.png" /></p>
+</div>
+</section>
+<section id="forma-general-de-procesos-de-nacimiento-y-muerte">
+<h2>Forma general de procesos de nacimiento y muerte<a class="headerlink" href="#forma-general-de-procesos-de-nacimiento-y-muerte" title="Link to this heading">#</a></h2>
+<p>El ejemplo que se presenta en la sección anterior es un caso particular
+de un proceso de nacimiento y muerte con espacio de estados infinito, y
+muestra algunas propiedades interesantes de esta clase de procesos. En
+particular, en la Figura 1 es posible observar la estructura
+particularmente simple de las transiciones, que pueden darse solo entre
+estados adyacentes, de tal forma que el diagrama de tasas de transición
+se puede ordenar como una cadena lineal de estados.</p>
+<p>En general, un proceso de nacimiento y muerte es una Cadena de Markov en
+tiempo continuo, con espacio de estados <span class="math notranslate nohighlight">\(S\mathbb{\subseteq N}\)</span>, tal que
+la tasa de transición entre estados es no nula solo para las parejas de
+estados <span class="math notranslate nohighlight">\(i,j \in S\)</span> tales que <span class="math notranslate nohighlight">\(|i - j| = 1\)</span>. Usualmente, se nombran los
+estados de forma incremental a partir de cero, y se denota con
+<span class="math notranslate nohighlight">\(\lambda_{i}\)</span> la tasa de nacimiento del estado <span class="math notranslate nohighlight">\(i - 1\)</span> y con <span class="math notranslate nohighlight">\(\mu_{i}\)</span>
+la tasa de muerte del estado <span class="math notranslate nohighlight">\(i\)</span>. Según esta convención, el diagrama de
+tasas transición adquiere una forma muy sencilla que se muestra en la
+Figura 2.</p>
+<p><img alt="Figura 2" src="../../../_images/nym2.png" /></p>
+<p>Nótese que no necesariamente tiene que ser <span class="math notranslate nohighlight">\(\lambda_{i} &gt; 0\)</span>, ni
+<span class="math notranslate nohighlight">\(\mu_{i} &gt; 0\)</span> para todo <span class="math notranslate nohighlight">\(i \in S\)</span>. La estructura que se observa en el
+diagrama de tasas de transición se refleja en una estructura igualmente
+simple en la matriz de tasas de transición <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> del proceso,
+como se muestra en la Figura 3, donde se omite el valor de los elementos
+diagonales para una visualización más clara. La matriz en la Figura 3
+posee una estructura tridiagonal, es decir, presenta elementos no nulos
+solamente en la diagonal principal (elementos <span class="math notranslate nohighlight">\(q_{ii}\)</span>), en la primera
+diagonal superior (elementos <span class="math notranslate nohighlight">\(q_{i,i + 1}\)</span>) y en la primera diagonal
+inferior (elementos <span class="math notranslate nohighlight">\(q_{i,i - 1}\)</span>).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{Q =}\begin{bmatrix}
+ &amp; \lambda_{1} &amp; 0 &amp; 0 &amp; \cdots \\
+\mu_{1} &amp; &amp; \lambda_{2} &amp; 0 &amp; \cdots \\
+0 &amp; \mu_{2} &amp; &amp; \lambda_{3} &amp; \cdots \\
+0 &amp; 0 &amp; \mu_{3} &amp; &amp; \cdots \\
+ \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots 
+\end{bmatrix}\end{split}\]</div>
+<p><em>Figura 3: Estructura tridiagonal de la matriz Q de tasas de transición
+para procesos de nacimiento y muerte.</em></p>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>La estructura tridiagonal de la matriz, que
+permite reconocer que un proceso estocástico pertenece a la clase de los
+procesos de nacimiento y muerte, se observa con un ordenamiento adecuado
+de los estados. Una permutación de los estados (por ejemplo, el
+ordenamiento <span class="math notranslate nohighlight">\(\{ 1,0,3,2,\ldots\}\)</span> no permitiría apreciar la estructura
+regular del proceso).</p>
+</div>
+</section>
+<section id="analisis-de-procesos-de-nacimiento-y-muerte-ergodicos">
+<h2>Análisis de procesos de nacimiento y muerte ergódicos<a class="headerlink" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos" title="Link to this heading">#</a></h2>
+<p>Para el análisis de un proceso de nacimiento y muerte se pueden utilizar
+todas las técnicas para Cadenas de Markov en tiempo de continuo. Si el
+proceso es ergódico, el análisis en el estado estacionario se vuelve
+particularmente sencillo, debido a la estructura regular del proceso.</p>
+<p>Dado que un proceso de nacimiento y muerte es una Cadena de Markov en
+tiempo continuo, para que éste sea ergódico es necesario que satisfaga
+las siguientes condiciones (véase la nota de clase <em>6. Clasificación de
+estados</em>):</p>
+<ol class="arabic simple">
+<li><p>Si el espacio de estado es finito, es necesario que sea irreducible.</p></li>
+<li><p>Si el espacio de estados es infinito, es necesario que sea
+irreducible y que todos los estados sean recurrentes positivos.</p></li>
+</ol>
+<p>En cuanto al punto 1, es fácil entender que, dada la particular
+estructura del proceso, si <span class="math notranslate nohighlight">\(\lambda_{i} &gt; 0\)</span> y <span class="math notranslate nohighlight">\(\mu_{i} &gt; 0\)</span> para todo
+<span class="math notranslate nohighlight">\(i \in S\)</span>, la cadena es irreducible y entonces el proceso de nacimiento
+y muerte será ergódico.</p>
+<p>En el caso al punto 2, además de requerirse <span class="math notranslate nohighlight">\(\lambda_{i} &gt; 0\)</span> y
+<span class="math notranslate nohighlight">\(\mu_{i} &gt; 0\)</span> para todo <span class="math notranslate nohighlight">\(i \in S\)</span> para asegurar la irreducibilidad, es
+necesario que las tasas sean tales que el estado de la cadena no crezca
+infinitamente. No es posible determinar una condición necesaria sobre
+las tasas, pero es fácil dar una suficiente que tiene un interés
+práctico. En particular, si existe un estado <span class="math notranslate nohighlight">\(k\)</span> tal que para cualquier
+otro estado <span class="math notranslate nohighlight">\(j &gt; k\)</span> siempre se cumple que <span class="math notranslate nohighlight">\(\lambda_{j} &lt; \mu_{j}\)</span> (es
+decir, existe un cierto estado <span class="math notranslate nohighlight">\(k\)</span> después del cual siempre es más
+probable que el número de entidades disminuya en lugar de que aumente),
+entonces la cadena será ergódica.</p>
+<p>Si la cadena es ergódica, es posible realizar el análisis para el
+cálculo de la distribución estacionaria de probabilidad, y debido a la
+particular estructura del proceso, este cálculo se lleva a cabo
+analíticamente obteniendo expresiones explicitas para las probabilidades
+estacionarias en función de las tasas de transición del proceso.</p>
+</section>
+<section id="analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-finitos">
+<h2>Análisis de procesos de nacimiento y muerte ergódicos finitos<a class="headerlink" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-finitos" title="Link to this heading">#</a></h2>
+<p>Sea <span class="math notranslate nohighlight">\(\left\{ X(t),t \geq 0 \right\}\)</span> un proceso de nacimiento y muerte
+con espacio de estados finito <span class="math notranslate nohighlight">\(S = \{ 0,1,2,\ldots,n\}\)</span>. El diagrama de
+tasas de transición del proceso será entonces el siguiente:</p>
+<p><img alt="Figura 3" src="../../../_images/nym3.png" /></p>
+<p>Para el análisis del estado estacionario, escribimos las ecuaciones de
+balance. La ecuación para el estado 0 nos proporciona la siguiente
+relación entre las probabilidades de estado estacionarias <span class="math notranslate nohighlight">\(\pi_{0}\)</span> y
+<span class="math notranslate nohighlight">\(\pi_{1}\)</span>:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{\lambda_{1}\pi}_{0} = {\mu_{1}\pi}_{1.}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>La ecuación de balance para el estado 1 es:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{{(\lambda}_{2} + \mu_{1})\pi}_{1} = {\mu_{2}\pi}_{2} + {\lambda_{1}\pi}_{0.}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Para el estado 2:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{{(\lambda}_{3} + \mu_{2})\pi}_{2} = {\mu_{3}\pi}_{3} + {\lambda_{2}\pi}_{1.}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Comparando las dos ecuaciones anteriores, es fácil darse cuenta que
+todas las ecuaciones desde el estado 1 hasta el estado n-1 tienen la
+misma forma, razón por la cual es posible escribir una ecuación general
+de balance para el estado <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(0 &lt; i &lt; n\)</span>, como sigue:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{{(\lambda}_{i + 1} + \mu_{i})\pi}_{i} = {\mu_{i + 1}\pi}_{i + 1} + {\lambda_{i}\pi}_{i - 1}.\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Finalmente, la ecuación de balance para el estado <span class="math notranslate nohighlight">\(n\)</span> es la siguiente:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{\mu_{n}\pi}_{n} = {\lambda_{n}\pi}_{n - 1}.\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Dada la forma de las ecuaciones, es posible encontrar su solución con un
+procedimiento iterativo. De la ecuación (1) para el estado 0, hallamos
+<span class="math notranslate nohighlight">\(\pi_{1} = \pi_{0}\frac{\lambda_{1}}{\mu_{1}}\)</span>. Si reemplazamos esta
+expresión en la ecuación (2) del estado 1, obtenemos:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{(\lambda}_{2} + \mu_{1})\frac{\pi_{0}\lambda_{1}}{\mu_{1}} = {\mu_{2}\pi}_{2} + {\lambda_{1}\pi}_{0} \Rightarrow \frac{\pi_{0}\lambda_{1}\lambda_{2}}{\mu_{1}} + \pi_{0}\lambda_{1} = {\mu_{2}\pi}_{2} + {\lambda_{1}\pi}_{0} \Rightarrow \frac{\pi_{0}\lambda_{1}\lambda_{2}}{\mu_{1}} = {\mu_{2}\pi}_{2}\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\Rightarrow \pi_{2} = \pi_{0}\frac{\lambda_{1}\lambda_{2}}{\mu_{1}\mu_{2}}.\]</div>
+<hr class="docutils" />
+<p>Repitiendo este proceso para la ecuación (3) se obtiene
+<span class="math notranslate nohighlight">\(\pi_{3} = \pi_{0}\frac{\lambda_{1}\lambda_{2}\lambda_{3}}{\mu_{1}\mu_{2}\mu_{3}}\)</span>,
+y así iterativamente para todas las demás ecuaciones, de modo tal que
+todas las probabilidades estacionarias son directamente proporcionales a
+<span class="math notranslate nohighlight">\(\pi_{0},\ \)</span>según un factor que es una función de las tasas. Para
+simplificar la notación, definamos las constantes <span class="math notranslate nohighlight">\(c_{j}\)</span>,
+<span class="math notranslate nohighlight">\(0 &lt; j \leq n\)</span>, como sigue:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[c_{j} = \frac{\prod_{i = 1}^{j}\lambda_{i}}{\prod_{i = 1}^{j}\mu_{i}} = \prod_{i = 1}^{j}\frac{\lambda_{i}}{\mu_{i}}.\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Por ejemplo, para el estado <span class="math notranslate nohighlight">\(j = 2\)</span>:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[c_{2} = \frac{\lambda_{1}\lambda_{2}}{\mu_{1}\mu_{2}}.\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>De modo que podemos escribir las probabilidades estacionarias de un
+estado <span class="math notranslate nohighlight">\(j \in S\)</span> como <span class="math notranslate nohighlight">\(\pi_{j} = \pi_{0}c_{j}\)</span>, <span class="math notranslate nohighlight">\(0 &lt; j \leq n\)</span>. Ahora
+bien, para completar el cálculo, es necesario determinar el valor del
+<span class="math notranslate nohighlight">\(\pi_{0}\)</span>, lo cual se realiza a través de la ecuación de normalización,
+como sigue:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\sum_{j = 0}^{n}{\pi_{j} = 1} \Rightarrow \pi_{0} + \sum_{j = 1}^{n}{\pi_{0}c_{j} = 1} \Rightarrow \pi_{0} + \pi_{0}\sum_{j = 1}^{n}{c_{j} = 1} \Rightarrow \pi_{0}\left( 1 + \sum_{j = 1}^{n}c_{j} \right) = 1\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\Rightarrow \pi_{0} = \left( 1 + \sum_{j = 1}^{n}c_{j} \right)^{- 1}.\]</div>
+<hr class="docutils" />
+<p>La expresión (8) completa el cálculo de las probabilidades de estado
+estacionario, las cuales quedan determinadas para todo proceso de
+nacimiento muerte con espacio de estados finito. Al reemplazar los
+valores puntuales de las tasas para las probabilidades en las
+expresiones, se encuentran los valores de dichas probabilidades.</p>
+</section>
+<section id="analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-con-espacio-de-estados-infinito">
+<h2>Análisis de procesos de nacimiento y muerte ergódicos con espacio de estados infinito<a class="headerlink" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-con-espacio-de-estados-infinito" title="Link to this heading">#</a></h2>
+<p>Si el espacio de estados de un proceso de nacimiento y muerte ergódico
+es infinito, es válida la forma general de las ecuaciones del balance,
+proporcionada por la expresión (4). Es decir, para todo estado
+<span class="math notranslate nohighlight">\(i \in S\)</span>, <span class="math notranslate nohighlight">\(i &gt; 0\)</span>, las probabilidades de estado estacionario satisfacen
+la igualdad:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{{(\lambda}_{i + 1} + \mu_{i})\pi}_{i} = {\mu_{i + 1}\pi}_{i + 1} + {\lambda_{i}\pi}_{i - 1.}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Para el estado 0, la ecuación del balance sigue siendo igual a la
+expresión (1), y no habrá ecuaciones de otra forma, dado que no existe
+un estado límite superior, como en el caso finito. El análisis procede
+entonces de la misma manera, ya que es posible expresar cada
+probabilidad estacionaria <span class="math notranslate nohighlight">\(\pi_{j}\)</span> como <span class="math notranslate nohighlight">\(\pi_{j} = \pi_{0}c_{j}\)</span>,
+siendo <span class="math notranslate nohighlight">\(c_{j}\)</span> definido como en la expresión (7).</p>
+<p>En la normalización para el cálculo del <span class="math notranslate nohighlight">\(\pi_{0}\)</span> aparece ahora una suma
+infinita. En efecto, será:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\sum_{j = 0}^{\infty}{\pi_{j} = 1} \Rightarrow \pi_{0} + \sum_{j = 1}^{\infty}{\pi_{0}c_{j} = 1} \Rightarrow \pi_{0} + \pi_{0}\sum_{j = 1}^{\infty}{c_{j} = 1} \Rightarrow \pi_{0}\left( 1 + \sum_{j = 1}^{\infty}c_{j} \right) = 1\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\Rightarrow \pi_{0} = \left( 1 + \sum_{j = 1}^{\infty}c_{j} \right)^{- 1}.\]</div>
+<hr class="docutils" />
+<p>Aquí es importante observar que la ergodicidad de la cadena garantiza la
+convergencia de la suma infinita en el denominador de la expresión (10)
+que define el valor de <span class="math notranslate nohighlight">\(\pi_{0}\)</span>. Dado que supusimos que existe un
+estado <span class="math notranslate nohighlight">\(k\)</span> tal que <span class="math notranslate nohighlight">\(\lambda_{j} &lt; \mu_{j}\)</span> por todo estado <span class="math notranslate nohighlight">\(j &gt; k\)</span>,
+escribimos la suma infinita como sigue:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\sum_{j = 1}^{\infty}c_{j} = \sum_{j = 1}^{k}c_{j} + \sum_{j = k + 1}^{\infty}c_{j}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>En el lado derecho de la expresión (11), la primera suma es finita, por
+lo cual la suma total en el lado izquierdo será finita si y solo si la
+segunda suma en el lado derecho es finita. Ahora bien, podemos encontrar
+una cota superior al valor de <span class="math notranslate nohighlight">\(c_{j}\)</span> por todo <span class="math notranslate nohighlight">\(j &gt; k\)</span>, definiendo, de
+la siguiente forma:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[c_{j} = c_{k}\frac{\lambda_{k + 1}\lambda_{k + 2}\cdots\lambda_{j}}{\mu_{k + 1}\mu_{k + 2}\cdots\mu_{j}} = c_{k}\frac{\prod_{i = k + 1}^{j}\lambda_{i}}{\prod_{i = k + 1}^{j}\mu_{i}} &lt; c_{k}\beta^{j - k}\ \forall\ j &gt; k\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>donde <span class="math notranslate nohighlight">\(\beta = \max_{j &gt; k}{\{\frac{\lambda_{j}}{\mu_{j}}\}}\)</span>. De esta
+manera, será:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\sum_{j = k + 1}^{\infty}{c_{j} &lt;}\sum_{j = k + 1}^{\infty}{c_{k}\beta^{j - k}} = c_{k}\sum_{j = k + 1}^{\infty}\beta^{j - k} = c_{k}\sum_{j = 1}^{\infty}\beta^{j} = c_{k}\frac{\beta}{1 - \beta}.\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Por lo anterior, el segundo término en el lado derecho de la expresión
+(11) es finito. Nótese que para obtener la última expresión en la
+expresión (13) hemos utilizado la fórmula para la suma de una serie
+geométrica.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Retomemos el ejemplo del proceso de nacimiento y muerte
+que modela la población de ballenas, y determinemos la solución
+estacionaria para las probabilidades de estado.</p>
+<p>Observamos que el proceso es ergódico porque, para todo estado <span class="math notranslate nohighlight">\(i\)</span>,
+<span class="math notranslate nohighlight">\(\lambda_{i} = \lambda &gt; 0\)</span> y <span class="math notranslate nohighlight">\(\mu_{i} = i \cdot \mu &gt; 0\)</span>, por lo cual
+la irreducibilidad de la cadena está asegurada. Además, la tasa con la
+cual las ballenas abandonan la población es proporcional al número de
+ballenas, mientras que la tasa de llegada es constante. Por ende, con
+seguridad existe un estado del proceso después del cual la tasa de
+muerte se vuelve mayor que la tasa de nacimiento (será el primer estado
+<span class="math notranslate nohighlight">\(k\)</span> para el cual <span class="math notranslate nohighlight">\(\lambda &lt; k \cdot \mu\)</span>).</p>
+<p>Con los resultados de la sección anterior, se pueden calcular
+analíticamente las probabilidades en estado estacionario, <span class="math notranslate nohighlight">\(\pi_{j}\)</span> para
+todo <span class="math notranslate nohighlight">\(j \in S\)</span>, como <span class="math notranslate nohighlight">\(\pi_{j} = \pi_{0}c_{j}\)</span>, siendo el factor <span class="math notranslate nohighlight">\(c_{j}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[c_{j} = \frac{\lambda^{j}}{\mu \bullet 2\mu \bullet 3\mu\cdots j\mu} = \frac{\lambda^{j}}{j!\mu^{j}} = \frac{1}{j!}\left( \frac{\lambda}{\mu} \right)^{j}\]</div>
+<p>El valor del <span class="math notranslate nohighlight">\(\pi_{0}\)</span> será:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( 1 + \sum_{j = 1}^{\infty}c_{j} \right)^{- 1} = \left( 1 + \sum_{j = 1}^{\infty}{\frac{1}{j!}\left( \frac{\lambda}{\mu} \right)^{j}} \right)^{- 1} = \left( \sum_{j = 0}^{\infty}{\frac{1}{j!}\left( \frac{\lambda}{\mu} \right)^{j}} \right)^{- 1} = \left( e^{\lambda/\mu} \right)^{- 1} = e^{- \lambda/\mu}.\]</div>
+<p>Uniendo los resultados en las expresiones (14) y (15), se obtiene que la
+distribución estacionaria de la probabilidad de estado para el modelo de
+la población de ballenas es una <span class="math notranslate nohighlight">\(Poisson(\lambda/\mu).\)</span></p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter10.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ley de Little</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter13.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Redes de Jackson</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-general-de-procesos-de-nacimiento-y-muerte">Forma general de procesos de nacimiento y muerte</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos">Análisis de procesos de nacimiento y muerte ergódicos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-finitos">Análisis de procesos de nacimiento y muerte ergódicos finitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-procesos-de-nacimiento-y-muerte-ergodicos-con-espacio-de-estados-infinito">Análisis de procesos de nacimiento y muerte ergódicos con espacio de estados infinito</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

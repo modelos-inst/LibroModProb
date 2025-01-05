@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Complementaria 2: Álgebra Lineal en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=7815ba43" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria2';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Complementaria 3: Cadenas de Markov en Python" href="Complementaria3.html" />
+    <link rel="prev" title="Complementaria 1: Introducción a Python" href="Complementaria1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria4/Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria5/Complementaria5_IntroDash.html"><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Complementaria2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><h3 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h3></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="complementaria-2-algebra-lineal-en-python">
+<h1><h3 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h3><a class="headerlink" href="#complementaria-2-algebra-lineal-en-python" title="Link to this heading">#</a></h1>
+<p>El objetivo de esta complementaria es aprender a definir y manejar matrices en Python. El uso de matrices aplicado a la construcción de Cadenas de Markov también será tratado a lo largo de la complementaria.</p>
+<h3 style="color: #ADD8E6;">Manejo de matrices
+</h3><p>Para crear y realizar operaciones sobre matrices en Python utilzaremos la libreria <code class="docutils literal notranslate"><span class="pre">numpy</span></code> que se abrevia como <code class="docutils literal notranslate"><span class="pre">np</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Existen diferentes formas para crear matrices en Python. Aqui hay algunos ejemplos:</p>
+<ol class="arabic simple">
+<li><p>Se puede crear una matriz a partir de varias listas:</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Se puede crear una matriz llena de ceros (esta forma de crear la matriz será de suma utilidad cuando estemos definiendo las cadenas de Markov):</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># Matriz 3x3 de ceros</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Crear una matriz identidad (útil para realizar análisis de tiempos)</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># Matriz identidad 4x4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 0. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 1. 0.]
+ [0. 0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para acceder a un elemento de una matriz se deben utilizar los índices del respectivo elemento. Se debe tener cuidado ya que los índices en Python empiezan en 0, tal que si, por ejemplo, se quiere acceder a la fila <code class="docutils literal notranslate"><span class="pre">1</span></code> se debe utilizar el <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Accede al elemento en la fila 1, columna 2</span>
+<span class="n">elemento</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">elemento</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>También se puede extraer filas o columnas de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extraer la primera fila de &#39;matrix&#39;.</span>
+<span class="n">fila1</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+<span class="n">fila1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extraer la tercera columna de &#39;matrix&#39;.</span>
+<span class="n">columna2</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">columna2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3, 6, 9])
+</pre></div>
+</div>
+</div>
+</div>
+<p>De igual manera se pueden agregar filas o columnas con la función <code class="docutils literal notranslate"><span class="pre">append</span></code>. Si se quiere aregar una nueva fila el parámetro <code class="docutils literal notranslate"><span class="pre">axis</span></code> de la funcion <code class="docutils literal notranslate"><span class="pre">append</span></code> debe ser igual a <code class="docutils literal notranslate"><span class="pre">0</span></code>; si se quiere agregar una nueva columna, <code class="docutils literal notranslate"><span class="pre">axis</span></code> debe ser igual a <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nueva fila que se quiere agregar.</span>
+<span class="n">nueva_fila</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+
+<span class="c1"># Agregar la nueva fila a la matriz</span>
+<span class="n">matrix_con_fila</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="p">[</span><span class="n">nueva_fila</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">matrix_con_fila</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1,  2,  3],
+       [ 4,  5,  6],
+       [ 7,  8,  9],
+       [10, 11, 12]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nueva columna que se quiere agregar.</span>
+<span class="n">nueva_columna</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">13</span><span class="p">],</span> <span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="p">[</span><span class="mi">15</span><span class="p">]])</span>
+
+<span class="c1"># Agregar la nueva columna a la matriz</span>
+<span class="n">matrix_con_columna</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">nueva_columna</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">matrix_con_columna</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1,  2,  3, 13],
+       [ 4,  5,  6, 14],
+       [ 7,  8,  9, 15]])
+</pre></div>
+</div>
+</div>
+</div>
+<h3 style="color: #ADD8E6;">Operaciones matriciales
+</h3><p>A modo de ejemplo, se crearán dos matrices llenas de números aleatorios que siguen una distribución normal generados por el comando <code class="docutils literal notranslate"><span class="pre">random.normal</span></code> de la libreria numpy, que tiene como parámetros la media, la desviación estandar y el tamaño de la matriz</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[25.81265713 24.85613895 28.70628961 19.44588963 20.90783179 14.08777945]
+ [23.84263572 22.67036504 15.93272035 29.44478882 20.00088753 22.09278642]
+ [22.86086204 18.93739172 21.26575341 20.47844934 17.11513131  9.53528466]
+ [19.62412285 12.45229694  3.2575555  16.41431898 12.37062484 22.78315285]
+ [ 9.28321329 22.62591235 21.88950667 24.25665514 19.11453088 21.83657415]
+ [22.2610462   8.71932848 18.78780849 21.84789129 33.43497213 21.35365735]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 6.89920104  5.90193982  9.07522923 11.50778604 13.35897988  7.78702411]
+ [ 9.20474693  4.49378974  9.46107463  8.99757115 10.09333782  5.56664408]
+ [ 8.68566551  5.31513192 13.09481156  9.51212595 10.82691885 10.97862958]
+ [11.6094933   9.09613595 11.04861413 15.12728433  7.83658696  4.94660296]
+ [11.46153686 15.26870219 14.60802194 11.54520683 11.45896756  6.94930574]
+ [ 5.35432243  8.96600976 14.94826888 10.81870454 10.7268584   8.42466913]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>A continuación, se encuentran algunos comandos de interes que nos permiten realizar operaciones matriciales en Python</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Comando</p></th>
+<th class="head text-center"><p>Explicación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A.T</span></code></p></td>
+<td class="text-center"><p>Transpuesta de la matriz A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">+</span> <span class="pre">B</span></code></p></td>
+<td class="text-center"><p>Suma elemento a elemento de las matrices A y B</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">-</span> <span class="pre">B</span></code></p></td>
+<td class="text-center"><p>Resta elemento a elemento de las matrices A y B</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&#64;</span> <span class="pre">B</span></code></p></td>
+<td class="text-center"><p>Producto matricial de A por B</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">*</span> <span class="pre">B</span></code></p></td>
+<td class="text-center"><p>Producto elemento a elemento de A por B</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">np.linalg.det(A)</span></code></p></td>
+<td class="text-center"><p>Calcula el determinante de la matriz cuadrada A</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">np.linalg.inv(A)</span></code></p></td>
+<td class="text-center"><p>Calcula la inversa de la matriz cuadrada A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">np.linalg.solve(A,</span> <span class="pre">b)</span></code></p></td>
+<td class="text-center"><p>Resuelve el sistema de ecuaciones lineales Ax = b</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">np.linalg.eig(A)</span></code></p></td>
+<td class="text-center"><p>Calcula los valores y vectores propios de la matriz cuadrada A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">np.diag(A)</span></code></p></td>
+<td class="text-center"><p>Extrae la diagonal principal de la matriz A como un vector</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">A.sum(axis</span> <span class="pre">=</span> <span class="pre">1)</span></code></p></td>
+<td class="text-center"><p>Calcula la suma de los elementos de cada fila de la matriz A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 style="color: #ADD8E6;">Cadenas de Markov</h3><p>El uso de matrices sirve para definir la representación de una cadena de Markov en Python. Por ejemplo, en las cadenas continuas es posible definir la matriz generadora (o de tasas de transición) <strong>Q</strong>, y en las discretas se define la matriz de probabilidades de transición a un paso <strong>P</strong>. En Python se utilizará la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p>
+<blockquote>
+<div><p><strong>¡Ponte a prueba!</strong>.
+Modela la evolución del Índice de calidad del aire (ICA) como una cadena de Markov.</p>
+</div></blockquote>
+<p>En primer lugar, se modela la situación como una cadena de Markov de tiempo discreto. Se define la variable de estado y el espacio de estados correspondiente.</p>
+<div class="math notranslate nohighlight">
+\[
+I_n = \text{Nivel del ICA en el n-ésimo día}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+S_I = \{1, 2, 3, 4, 5\}
+\]</div>
+<p>Es importante considerar que, en el espacio de estados, los niveles de calidad del aire aparecen en orden creciente de empeoramiento: el estado 1 corresponde a la clase Buena y el estado 5 a Muy dañina para la salud.</p>
+<p>Como es una cadena de Markov en tiempo discreto (CMTD) se debe definir la matriz P. Las probabilidades de transición en un paso entre estados de la cadena de Markov discreta son las siguientes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{i \rightarrow j} = \begin{cases}
+0.5 &amp; \text{si } j = i + 1, i &lt; 5 \\
+0.3 &amp; \text{si } j = i, 1 &lt; i &lt; 5 \\
+0.2 &amp; \text{si } j = i - 1, i &gt; 1 \\
+0.5 &amp; \text{si } j = i = 1 \\
+0.8 &amp; \text{si } j = i = 5 \\
+0 &amp; \text{dlc}
+\end{cases}
+\end{split}\]</div>
+<p>Para crear matrices en Python, utilizaremos la biblioteca <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, que se emplea para trabajar con matrices y realizar cálculos numéricos de manera eficiente. Esta biblioteca se abrevia comúnmente como <code class="docutils literal notranslate"><span class="pre">np</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importar las librerias necesarias.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A continuación, se implementa esta CMTD en Python. Se empieza creando la matriz de probabilidades de transición que se llamará <code class="docutils literal notranslate"><span class="pre">matriz</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filas</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">columnas</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Crear una matriz de ceros de 5x5</span>
+<span class="n">matriz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">filas</span><span class="p">,</span> <span class="n">columnas</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ahora, se recorren las filas y columnas de la matriz para llenarla de acuerdo a la formulación general definida previamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Llenar la matriz con valores</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">filas</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">columnas</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">matriz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">matriz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.3</span>
+        <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">matriz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">matriz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span> <span class="o">==</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">matriz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">matriz</span><span class="p">)</span>
+
+<span class="c1"># Verificación de que las filas de la matriz suman 1.</span>
+<span class="n">matriz</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.5 0.5 0.  0.  0. ]
+ [0.2 0.3 0.5 0.  0. ]
+ [0.  0.2 0.3 0.5 0. ]
+ [0.  0.  0.2 0.3 0.5]
+ [0.  0.  0.  0.2 0.8]]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1., 1., 1., 1., 1.])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Complementaria1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Complementaria3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h3></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

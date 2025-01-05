@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ley de Little &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter10';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Procesos de nacimiento y muerte" href="chapter11.html" />
+    <link rel="prev" title="Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)" href="../Modulo3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter10.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Ley de Little</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-de-aplicacion">Ejemplos de aplicación</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ley-de-little">
+<h1>Ley de Little<a class="headerlink" href="#ley-de-little" title="Link to this heading">#</a></h1>
+<p>Este breve capítulo introduce la Ley de Little, describe su generalidad
+y presenta algunas aplicaciones relevantes para los análisis de sistemas
+que alcanzan un estado estacionario.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>El resultado que se conoce como Ley de Little (Little’s law, en inglés),
+fue propuesto en 1954 por John Dutton Conant Little, quien es Profesor
+del Massachusetts Institute of Technology (hoy tiene 94 años). El
+resultado de Little es una formula muy sencilla que relaciona el número
+promedio de entidades en un sistema, con la tasa de llegada y el tiempo
+promedio de permanencia de los usuarios.</p>
+<p>Si denotamos con <span class="math notranslate nohighlight">\(L\)</span> el número promedio de entidades en el sistema, con
+<span class="math notranslate nohighlight">\(\lambda\)</span> la tasa efectiva de entrada de las entidades al sistema, y
+finalmente con <span class="math notranslate nohighlight">\(W\)</span> el tiempo promedio que cada entidad pasa en el
+sistema, la Ley de Little afirma que:</p>
+<div class="math notranslate nohighlight">
+\[L = \ \lambda \bullet W.\]</div>
+<p>Es importante observar que todas las cantidades mencionadas se entienden
+evaluadas en el <strong>estado estacionario (estable)</strong> de un sistema. La Ley
+de Little será particularmente útil para analizar sistemas para los
+cuales se conocen, o se pueden calcular fácilmente, dos de las tres
+cantidades<span class="math notranslate nohighlight">\(L,\ \lambda\ o\ W\)</span> <u><strong>Es incorrecto aplicar la Ley de Little
+a un sistema que no se encuentre en estado estacionario</strong>.</u></p>
+<p>El resultado de Little es muy general, aplica para sistemas de cualquier
+naturaleza y es independiente de las distribuciones, del tipo de proceso
+de llegada, y/o del proceso específico que se realiza dentro del
+sistema. Por su generalidad, tiene estatus de Ley, lo cual en las
+matemáticas y en la física es reservado a resultados que expresan
+principios generales de los sistemas; por ejemplo, la Ley de Gravitación
+Universal de Newton, o las Leyes de la termodinámica.</p>
+<p>Es también remarcable que la Ley de Little puede ser aplicada en el
+mismo sistema a diferentes niveles de abstracción, proporcionando
+diferentes tipos de resultados.</p>
+<p>Para aplicar la Ley de Little, es necesario conocer dos de las
+cantidades que la formula relaciona, y de manera sencilla se obtiene la
+tercera.</p>
+</section>
+<section id="ejemplos-de-aplicacion">
+<h2>Ejemplos de aplicación<a class="headerlink" href="#ejemplos-de-aplicacion" title="Link to this heading">#</a></h2>
+<p>Consideremos un sistema de producción que procesa chasis de carros. Al
+proceso entran 25 chasis por hora y el tiempo promedio de procesamiento
+de cada chasis es de 21 minutos, tal como se observa en la
+Ilustración 1. ¿Es posible a través de la Ley de Little obtener el
+número promedio de chasis en la línea de producción?</p>
+<p><img alt="Ilustración 1" src="../../../_images/little1.png" /></p>
+<p>La respuesta es sí. Conocemos la tasa de llegada de los chasis, la cuál
+es <span class="math notranslate nohighlight">\(\lambda = 25\ \text{horas}^{- 1}\)</span>, y también conocemos el tiempo
+promedio que cada chasis permanece en el sistema de producción, lo cual
+denotamos con <span class="math notranslate nohighlight">\(W\)</span>, siendo <span class="math notranslate nohighlight">\(W = 21\ \text{min} = 0.35\ \text{horas}\)</span>. Entonces podemos calcular el
+número promedio de chasis que habrá en estado estable en la línea de
+producción, es decir <span class="math notranslate nohighlight">\(L\)</span>, utilizando directamente la fórmula de Little:</p>
+<div class="math notranslate nohighlight">
+\[L = \ \lambda \bullet W = 25\frac{\ \text{chasis}}{\text{hora}} \bullet 0.35\ \text{horas} = 8.75\ \text{chasis.}\]</div>
+<p>Observamos que no se necesita conocer la estructura interna de la línea
+de producción para contestar la pregunta.</p>
+<p>Como se mencionó en la sección anterior, también es posible estudiar el
+sistema en un nivel de abstracción más detallado. Por esta razón,
+suponga que la línea de producción de los chasis tiene una parte
+robotizada y una parte manual. En la parte manual se reprocesan en
+promedio una décima parte de los chasis, después de que han pasado por
+la línea robotizada, para corregir imperfecciones de soldadura, tal como
+se observa en la Ilustración 2. Adicionalmente, en estado estable, hay
+<span class="math notranslate nohighlight">\(1.25\ \text{chasis}\)</span> en promedio que están siendo procesados por los
+operarios en la parte manual de la línea. ¿Cuál es el tiempo promedio de
+procesamiento en la parte robotizada?</p>
+<p><img alt="Ilustración 2" src="../../../_images/little2.png" /></p>
+<p>Es posible calcular, primero, el número promedio de chasis en la parte
+robotizada, considerando la cantidad total en la línea de producción
+encontrada anteriormente. De este modo, se tiene que la cantidad en la
+parte robotizada es de <span class="math notranslate nohighlight">\(L - 1.25 = 7.5\ \text{chasis}\)</span>, y se aplica
+nuevamente la Ley de Little, pero esta vez al subsistema de la parte
+robotizada. Si en el subsistema que ahora se considera hay en promedio
+en estado estable <span class="math notranslate nohighlight">\(L_{1} = 7.5\ \text{chasis}\)</span>, y la tasa de llegada es
+<span class="math notranslate nohighlight">\(\lambda = 25\frac{\text{chasis}}{\text{hora}} = 0.416\ \frac{\text{chasis}}{\text{minuto}}\)</span>,
+entonces el tiempo promedio en el subsistema será:</p>
+<div class="math notranslate nohighlight">
+\[W_{1} = \frac{L_{1}}{\lambda} = \frac{7.5}{0.416} = 18\ \text{minutos.}\]</div>
+<p>Ahora, calcule el tiempo promedio que permanece un chasis en la estación
+manual del sistema. Siempre, con la Ley de Little, podemos determinar
+este tiempo ya que conocemos la tasa de llegada al subsistema de
+reprocesamiento manual, así como el número promedio de chasis en el
+subsistema. Entonces, con la Ley de Little hallamos el tiempo de
+permanencia en el subsistema:</p>
+<div class="math notranslate nohighlight">
+\[W_{2} = \frac{1.25}{0.1 \cdot \lambda_{\ }} = \frac{1.25}{0.1 \cdot 0.416\ } = \frac{1.25}{0.0416\ } = 30\ \text{minutos.}\]</div>
+<p>Obteniendo que el tiempo promedio que un chasis permanece en la estación
+de reprocesamiento manual es de <span class="math notranslate nohighlight">\(30\ \text{minutos}\)</span>.</p>
+<p>Adicionalmente, la Ley de Little nos facilita el cálculo de medidas de
+desempeño, como el número promedio de entidades en fila y el número
+promedio de entidades en servicio, los cuales se denotan como <span class="math notranslate nohighlight">\(L_{q}\)</span> y
+<span class="math notranslate nohighlight">\(L_{s}\)</span>, respectivamente. De la misma manera, también es posible
+calcular el tiempo promedio que una entidad permanece en fila y el
+tiempo promedio que una entidad permanece en servicio, siendo estos
+comúnmente representados como <span class="math notranslate nohighlight">\(W_{q}\)</span> y <span class="math notranslate nohighlight">\(W_{s}\)</span>, respectivamente. A
+continuación, se presenta la Ley de Little para estos casos
+particulares:</p>
+<div class="math notranslate nohighlight">
+\[L_{q} = \ \lambda \bullet W_{q}\]</div>
+<div class="math notranslate nohighlight">
+\[L_{s} = \ \lambda \bullet W_{s}\]</div>
+<div class="math notranslate nohighlight">
+\[L = \ L_{q} + L_{s}\]</div>
+<div class="math notranslate nohighlight">
+\[W = \ W_{q} + W_{s}\]</div>
+<p>De las anteriores expresiones, se puede intuir que el número total de
+entidades promedio en estado estacionario será la suma del número de
+entidades promedio en cola y en servicio. La misma intuición se da para
+el tiempo total que una entidad permanece en el sistema, donde este
+tiempo será igual a la suma de los tiempos que una entidad permanece en
+cola y en servicio.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Modulo3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter11.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Procesos de nacimiento y muerte</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-de-aplicacion">Ejemplos de aplicación</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

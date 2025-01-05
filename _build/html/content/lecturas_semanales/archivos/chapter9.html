@@ -1,0 +1,1193 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter9';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)" href="../Modulo3.html" />
+    <link rel="prev" title="Análisis de tiempos promedios" href="chapter8.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter9.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion-a-cadenas-absorbentes">Introducción a cadenas absorbentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-discreto">Tiempo antes de la absorción en Cadenas de Markov de Tiempo Discreto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-continuo">Tiempo antes de la absorción en Cadenas de Markov de Tiempo Continuo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-discreto">Probabilidades de absorción para cadenas de tiempo discreto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-continuo">Probabilidades de absorción para cadenas de tiempo continuo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anexos">Anexos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-mediante-la-emc">Probabilidades de absorción mediante la EMC</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cadenas-absorbentes-tiempos-antes-de-la-absorcion-y-probabilidades-de-absorcion">
+<h1>Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción<a class="headerlink" href="#cadenas-absorbentes-tiempos-antes-de-la-absorcion-y-probabilidades-de-absorcion" title="Link to this heading">#</a></h1>
+<p>Como vimos anteriormente, al caracterizar estados, existen cadenas de
+Markov que incluyen estados absorbentes y estados transitorios. Los
+últimos, corresponden a todos aquellos estados desde los cuales es
+posible alcanzar un estado absorbente. En este capítulo se estudiarán
+los cálculos de tiempos promedio antes de la absorción, es decir, el
+tiempo promedio que un proceso estocástico visita los estados
+transitorios antes de ser absorbido, dado que dicho proceso inicia en un
+estado transitorio. Posteriormente, se presentan métodos para calcular
+las probabilidades de que un proceso estocástico termine absorbido en el
+largo plazo por algún estado absorbente, dado que dicho proceso inicia
+en algún estado transitorio.</p>
+<section id="introduccion-a-cadenas-absorbentes">
+<h2>Introducción a cadenas absorbentes<a class="headerlink" href="#introduccion-a-cadenas-absorbentes" title="Link to this heading">#</a></h2>
+<p>Una cadena de Markov (discreta o continua) es <em>absorbente</em> si:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Su espacio de estados <span class="math notranslate nohighlight">\(S\)</span> incluye un subconjunto de estados <span class="math notranslate nohighlight">\(A \subset S\)</span>
+tal que todo estado <span class="math notranslate nohighlight">\(i \in A\)</span> es absorbente;</p></li>
+</ol>
+</div></blockquote>
+<blockquote>
+<div><ol class="arabic simple" start="2">
+<li><p>Para todo estado <span class="math notranslate nohighlight">\(j \in S\backslash A\)</span>, existe un estado <span class="math notranslate nohighlight">\(i \in A\)</span>
+tal que <span class="math notranslate nohighlight">\(j \rightarrow i\)</span>.</p></li>
+</ol>
+</div></blockquote>
+<p>La definición anterior requiere la existencia de estados absorbentes
+(punto 1), y que de todo estado que no es absorbente sea posible
+alcanzar un estado absorbente (punto 2). Como consecuencia, en una
+cadena absorbente todos los estados que no son absorbentes son
+transitorios. Por ende, la cadena que se muestra en la figura 1 <strong>no
+es</strong> una cadena de Markov absorbente.</p>
+<p><img alt="Figura 1" src="../../../_images/absorcion1.png" /></p>
+<p>Si una cadena posee un estado absorbente no es ergódica, ya que pasaría
+a ser reducible. Consecuentemente, <strong>en el largo plazo</strong> la CMTC
+alcanzará un estado límite por el cual la probabilidad de estar en un
+estado transitorio se vuelve nula y se tiene 100% de certeza que la CMTC
+ocupará el estado absorbente o algún estado de la clase comunicante
+cerrada. El análisis en el largo plazo de este tipo de cadenas permite
+determinar las probabilidades con las que ocurren estos eventos.</p>
+<p>Consideramos una cadena de Markov <strong>absorbente</strong> en tiempo discreto
+<span class="math notranslate nohighlight">\(\{ Z_{n},n \geq 0\}\)</span>, con un espacio de estados <span class="math notranslate nohighlight">\(S\)</span> que contiene un
+número finito <span class="math notranslate nohighlight">\(N\)</span> de estados. Supongamos que de los <span class="math notranslate nohighlight">\(N\)</span> estados de <span class="math notranslate nohighlight">\(S\)</span>,
+<span class="math notranslate nohighlight">\(N_{A}\)</span> sean absorbentes y <span class="math notranslate nohighlight">\({N - N}_{A} = N_{T}\)</span> transitorios. Denotamos
+con <span class="math notranslate nohighlight">\(A \subset S\)</span> y con <span class="math notranslate nohighlight">\(T \subset S\)</span> los subconjuntos de los estados
+absorbentes y transitorios de la cadena, respectivamente. Por la
+definición misma de cadena absorbente, se tiene que <span class="math notranslate nohighlight">\(A \cup T = S\)</span> y
+también que <span class="math notranslate nohighlight">\(A \cap T = \varnothing\)</span>, o sea <span class="math notranslate nohighlight">\(A\)</span> y <span class="math notranslate nohighlight">\(T\)</span> forman una
+partición de <span class="math notranslate nohighlight">\(S\)</span>. Si se ordena el espacio de estados de manera que
+primero listemos los <span class="math notranslate nohighlight">\(N_{T}\)</span> estados transitorios y después aquellos
+absorbentes, y se escribe la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> de probabilidades de
+transición a un paso según dicho ordenamiento, se observa la siguiente
+estructura de la matriz:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P =}\begin{matrix}
+  \  &amp; \begin{matrix}                                                 
+  T &amp; A                                                               
+  \end{matrix} \\                                                     
+  \begin{matrix}                                                      
+  T \\                                                                
+  A                                                                   
+  \end{matrix} &amp; \left\lbrack \ \begin{matrix}                        
+  \mathbb{Q} &amp; \mathbb{R} \\                                          
+  0 &amp; \mathbb{I}                                                      
+  \end{matrix}\  \right\rbrack                                        
+  \end{matrix}\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Si tomamos un estado <span class="math notranslate nohighlight">\(i\)</span> en <span class="math notranslate nohighlight">\(A\)</span> y un estado <span class="math notranslate nohighlight">\(j\)</span> en <span class="math notranslate nohighlight">\(T\)</span>, <span class="math notranslate nohighlight">\(p_{ij} = 0\)</span>,
+<span class="math notranslate nohighlight">\(p_{ii} = 1\)</span>, ya que <span class="math notranslate nohighlight">\(i\)</span> es absorbente.</p>
+<p>Las dos sub-matrices en la parte superior de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> son
+la matriz cuadrada <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>, de dimensiones <span class="math notranslate nohighlight">\(N_{T} \times N_{T}\)</span>,
+contiene todas las probabilidades de transición entre estados
+transitorios, mientras que la matriz rectangular <span class="math notranslate nohighlight">\(R\)</span>, de dimensiones
+<span class="math notranslate nohighlight">\(N_{T} \times N_{A}\)</span>, contiene todas las probabilidades de transición
+entre estados transitorios y estados absorbentes. Las dos sub-matrices
+en la parte inferior de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> son la matriz rectangular
+<span class="math notranslate nohighlight">\(N_{A} \times N_{T}\)</span> de valores nulos, y la matriz identidad de
+dimensión <span class="math notranslate nohighlight">\(N_{A}\)</span>.</p>
+<p>De una manera análoga, si <span class="math notranslate nohighlight">\(\{ X(t),t \geq 0\}\)</span> es una cadena de Markov
+<strong>absorbente</strong> en tiempo continuo, reordenando el espacio de los estados
+para separar los estados transitorios de aquellos absorbentes, es
+posible obtener la siguiente forma de la matriz generadora <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{Q =}\begin{matrix}
+  \  &amp; \begin{matrix}                                                 
+  T &amp; A                                                               
+  \end{matrix} \\                                                     
+  \begin{matrix}                                                      
+  T \\                                                                
+  A                                                                   
+  \end{matrix} &amp; \left\lbrack \ \begin{matrix}                        
+  \mathbb{U} &amp; \mathbb{V} \\                                          
+  0 &amp; 0                                                               
+  \end{matrix}\  \right\rbrack                                        
+  \end{matrix}\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>La sub-matriz <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> contiene las tasas de transición entre
+estados transitorios, y la sub-matriz <span class="math notranslate nohighlight">\(\mathbb{V}\)</span> aquellas entre
+estados transitorios y absorbentes de la cadena. En este tipo de
+cadenas, la matriz de estados absorbentes a absorbentes se identifica
+por estar compuesta de 0 únicamente, al no existir ninguna tasa de
+salida de un estado absorbente.</p>
+</section>
+<section id="tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-discreto">
+<h2>Tiempo antes de la absorción en Cadenas de Markov de Tiempo Discreto<a class="headerlink" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-discreto" title="Link to this heading">#</a></h2>
+<p>Consideremos una Cadena de Markov absorbente, y preguntémonos cuál es el
+número promedio de veces que un estado transitorio <span class="math notranslate nohighlight">\(j\)</span> es visitado, si
+el estado inicial de la cadena es el estado transitorio<span class="math notranslate nohighlight">\(\ i\)</span>, antes de
+que la cadena alcance uno de los estados absorbentes.</p>
+<p>Recordando, la matriz de probabilidades de transición a un paso para una
+cadena absorbente tiene la siguiente estructura:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P} = \begin{bmatrix}
+\mathbf{Q} &amp; \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> es la submatriz de las probabilidades de transición
+entre estados transitorios, y <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> la submatriz de
+probabilidades de transición entre estados transitorios y absorbentes.
+Asimismo, si se define la matriz <span class="math notranslate nohighlight">\(\mathbb{M}^{n}\)</span> como la matriz que
+contiene el número de transiciones entre de cada par de estados
+<span class="math notranslate nohighlight">\((i,j) \in S\)</span> luego de <span class="math notranslate nohighlight">\(n\)</span> transiciones<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, el número de visitas a los
+estados transitorios puede ser determinado a partir del límite
+<span class="math notranslate nohighlight">\(\lim_{n \rightarrow \infty}{\mathbf{M}}^{n}\)</span>. Lo anterior, gracias a
+que si dejamos que <span class="math notranslate nohighlight">\(n\)</span> se vuelva muy grande, la parte asociada a los
+estadios transitorios convergerá a un valor finito, ya que la cadena
+será absorbida. Podemos escribir el límite como sigue:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty}\mathbf{M}^{n} = \lim_{n \rightarrow \infty}{\sum_{j = 0}^{n}\mathbf{P}^{j}}\]</div>
+<p>Ahora bien, la <span class="math notranslate nohighlight">\(n\)</span>-ésima potencia de la matriz <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>, para una
+cadena absorbente se puede describir como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{P}^{n} = \begin{bmatrix}
+\mathbf{Q}^{n} &amp; \sum_{h = 0}^{n - 1}\mathbf{Q}^{h}\mathbf{R} \\
+\mathbf{0} &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Y la matriz <span class="math notranslate nohighlight">\(\mathbf{M}^{n}\)</span> para una cadena de Markov en tiempo
+discreto absorbente será entonces:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{M}^{n} = \sum_{j = 0}^{n}\mathbf{P}^{j} = \sum_{j = 0}^{n}\begin{bmatrix}
+\mathbf{Q}^{j} &amp; \sum_{h = 0}^{n - 1}\mathbf{Q}^{h}\mathbf{R} \\
+\mathbf{0} &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+\sum_{j = 0}^{n}\mathbf{Q}^{j} &amp; \sum_{j = 0}^{n}{\sum_{h = 0}^{n - 1}\mathbf{Q}^{h}\mathbf{R}} \\
+\mathbf{0} &amp; \sum_{j = 0}^{n}\mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Por la naturaleza de la cadena, el número promedio de visitas a estados
+absorbentes será creciente en <span class="math notranslate nohighlight">\(n\)</span>, mientras el número promedio de
+visitas a estados transitorios tendrá un límite finito. Dado que en este
+análisis pretendemos evaluar en el número promedio de visitas a estados
+transitorios cuando el estado inicial es transitorio, el bloque de la
+matriz <span class="math notranslate nohighlight">\(\mathbf{M}^{n}\)</span> que nos interesa es el primer bloque diagonal.
+Por esta razón se tiene que:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty}{\sum_{j = 0}^{n}\mathbf{Q}^{j}} = \sum_{j = 0}^{\infty}\mathbf{Q}^{j} = {(\mathbb{I} - \mathbf{Q})}^{- 1}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Entonces, el elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz
+<span class="math notranslate nohighlight">\({\mathbb{(I -}\mathbf{Q})}^{- 1}\)</span> es el tiempo promedio que la cadena
+pasa en el (o el número promedio de visitas al) estado transitorio <span class="math notranslate nohighlight">\(j\)</span>,
+dado que empieza en el estado transitorio <span class="math notranslate nohighlight">\(i\)</span>, antes de alcanzar
+cualquier estado absorbente.</p>
+</section>
+<section id="tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-continuo">
+<h2>Tiempo antes de la absorción en Cadenas de Markov de Tiempo Continuo<a class="headerlink" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-continuo" title="Link to this heading">#</a></h2>
+<p>Para una Cadena de Markov en tiempo continuo absorbente, recordemos que
+la matriz de tasas de transición <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> tiene la siguiente
+estructura:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q} = \begin{bmatrix}
+\mathbb{U} &amp; \mathbb{V} \\
+\mathbf{0} &amp; \mathbf{0}
+\end{bmatrix}\end{split}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> es la submatriz de las tasas de transición entre
+estados transitorios y <span class="math notranslate nohighlight">\(\mathbb{V}\)</span> la submatriz de las tasas de
+transición entre estados transitorios y estados absorbentes. Debido a
+esta particular estructura, el exponencial matricial
+<span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span> tiene la siguiente forma:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}e^{\mathbf{Q} \bullet t} = \begin{bmatrix}
+e^{\mathbb{U} \bullet t} &amp; \mathbb{U}^{- 1}\left( e^{\mathbb{U} \bullet t} - \mathbb{I} \right)\mathbb{V} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Si <span class="math notranslate nohighlight">\(i \in S\)</span> es el estado inicial transitorio de la cadena en tiempo
+continuo, y <span class="math notranslate nohighlight">\(j \in S\)</span> es otro estado transitorio de la cadena, el tiempo
+esperado que la cadena pasa en <span class="math notranslate nohighlight">\(j\)</span> antes de la absorción, dado que
+empezó en <span class="math notranslate nohighlight">\(i\)</span>, se puede calcular a partir del límite cuando
+<span class="math notranslate nohighlight">\(t \rightarrow \infty\)</span> de la integral del elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz
+<span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span>. Observemos que, dado que ambos <span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(j\)</span> son
+estados transitorios de la cadena, el elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz
+<span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span> es un elemento de la submatriz
+<span class="math notranslate nohighlight">\(e^{\mathbb{U \bullet}t}\)</span>. Dado que la submatriz <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> es
+invertible, la integral de <span class="math notranslate nohighlight">\(e^{\mathbb{U \bullet}t}\)</span> tiene la siguiente
+forma explícita:</p>
+<div class="math notranslate nohighlight">
+\[\int_{0}^{t}{e^{\mathbb{U}x}dx = \mathbb{U}^{- 1}\left( e^{\mathbb{U}t} - \mathbb{I} \right)}\]</div>
+<p>Entonces, el límite cuando <span class="math notranslate nohighlight">\(t \rightarrow \infty\)</span> de la integral es:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{\ t \rightarrow \infty}{\int_{0}^{t}{e^{\mathbb{U}x}dx} =}\lim_{\ t \rightarrow \infty}{\mathbb{U}^{- 1}\left( e^{\mathbb{U}t} - I \right) = \lim_{\ t \rightarrow \infty}{\mathbb{U}^{- 1}e^{\mathbf{U}t} - \lim_{\ t \rightarrow \infty}{\mathbb{U}^{- 1} =}}} - \mathbb{U}^{- 1}\]</div>
+<p>Donde se utiliza el hecho de que en el límite cuando
+<span class="math notranslate nohighlight">\(t \rightarrow \infty\)</span> todo elemento de la matriz <span class="math notranslate nohighlight">\(e^{\mathbb{U}t}\)</span>
+converge a cero por ser la probabilidad de que la cadena absorbente se
+encuentre en un estado transitorio. Entonces, si <span class="math notranslate nohighlight">\(i\)</span> es el estado
+inicial de la cadena y <span class="math notranslate nohighlight">\(j\)</span> otro estado transitorio, el elemento <span class="math notranslate nohighlight">\(i,j\)</span> de
+la matriz <span class="math notranslate nohighlight">\(- \mathbb{U}^{- 1}\)</span> es el tiempo promedio que la cadena
+pasará en el estado <span class="math notranslate nohighlight">\(j\)</span>, dado que empezó en el estado <span class="math notranslate nohighlight">\(i\)</span>, antes de la
+absorción.</p>
+</section>
+<section id="probabilidades-de-absorcion-para-cadenas-de-tiempo-discreto">
+<h2>Probabilidades de absorción para cadenas de tiempo discreto<a class="headerlink" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-discreto" title="Link to this heading">#</a></h2>
+<p>En esta sección consideramos una cadena <strong>absorbente</strong> en tiempo
+discreto, y vamos a proporcionar un método para calcular las
+probabilidades de absorción en el largo plazo de la cadena desde los
+estados transitorios. Primero, observamos que la cadena cumpla con las
+definiciones de cadena <strong>absorbente</strong> definidas anteriormente**.**
+También, observamos que si el número de estados absorbentes <span class="math notranslate nohighlight">\(N_{A}\)</span> es
+igual a 1, el problema es trivial, ya que la cadena será absorbida en el
+único estado absorbente con total certeza.</p>
+<p>Supongamos entonces que la cadena tenga un número de estados absorbentes
+<span class="math notranslate nohighlight">\(N_{A} &gt; 1\)</span>, y queremos determinar las probabilidades de absorción en
+cada uno de esos estados. Esta situación se encuentra a menudo en el
+análisis de sistemas, por ejemplo, cuando existen dos posibles estados
+de parada para su evolución, con características o significado
+diferentes. Quizá el ejemplo más clásico sea el modelo del apostador
+(<em>gambler ruin problem</em>, en inglés), que representa la evolución del
+monto de dinero de un apostador, que en cada ronda del juego gana o
+pierde de manera probabilística una cantidad de dinero, y puede terminar
+el juego ganándole al banco o perdiéndolo todo. Para este ejemplo,
+podemos considerar el modelo de cadena de Markov en tiempo discreto
+absorbente que se ilustra en la siguiente figura:</p>
+<p><img alt="Figura 2" src="../../../_images/absorcion2.png" /></p>
+<p>En el modelo del apostador que se presenta en la Figura 2, el apostador
+puede en cada ronda perder un dólar con probabilidad <span class="math notranslate nohighlight">\(p\)</span> o ganar uno con
+probabilidad <span class="math notranslate nohighlight">\(1 - p\)</span>. Si alcanza a ganar 5 dólares (estado <span class="math notranslate nohighlight">\(W\)</span>), se
+retira del juego. Si pierde todo el dinero (estado <span class="math notranslate nohighlight">\(L\)</span>), también el
+juego terminará. Una pregunta interesante para este problema es
+determinar la probabilidad de ganar o perder el juego dado el estado
+inicial, para lo cual es necesario evaluar las probabilidades de
+absorción de la cadena en el largo plazo.</p>
+<p>En términos de la distribución de estado del proceso estocástico, lo que
+se quiere calcular es el siguiente límite:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[{\lim_{n \rightarrow \infty}P}\left\lbrack Z_{n} = j \middle| Z_{0} = i \right\rbrack\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Aquí vale la pena observar que el cálculo del límite en la expresión (3)
+toma los valores mostrados a continuación, de acuerdo con los valores de
+<span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(j\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[{\lim_{n \rightarrow \infty}P}\left\lbrack Z_{n} = j \middle| Z_{0} = i \right\rbrack = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \forall\ j \in T\]</div>
+<div class="math notranslate nohighlight">
+\[{\lim_{n \rightarrow \infty}P}\left\lbrack Z_{n} = j \middle| Z_{0} = i \right\rbrack = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \forall\ i,j \in A\ |\ i \neq j\]</div>
+<div class="math notranslate nohighlight">
+\[{\lim_{n \rightarrow \infty}P}\left\lbrack Z_{n} = j \middle| Z_{0} = i \right\rbrack = 1\ \ \ \ \ \ \ \ \ \ \ \ \ \forall\ i,j \in A\ |\ i = j\]</div>
+<p>Para calcular el límite de las probabilidades condicionales en la
+expresión (3), observamos que
+<span class="math notranslate nohighlight">\(P\left\lbrack Z_{n} = i \middle| Z_{0} = j \right\rbrack\)</span> es el
+elemento <span class="math notranslate nohighlight">\(i,j\)</span> de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span>, la potencia <span class="math notranslate nohighlight">\(n\)</span>-ésima de
+la matriz de probabilidades de transición <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>. La estructura en
+bloques de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, que se muestra en (1), determina una
+estructura particular de las potencias
+<span class="math notranslate nohighlight">\(\mathbb{P}^{2}\)</span>,<span class="math notranslate nohighlight">\(\mathbb{P}^{3}\)</span>,<span class="math notranslate nohighlight">\(\ldots\)</span>. En particular, para
+<span class="math notranslate nohighlight">\(\mathbb{P}^{2}\)</span>, es fácil determinar que:</p>
+<p><span class="math notranslate nohighlight">\(\mathbb{P}^{2}\mathbb{= P \bullet P =}\begin{bmatrix}
+\mathbf{Q} &amp; \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} \bullet \begin{bmatrix}
+\mathbf{Q} &amp; \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+\mathbf{Q}^{2} &amp; \mathbf{QR} + \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+\mathbf{Q}^{2} &amp; (\mathbf{Q} + \mathbb{I})\mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\)</span>.</p>
+<p>Para <span class="math notranslate nohighlight">\(\mathbb{P}^{3}\)</span>, se obtiene que</p>
+<p><span class="math notranslate nohighlight">\(\mathbb{P}^{3} = \mathbb{P}^{2}\mathbb{\bullet P} = \begin{bmatrix}
+\mathbf{Q}^{2} &amp; \mathbf{QR} + \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} \bullet \begin{bmatrix}
+\mathbf{Q} &amp; \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+\mathbf{Q}^{3} &amp; \mathbf{Q}^{2}\mathbf{R} + \mathbf{QR} + \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+\mathbf{Q}^{3} &amp; {(\mathbf{Q}}^{2} + \mathbf{Q} + \mathbb{I})\mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\)</span>.</p>
+<p>Generalizando para cualquier <span class="math notranslate nohighlight">\(n\)</span>, obtenemos que la matriz
+<span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span> tendrá la siguiente estructura en bloques:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P}^{n} = \begin{bmatrix}
+  \mathbf{Q}^{n} &amp; {(\mathbf{Q}}^{n - 1} + \mathbf{Q}^{n - 2} + \cdots + \mathbb{I})\mathbf{R} \\   
+  0 &amp; \mathbb{I}                                                                                    
+  \end{bmatrix} = \begin{bmatrix}                                                                   
+  \mathbf{Q}^{n} &amp; \sum_{j = 0}^{n - 1}\mathbf{Q}^{j}\mathbf{R} \\                                  
+  0 &amp; \mathbb{I}                                                                                    
+  \end{bmatrix}\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>En la expresión final para <span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span> en (4) cabe recordar que,
+para toda matriz, la potencia <span class="math notranslate nohighlight">\(0\)</span>-ésima es igual a la matriz identidad
+(<span class="math notranslate nohighlight">\(\mathbb{I}\)</span>).</p>
+<p>Ahora bien, podemos pasar la expresión de la potencia <span class="math notranslate nohighlight">\(\mathbb{P}^{n}\)</span>
+al límite, como sigue:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}\lim_{n \rightarrow \infty}{\mathbb{P}^{n}}^{\ } = \lim_{n \rightarrow \infty}\begin{bmatrix}
+  \mathbf{Q}^{n} &amp; \sum_{j = 0}^{n - 1}\mathbf{Q}^{j}\mathbf{R} \\                                                           
+  0 &amp; \mathbb{I}                                                                                                             
+  \end{bmatrix} = \begin{bmatrix}                                                                                            
+  {\lim_{n \rightarrow \infty}\mathbf{Q}}^{n} &amp; \lim_{n \rightarrow \infty}\sum_{j = 0}^{n - 1}\mathbf{Q}^{j}\mathbf{R} \\   
+  0 &amp; \mathbb{I}                                                                                                             
+  \end{bmatrix}\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Observamos que el límite del primer bloque <span class="math notranslate nohighlight">\(\mathbb{Q}^{n}\)</span> es una
+matriz nula, dado que la probabilidad de que la cadena quede en un
+estado transitorio en el largo plazo es nula. En cuanto al límite del
+bloque súper-diagonal, se tiene lo siguiente:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty}\sum_{j = 0}^{n - 1}\mathbf{Q}^{j}\mathbf{R} = \sum_{j = 0}^{\infty}\mathbf{Q}^{j}\mathbf{R} = \left( \mathbb{I} - \mathbf{Q} \right)^{- 1}\mathbf{R}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>La expresión (6) se obtiene reemplazando la suma infinita de potencias
+de la matriz <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> con la inversa de la matriz
+<span class="math notranslate nohighlight">\((\mathbb{I} - \mathbf{Q})\)</span>. Esta equivalencia es una extensión de las
+series geométricas de los números reales a las series geométricas de
+matrices. Tal como la serie geométrica de razón <span class="math notranslate nohighlight">\(x\)</span> converge a
+<span class="math notranslate nohighlight">\(\frac{1}{1 - x} = (1 - x)^{- 1}\)</span> cuando <span class="math notranslate nohighlight">\(x\)</span> es en módulo menor a 1, la
+serie geométrica de una matriz <span class="math notranslate nohighlight">\(\mathbb{A\ }\)</span> converge a
+<span class="math notranslate nohighlight">\(\left( \mathbb{I} - \mathbb{A} \right)^{- 1}\)</span> cuando el módulo del
+máximo autovalor de <span class="math notranslate nohighlight">\(\mathbb{A}\)</span> (lo que se llama el <em>radio espectral</em>
+de la matriz <span class="math notranslate nohighlight">\(\mathbb{A}\)</span>) es menor a 1. Esta condición siempre aplica
+para la matriz <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> de una cadena de Markov en tiempo discreto
+absorbente (sin demostración). Entonces, la matriz
+<span class="math notranslate nohighlight">\(\left( \mathbb{I} - \mathbf{Q} \right)^{- 1}\mathbf{R}\)</span> es la matriz
+cuyos elementos proporcionan las probabilidades que en el límite la
+cadena sea absorbida en los estados <span class="math notranslate nohighlight">\(j \in A_{Z}\)</span>, dado que el estado
+inicial es <span class="math notranslate nohighlight">\(i \in T_{Z}\)</span>.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Supongamos que la probabilidad de que el apostador gane
+una ronda del juego es <span class="math notranslate nohighlight">\(p = 0.4\)</span>, y calculamos las probabilidades de
+ganar o perder todo para la cadena de la Figura 2. La matriz de tasas de
+transición <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, reordenada como se explica anteriormente, es la
+siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P =}\begin{matrix}
+1 \\
+2 \\
+3 \\
+4 \\
+L \\
+W
+\end{matrix}\begin{bmatrix}
+0 &amp; 0.4 &amp; 0 &amp; 0 &amp; 0.6 &amp; 0 \\
+0.6 &amp; 0 &amp; 0.4 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0.6 &amp; 0 &amp; 0.4 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0.6 &amp; 0 &amp; 0 &amp; 0.4 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}\end{split}\]</div>
+<p>Se identifican entonces los bloques:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Q} = \begin{bmatrix}
+0 &amp; 0.4 &amp; 0 &amp; 0 \\
+0.6 &amp; 0 &amp; 0.4 &amp; 0 \\
+0 &amp; 0.6 &amp; 0 &amp; 0.4 \\
+0 &amp; 0 &amp; 0.6 &amp; 0
+\end{bmatrix}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{R =}\begin{bmatrix}
+0.6 &amp; 0 \\
+0 &amp; 0 \\
+0 &amp; 0 \\
+0 &amp; 0.4
+\end{bmatrix}\)</span></p>
+<p>La matriz <span class="math notranslate nohighlight">\((\mathbb{I} - \mathbf{Q})\)</span> es la siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{I} - \mathbf{Q} = \begin{bmatrix}
+1 &amp; - 0.4 &amp; 0 &amp; 0 \\
+ - 0.6 &amp; 1 &amp; - 0.4 &amp; 0 \\
+0 &amp; - 0.6 &amp; 1 &amp; - 0.4 \\
+0 &amp; 0 &amp; - 0.6 &amp; 1
+\end{bmatrix}\end{split}\]</div>
+<p>y su inversa <span class="math notranslate nohighlight">\({(\mathbb{I} - \mathbf{Q})}^{- 1}\)</span> es la matriz:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{(\mathbb{I} - \mathbf{Q})}^{- 1} = \begin{bmatrix}
+1.54 &amp; 0.9 &amp; 0.47 &amp; 0.18 \\
+1.35 &amp; 2.25 &amp; 1.18 &amp; 0.47 \\
+1.06 &amp; 1.77 &amp; 2.25 &amp; 0.9 \\
+0.63 &amp; 1.06 &amp; 1.35 &amp; 1.54
+\end{bmatrix}\end{split}\]</div>
+<p>El producto <span class="math notranslate nohighlight">\({(\mathbb{I} - \mathbf{Q})}^{- 1}\mathbb{R}\)</span> es la
+siguiente matriz de probabilidades:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{(\mathbb{I} - \mathbf{Q})}^{- 1}\mathbb{R} = \begin{bmatrix}
+1.54 &amp; 0.9 &amp; 0.47 &amp; 0.18 \\
+1.35 &amp; 2.25 &amp; 1.18 &amp; 0.47 \\
+1.06 &amp; 1.77 &amp; 2.25 &amp; 0.9 \\
+0.63 &amp; 1.06 &amp; 1.35 &amp; 1.54
+\end{bmatrix} \bullet \begin{bmatrix}
+0.6 &amp; 0 \\
+0 &amp; 0 \\
+0 &amp; 0 \\
+0 &amp; 0.4
+\end{bmatrix} = \begin{bmatrix}
+0.92 &amp; 0.08 \\
+0.81 &amp; 0.19 \\
+0.64 &amp; 0.36 \\
+0.38 &amp; 0.62
+\end{bmatrix}\end{split}\]</div>
+<p>Entonces, si el apostador empieza a jugar con 1 dólar (primer estado),
+terminará ganando el juego con probabilidad 0.08. Esta probabilidad se
+encuentra en la primera fila de la matriz
+<span class="math notranslate nohighlight">\({(\mathbb{I} - \mathbf{Q})}^{- 1}\mathbb{R}\)</span>, ya que 1 es el primer
+estado, y en la segunda columna, ya que el estado final (<span class="math notranslate nohighlight">\(W\)</span>) es el
+último de los absorbentes. Si el apostador empieza el juego con 4
+dólares (último estado transitorio), la probabilidad de ganar es 0.62.
+Esta probabilidad se encuentra en la cuarta fila de la matriz
+<span class="math notranslate nohighlight">\({(\mathbb{I} - \mathbf{Q})}^{- 1}\mathbb{R}\)</span>, ya que 4 es el último
+estado, y en la segunda columna, ya que el estado final (<span class="math notranslate nohighlight">\(W\)</span>) es el
+último de los absorbentes. Observamos que, por cada fila de la matriz
+<span class="math notranslate nohighlight">\({(\mathbb{I} - \mathbf{Q})}^{- 1}\mathbb{R}\)</span>, la suma de los elementos
+es 1, ya que con probabilidad 1 la cadena es absorbida (no importa en
+cual estado absorbente).</p>
+<p>Finalmente, si no se conociera con exactitud el estado inicial, para
+determinar por ejemplo la probabilidad de perder el juego (o sea de que
+la cadena sea absorbida en el estado <span class="math notranslate nohighlight">\(L\)</span>), podríamos usar la
+distribución inicial sobre los estados transitorios. Si
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha} = (\alpha_{1},\alpha_{2},\alpha_{3},\alpha_{4})\)</span>
+es el vector de la probabilidad de estado inicial, o sea
+<span class="math notranslate nohighlight">\(\alpha_{i} = P\lbrack Z_{0} = i\rbrack\)</span>, donde es pertinente recalcar
+que la distribución inicial se define únicamente para los estados
+transitorios.</p>
+<p>Por ejemplo, si
+<span class="math notranslate nohighlight">\(\overrightarrow{\alpha} = \left( \frac{1}{4},\frac{1}{4},\frac{1}{4},\frac{1}{4} \right)\)</span>,
+es decir cualquier cantidad de dólares entre 1 y 4 con la misma
+probabilidad, las probabilidades de absorción serían:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left( \frac{1}{4},\frac{1}{4},\frac{1}{4},\frac{1}{4} \right) \bullet \ \begin{bmatrix}
+0.92 &amp; 0.08 \\
+0.81 &amp; 0.19 \\
+0.64 &amp; 0.36 \\
+0.38 &amp; 0.62
+\end{bmatrix} = (0.69,0.31)\end{split}\]</div>
+<p>De este modo, la probabilidad de perder todo sería entonces 0.69, más
+que el doble de la probabilidad de ganar (0.31).</p>
+</div>
+</section>
+<section id="probabilidades-de-absorcion-para-cadenas-de-tiempo-continuo">
+<h2>Probabilidades de absorción para cadenas de tiempo continuo<a class="headerlink" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-continuo" title="Link to this heading">#</a></h2>
+<p>Para el cálculo de las probabilidades de absorción en cadenas continuas
+existen diferentes opciones. La primera consiste en obtener de la cadena
+en tiempo continuo la cadena embebida EMC, y realizar el análisis de las
+probabilidades de absorción en la EMC, ya que, para la distribución de
+la probabilidad de estado en el largo plazo, las dos cadenas son
+equivalentes.</p>
+<p>Por otra parte, también es posible realizar el cálculo de las
+probabilidades de absorción directamente en la cadena continua.
+Observamos que, de manera totalmente análoga al caso discreto, las
+probabilidades límite de una cadena absorbente continua pueden ser
+calculadas a partir de las probabilidades condicionales del transitorio.
+Dichas probabilidades se calculan a través del exponencial de la matriz
+de las tasas de transición <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>. En particular, recordamos que
+el exponencial de una matriz cuadrada <span class="math notranslate nohighlight">\(A\)</span> es la matriz</p>
+<div class="math notranslate nohighlight">
+\[e^{\mathbb{A}} = I + \mathbb{A} + \frac{\mathbb{A}^{2}}{2!} + \frac{\mathbb{A}^{3}}{3!} + \frac{\mathbb{A}^{4}}{4!} + \cdots = \sum_{j = 0}^{\infty}\frac{\mathbb{A}^{j}}{j!}\]</div>
+<p>En una cadena de Markov de tiempo continuo, el elemento <span class="math notranslate nohighlight">\(i,j\)</span> del
+exponencial de la matriz <span class="math notranslate nohighlight">\(\mathbf{Q} \bullet t\)</span> proporciona la
+probabilidad de que la cadena, en el tiempo <span class="math notranslate nohighlight">\(t\)</span>, esté en el estado <span class="math notranslate nohighlight">\(j\)</span>,
+dado que al tiempo 0 se encontraba en el estado <span class="math notranslate nohighlight">\(i\)</span>, es decir que:</p>
+<div class="math notranslate nohighlight">
+\[\left\lbrack e^{\mathbf{Q} \bullet t} \right\rbrack_{(i,j)} = P\left\lbrack X(t) = j|X(0) = i \right\rbrack,\ \forall t \geq 0,\ i,j \in S\]</div>
+<p>El límite por <span class="math notranslate nohighlight">\(t \rightarrow + \infty\)</span> de la matriz
+<span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span> proporciona entonces las probabilidades en el
+largo plazo de la cadena. Si una cadena continua es absorbente, la
+matriz <span class="math notranslate nohighlight">\(\mathbf{Q} \bullet t\)</span> tiene la estructura en bloques que se
+ilustra en (2). Esta forma particular en bloques permite calcular las
+probabilidades de absorción de manera sencilla. Antes que nada, dado que
+el factor <span class="math notranslate nohighlight">\(t\)</span> es escalar, notamos lo siguiente:</p>
+<div class="math notranslate nohighlight">
+\[e^{\mathbf{Q} \bullet t} = \ \mathbb{I} + \mathbf{Q} \bullet t + \frac{\left( \mathbf{Q} \bullet t \right)^{2}}{2!} + \frac{\left( \mathbf{Q} \bullet t \right)^{3}}{3!} + \cdots = \mathbb{I} + \mathbf{Q} \bullet t + \mathbf{Q}^{2}\frac{t^{2}}{2!} + \mathbf{Q}^{3}\frac{t^{3}}{3!} + \cdots\]</div>
+<p>Ahora, las primeras potencias de la matriz <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> tienen la
+siguiente forma:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q}^{2} = \mathbf{Q} \bullet \mathbf{Q} = \begin{bmatrix}
+\mathbb{U} &amp; \mathbb{V} \\
+0 &amp; 0
+\end{bmatrix} \bullet \begin{bmatrix}
+\mathbb{U} &amp; V \\
+0 &amp; 0
+\end{bmatrix} = \begin{bmatrix}
+\mathbb{U}^{2} &amp; \mathbb{V} \\
+0 &amp; 0
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q}^{3} = \mathbf{Q}^{2} \bullet \mathbf{Q} = \begin{bmatrix}
+\mathbb{U}^{2} &amp; \mathbb{U}V \\
+0 &amp; 0
+\end{bmatrix} \bullet \begin{bmatrix}
+\mathbb{U} &amp; \mathbb{U} \\
+0 &amp; 0
+\end{bmatrix} = \begin{bmatrix}
+\mathbb{U}^{3} &amp; \mathbb{U}^{2}\mathbb{V} \\
+0 &amp; 0
+\end{bmatrix}\end{split}\]</div>
+<p>De esta forma, es posible determinar que la matriz <span class="math notranslate nohighlight">\(\mathbf{Q}^{n}\)</span>
+tendrá la siguiente estructura en bloques:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Q}^{n} = \begin{bmatrix}
+  \mathbb{U}^{n} &amp; \mathbb{U}^{n - 1}\mathbb{V} \\                    
+  0 &amp; 0                                                               
+  \end{bmatrix},\ n &gt; 0\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Entonces,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}e^{\mathbf{Q} \bullet t} = \begin{bmatrix}
+\mathbb{I} &amp; 0 \\
+0 &amp; \mathbb{I}
+\end{bmatrix} + \begin{bmatrix}
+\mathbb{U} &amp; \mathbb{V} \\
+0 &amp; 0
+\end{bmatrix}t + \begin{bmatrix}
+\mathbb{U}^{2} &amp; \mathbb{UV} \\
+0 &amp; 0
+\end{bmatrix}\frac{t^{2}}{2!} + \begin{bmatrix}
+\mathbb{U}^{3} &amp; \mathbb{U}^{2}\mathbb{V} \\
+0 &amp; 0
+\end{bmatrix}\frac{t^{3}}{3!} + \cdots =\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}= \begin{bmatrix}
+\mathbb{I}\mathbb{+ U +}\mathbb{U}^{2}\frac{t^{2}}{2!} + \mathbb{U}^{3}\frac{t^{3}}{3!} + \cdots &amp; \mathbb{V}t + \mathbb{UV}\frac{t^{2}}{2!} + \mathbb{U}^{2}\mathbb{V}\frac{t^{3}}{3!} + \cdots \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Podemos reconocer que la suma infinita de matrices en el primer bloque
+de <span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span> es el exponencial de la matriz
+<span class="math notranslate nohighlight">\(\mathbb{U} \bullet t\)</span>. En cuanto al bloque súper-diagonal, con pocas
+transformaciones algebraicas se obtiene:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\mathbb{V}t + \mathbb{UV}\frac{t^{2}}{2!} + \mathbb{U}^{2}\mathbb{V}\frac{t^{3}}{3!} + \cdots = \left( \mathbb{I}t + \mathbb{U}\frac{t^{2}}{2!} + \mathbb{U}^{2}\frac{t^{3}}{3!} + \cdots \right)\mathbb{V} = \mathbb{U}^{- 1}\left( \mathbb{U}t + \mathbb{U}^{2}\frac{t^{2}}{2!} + \mathbb{U}^{3}\frac{t^{3}}{3!} + \cdots \right)\mathbb{V}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Ahora observamos que la suma infinita de matrices entre paréntesis en
+(8) es la matriz exponencial <span class="math notranslate nohighlight">\(e^{\mathbb{U} \bullet t}\)</span> menos la matriz
+identidad, así que finalmente, para el bloque 1,2 se obtiene la
+expresión
+<span class="math notranslate nohighlight">\(\mathbb{U}^{- 1}\left( e^{\mathbb{U} \bullet t} - \mathbb{I} \right)\mathbb{V}\)</span>.
+La matriz <span class="math notranslate nohighlight">\(e^{\mathbf{Q} \bullet t}\)</span>, para una cadena de Markov
+absorbente en tiempo continuo es entonces la siguiente:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}e^{\mathbf{Q} \bullet t} = \begin{bmatrix}
+  e^{\mathbb{U} \bullet t} &amp; \mathbb{U}^{- 1}\left( e^{\mathbb{U} \bullet t} - \mathbb{I} \right)\mathbb{V} \\   
+  0 &amp; \mathbb{I}                                                                                                 
+  \end{bmatrix}\end{split}\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>En el límite por <span class="math notranslate nohighlight">\(t \rightarrow + \infty\)</span> se obtiene que</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lim_{t \rightarrow + \infty}e^{\mathbf{Q} \bullet t} = \lim_{t \rightarrow + \infty}\begin{bmatrix}
+e^{\mathbb{U} \bullet t} &amp; \mathbb{U}^{- 1}\left( e^{\mathbb{U} \bullet t} - \mathbb{I} \right)\mathbb{V} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+{\lim_{t \rightarrow + \infty}e}^{\mathbb{U} \bullet t} &amp; \lim_{t \rightarrow + \infty}\mathbb{U}^{- 1}\left( e^{\mathbb{U} \bullet t} - \mathbb{I} \right)\mathbb{V} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Dado que en el largo plazo la probabilidad de que la cadena esté en un
+estado transitorio tiende a cero, el límite cuando
+<span class="math notranslate nohighlight">\(t \rightarrow + \infty\)</span> de <span class="math notranslate nohighlight">\(e^{\mathbb{U} \bullet t}\)</span> es la matriz
+nula. Por ende, se obtiene que:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lim_{t \rightarrow + \infty}e^{\mathbf{Q} \bullet t} = \begin{bmatrix}
+0 &amp; \mathbb{U}^{- 1}\left( 0 - \mathbb{I} \right)\mathbb{V} \\
+0 &amp; \mathbb{I}
+\end{bmatrix} = \begin{bmatrix}
+0 &amp; - \mathbb{U}^{- 1}\mathbb{V} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>Las probabilidades condicionales de absorción, dado el estado
+transitorio inicial, son finalmente dadas por los elementos de la matriz
+<span class="math notranslate nohighlight">\(- \mathbb{U}^{- 1}\mathbb{V}\)</span>.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Como ejemplo consideramos el modelado del proceso de
+evacuación de un edificio durante un evento sísmico. Si en el edificio
+hay <span class="math notranslate nohighlight">\(n\)</span> personas, cada persona evacúa en un tiempo promedio de
+<span class="math notranslate nohighlight">\(n \bullet T\)</span> unidades de tiempo. Durante el evento sísmico, el evento
+catastrófico de derrumbe del edificio ocurre con tasa <span class="math notranslate nohighlight">\(\omega\)</span>.
+Suponiendo que todos los tiempos son exponenciales e independientes, es
+posible definir un modelo de cadena de Markov de tiempo continuo para
+calcular la probabilidad de que todas las personas inicialmente
+presentes en el edificio alcancen a evacuar antes de que ocurra un
+derrumbe.</p>
+<p>Supongamos que <span class="math notranslate nohighlight">\(M\)</span> sea el número personas en el edificio al principio de
+la evacuación, y consideramos la cadena de Markov de tiempo continuo
+<span class="math notranslate nohighlight">\(\left\{ \left( N(t),E(t) \right),t \geq 0 \right\}\)</span>, donde <span class="math notranslate nohighlight">\(N(t)\)</span> es el
+número de personas en el edificio al tiempo<span class="math notranslate nohighlight">\(\ t\)</span>, y <span class="math notranslate nohighlight">\(E(t)\)</span> el estado del
+edificio al tiempo <span class="math notranslate nohighlight">\(t\)</span>. En el tiempo <span class="math notranslate nohighlight">\(t = 0\)</span> tendremos el tiempo de
+inicio de la evacuación. El espacio de los estados <span class="math notranslate nohighlight">\(S_{N}\)</span> será dado por
+el siguiente conjunto con <span class="math notranslate nohighlight">\(2 \bullet (M + 1)\)</span> elementos:</p>
+<div class="math notranslate nohighlight">
+\[S_{N} = \left\{ (i,e)|i \in \{ 0,1,2,\ldots,M\},e \in \{ I,D \right\}\}\]</div>
+<p><span class="math notranslate nohighlight">\(I\)</span> modela el estado intacto del edificio y <span class="math notranslate nohighlight">\(D\)</span> el estado derrumbado del
+mismo. La cadena tiene <span class="math notranslate nohighlight">\(M + 1\)</span> estados absorbentes, que corresponden a
+todos los estados donde la segunda componente toma el valor <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<p>Las tasas de transición en la matriz <span class="math notranslate nohighlight">\(Q\)</span> (elementos no diagonales) de
+esta cadena continua son las siguientes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}q_{(i,e),(j,f)} = \left\{ \begin{matrix}
+{(i \bullet T)}^{- 1} &amp; si\ j = i - 1\ y\ e = f = I \\
+\omega &amp; si\ j = i\ y\ e = I\ y\ f = D \\
+0 &amp; en\ todos\ los\ demás\ casos
+\end{matrix} \right.\ \end{split}\]</div>
+<p>El diagrama de estado transición de la cadena se ilustra en la Figura 3:</p>
+<p><img alt="Figura 3" src="../../../_images/absorcion3.png" /></p>
+<p>De esta forma, se tiene que la matriz <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> es súper-diagonal,
+con los siguientes elementos no diagonales:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}q_{(i,I),(j,I)} = \left\{ \begin{matrix}
+({i \bullet T)}^{- 1} &amp; si\ j = i - 1\  \\
+0 &amp; en\ todos\ los\ demás\ casos
+\end{matrix} \right.\ \end{split}\]</div>
+<p>y la matriz <span class="math notranslate nohighlight">\(\mathbb{V}\)</span> es la matriz identidad de tamaño
+<span class="math notranslate nohighlight">\((M + 1) \times (M + 1)\)</span> multiplicada por la constante <span class="math notranslate nohighlight">\(\omega\)</span>. El
+siguiente código en R, totalmente análogo al código para el análisis de
+la cadena embebida, produce una gráfica de barras de las probabilidades,
+idénticas en valor a aquellas que se muestran en la Figura 5.</p>
+<p><img alt="Figura 4" src="../../../_images/absorcion4.png" /></p>
+</div>
+</section>
+<section id="anexos">
+<h2>Anexos<a class="headerlink" href="#anexos" title="Link to this heading">#</a></h2>
+</section>
+<section id="probabilidades-de-absorcion-mediante-la-emc">
+<h2>Probabilidades de absorción mediante la EMC<a class="headerlink" href="#probabilidades-de-absorcion-mediante-la-emc" title="Link to this heading">#</a></h2>
+<p>Como se mencionó en la 9.5, es posible calcular las probabilidades de
+absorción de una cadena en tiempo continuo, encontrando primero la
+cadena embebida (EMC), y usando ésta última para calcular las
+probabilidades. A continuación, se muestra un ejemplo que ilustra dicha
+aproximación.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 3</p>
+<p>Considerando el mismo contexto presentado en el ejemplo
+2, y recordando la formulación</p>
+<p><span class="math notranslate nohighlight">\(q_{(i,e),(j,f)} = \left\{ \begin{matrix}
+{(i \bullet T)}^{- 1} &amp; si\ j = i - 1\ y\ e = f = I \\
+\omega &amp; si\ j = i\ y\ e = I\ y\ f = D \\
+0 &amp; en\ todos\ los\ demás\ casos
+\end{matrix} \right.\ \)</span>,</p>
+<p>es posible obtener la cadena embebida, cuyo diagrama de estado
+transición es el siguiente:</p>
+<p><img alt="Figura 4" src="../../../_images/absorcion5.png" /></p>
+<p>Ordenando el espacio de estados de manera que se listan primero los
+estados no absorbentes y después aquellos absorbentes, y dentro de cada
+subconjunto se ordenan los estados por número de personas decreciente,
+se obtiene la siguiente estructura a bloques de la matriz de
+probabilidades de transición:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{P} = \begin{bmatrix}
+\mathbf{Q} &amp; \mathbf{R} \\
+0 &amp; \mathbb{I}
+\end{bmatrix}\end{split}\]</div>
+<p>La matriz <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> es una matriz súper-diagonal tal que:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}q_{(i,I),(j,I)} = \left\{ \begin{matrix}
+\frac{\frac{1}{i \bullet T}}{\frac{1}{i \bullet T} + \omega} &amp; si\ j = i - 1\  \\
+0 &amp; en\ todos\ los\ demás\ casos
+\end{matrix} \right.\ \end{split}\]</div>
+<p>La matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> es una matriz diagonal tal que
+<span class="math notranslate nohighlight">\(r_{(i,I),(i,D)} = \omega/(\frac{1}{iT} + \omega)\)</span>.</p>
+</div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Para mayor detalle, revisar la nota 8-Análisis de tiempos
+promedio.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter8.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Análisis de tiempos promedios</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Modulo3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion-a-cadenas-absorbentes">Introducción a cadenas absorbentes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-discreto">Tiempo antes de la absorción en Cadenas de Markov de Tiempo Discreto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiempo-antes-de-la-absorcion-en-cadenas-de-markov-de-tiempo-continuo">Tiempo antes de la absorción en Cadenas de Markov de Tiempo Continuo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-discreto">Probabilidades de absorción para cadenas de tiempo discreto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-para-cadenas-de-tiempo-continuo">Probabilidades de absorción para cadenas de tiempo continuo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anexos">Anexos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilidades-de-absorcion-mediante-la-emc">Probabilidades de absorción mediante la EMC</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

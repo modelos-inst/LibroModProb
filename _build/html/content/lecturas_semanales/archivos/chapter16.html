@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Principio de Optimalidad y Ecuaciones de Bellman &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter16';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Programación Dinámica" href="chapter17.html" />
+    <link rel="prev" title="Procesos de decisión en el tiempo" href="chapter15.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter16.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Principio de Optimalidad y Ecuaciones de Bellman</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principio-de-optimalidad-definicion">Principio de optimalidad - Definición</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-16-1-1"><strong>Definición 16.1.1:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuaciones-de-bellman-caso-deterministico">Ecuaciones de Bellman – caso determinístico</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="principio-de-optimalidad-y-ecuaciones-de-bellman">
+<h1>Principio de Optimalidad y Ecuaciones de Bellman<a class="headerlink" href="#principio-de-optimalidad-y-ecuaciones-de-bellman" title="Link to this heading">#</a></h1>
+<p>En este capítulo se presenta la definición del principio de optimalidad,
+condición necesaria para resolver un problema de decisión en el tiempo
+usando programación dinámica. Se muestra un ejemplo de un problema que
+no cumple con el principio de optimalidad y, finalmente, se muestra la
+construcción de las ecuaciones recursivas que permiten construir la
+política óptima para un problema de decisión en el tiempo.</p>
+<section id="principio-de-optimalidad-definicion">
+<h2>Principio de optimalidad - Definición<a class="headerlink" href="#principio-de-optimalidad-definicion" title="Link to this heading">#</a></h2>
+<p>Solucionar un problema de decisión en el tiempo consiste en encontrar
+una política óptima. Esto es, encontrar una decisión para cada estado y
+cada época tal que se minimice (o se maximice) una función objetivo.
+Como se vio en el capítulo anterior, una de las formas de encontrar la
+política óptima <span class="math notranslate nohighlight">\(\pi^{*}\)</span> es usando inducción hacía atrás.
+Fundamentalmente, realizar inducción hacía atrás consiste en escribir la
+solución al problema en la etapa <span class="math notranslate nohighlight">\(t \in E\)</span> en términos de la solución
+del mismo problema para algún estado de la etapa <span class="math notranslate nohighlight">\(t + 1\)</span>. Esto es
+posible siempre y cuando el problema que se quiera resolver cumpla con
+el principio de optimalidad, que se define a continuación:</p>
+<section id="definicion-16-1-1">
+<h3><strong>Definición 16.1.1:</strong><a class="headerlink" href="#definicion-16-1-1" title="Link to this heading">#</a></h3>
+<p>En la política óptima de un problema, independientemente de los estados
+y de las decisiones sobre una época inicial, los estados y las
+decisiones de las épocas restantes deben ser óptimas con respecto al
+subproblema resultante al remover la época inicial.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>DACL es una empresa de paquetería que cuenta con 36
+centros de distribución en Colombia. Un paquete que llega al puerto de
+Buenaventura y tiene destino final en Bogotá se puede mover por la red
+de distribución de DACL como se muestra en la Figura 1, donde el peso de
+cada arco es el costo de enviar un paquete de una ciudad a otra:</p>
+<p><img alt="Figura 1" src="../../../_images/optimalidad1.png" /></p>
+<p>En este caso el problema que se quiere solucionar es encontrar la ruta
+más económica para enviar un paquete de Buenaventura a Bogotá, y para
+encontrarla es necesario resolver subproblemas que consisten en
+encontrar la ruta más económica entre ciudades intermedias y Bogotá.
+Así, DACL sabe que la ruta más corta entre Buenaventura y Bogotá es la
+ruta Buenaventura-Armenia-Pereira-Bogotá con un costo de $377. Si este
+problema cumple con el principio de optimalidad, entonces DACL también
+podría decir que la ruta más corta entre Armenia y Bogotá es
+Armenia-Pereira-Bogotá.</p>
+<p>Suponga que esto no es cierto, es decir, la ruta más corta de Armenia a
+Bogotá es por ejemplo Armenia-Manizales-Bogotá. Esto implicaría que la
+ruta Buenaventura-Armenia-Manizales-Bogotá es más corta que
+Buenaventura-Armenia-Pereira-Bogotá, lo que contradice el hecho que la
+ruta más corta entre Buenaventura y Bogotá es
+Buenaventura-Armenia-Pereira-Bogotá.</p>
+</div>
+<p>Ahora, el principio de optimalidad no se cumple para todos los
+problemas. Cuando un problema de decisión en el tiempo no cumple con el
+principio de optimalidad, se debe solucionar con técnicas diferentes a
+inducción hacía atrás o programación dinámica. A continuación, se
+muestra un ejemplo de un proceso de decisión que no cumple con el
+principio de optimalidad.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Considere la red de la Figura 2, donde se quiere hallar
+la ruta más larga sin ciclos del nodo Q al nodo T. Note que es de
+interés hallar rutas sin ciclos pues cuando se permiten ciclos la
+solución se vuelve trivial y vale <span class="math notranslate nohighlight">\(\infty\)</span>:</p>
+<p><img alt="Figura 2" src="../../../_images/optimalidad2.png" /></p>
+<p>En este caso, el problema es encontrar la ruta más larga de Q a T y los
+subproblemas son encontrar la ruta más larga entre los nodos intermedios
+y T. No es difícil ver que la ruta más larga entre Q y T es Q-R-T con
+una distancia de 3. Si este problema cumpliera con el principio de
+optimalidad, entonces R-T sería la ruta más larga entre R y T; sin
+embargo, la ruta más larga en este caso es R-Q-S-T.</p>
+</div>
+</section>
+</section>
+<section id="ecuaciones-de-bellman-caso-deterministico">
+<h2>Ecuaciones de Bellman – caso determinístico<a class="headerlink" href="#ecuaciones-de-bellman-caso-deterministico" title="Link to this heading">#</a></h2>
+<p>Recordemos el ejemplo 1. Definimos:</p>
+<div class="math notranslate nohighlight">
+\[f_{1}\left( \text{Buenaventura} \right):\ El\ valor\ de\ la\ ruta\ más\ corta\ de\ Buenaventura\ a\ Bogotá.\]</div>
+<p>Entonces el problema se reduce a encontrar <span class="math notranslate nohighlight">\(f_{1}(\text{Buenaventura})\)</span>
+y la política <span class="math notranslate nohighlight">\(\pi^{*}\)</span> que le permite a DACL alcanzar ese valor. Así,
+en general se puede definir <span class="math notranslate nohighlight">\(f_{t}(i)\)</span> para cualquier estado y cualquier
+etapa así:</p>
+<div class="math notranslate nohighlight">
+\[f_{t}(i):\ El\ valor\ esperado\ de\ la\ solción\ óptima\ al\ problema\ del\ estado\ i \in S_{t}\ de\ la\ etapa\ t.\]</div>
+<p>Si además se sabe que el problema cumple con el principio de
+optimalidad, es posible construir la solución óptima a partir de
+soluciones óptimas a problemas más pequeños. Sabemos que para el estado
+<span class="math notranslate nohighlight">\(i \in S_{t}\)</span> de la etapa <span class="math notranslate nohighlight">\(t \in T\)</span> encontrar la solución es escoger
+algún <span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span> que minimice (o maximice) <span class="math notranslate nohighlight">\(f_{t}(i)\)</span>. Entonces,
+es posible escribir una relación recursiva de la forma:</p>
+<div class="math notranslate nohighlight">
+\[f_{t}(i) = \min_{a \in A_{t}(i)}\left\{ c_{t}(i,a) + f_{t + 1}(s_{t + 1}(i,a)) \right\}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(s_{t + 1}(i,a)\)</span> es el estado al que se llega en la época <span class="math notranslate nohighlight">\(t + 1\)</span>
+cuando en la época <span class="math notranslate nohighlight">\(t \in E\)</span> y el estado <span class="math notranslate nohighlight">\(i \in S_{t}\)</span> se toma la
+decisión <span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>. Note que para conocer <span class="math notranslate nohighlight">\(f_{t}(i)\)</span> es necesario
+conocer <span class="math notranslate nohighlight">\(f_{t + 1}(j)\)</span> para cada estado <span class="math notranslate nohighlight">\(j\)</span> al que se puede ir al tomar
+la decisión <span class="math notranslate nohighlight">\(a \in A_{t}(i)\)</span>. Si escribimos la misma ecuación para
+<span class="math notranslate nohighlight">\(f_{t + 1}(j)\)</span> obtenemos:</p>
+<div class="math notranslate nohighlight">
+\[f_{t + 1}(j) = \min_{a \in A_{t + 1}(j)}\left\{ c_{t + 1}(j,a) + f_{t + 2}(s_{t + 2}(j,a)) \right\}\]</div>
+<p>Y nuevamente, para conocer <span class="math notranslate nohighlight">\(f_{t + 1}(j)\)</span> es necesario conocer
+<span class="math notranslate nohighlight">\(f_{t + 2}(i)\)</span> para algún estado <span class="math notranslate nohighlight">\(i \in S_{t + 2}\)</span>. Es necesario
+entonces formular esta misma ecuación recursiva hasta la última etapa
+del proceso de decisión, donde se obtiene:</p>
+<div class="math notranslate nohighlight">
+\[f_{|E|}(i) = \min_{a \in A_{|E|}(i)}\left\{ c_{|E|}(i,a) \right\}\]</div>
+<p>Note que esta última ecuación es la solución al subproblema más pequeño,
+y a partir de esta se pueden solucionar los subproblemas moviéndose de
+la última hasta la primera etapa de decisión hasta encontrar la solución
+al problema original.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter15.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Procesos de decisión en el tiempo</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter17.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Programación Dinámica</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principio-de-optimalidad-definicion">Principio de optimalidad - Definición</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-16-1-1"><strong>Definición 16.1.1:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuaciones-de-bellman-caso-deterministico">Ecuaciones de Bellman – caso determinístico</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

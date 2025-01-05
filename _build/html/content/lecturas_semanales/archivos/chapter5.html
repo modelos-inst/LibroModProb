@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Clasificación de estados &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter5';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Probabilidades en estado estable" href="chapter6.html" />
+    <link rel="prev" title="Análisis transitorio de cadenas de Markov" href="chapter4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter5.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clasificación de estados</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definiciones-preliminares">Definiciones preliminares</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-1"><strong>Definición 5.1.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-2"><strong>Definición 5.1.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-3"><strong>Definición 5.1.3:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-4"><strong>Definición 5.1.4:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-5"><strong>Definición 5.1.5:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-irreducibles">Cadenas de Markov irreducibles</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-2-1"><strong>Definición 5.2.1:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estados-absorbentes-recurrentes-y-transitorios">Estados absorbentes, recurrentes y transitorios</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-1"><strong>Definición 5.3.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-2"><strong>Definición 5.3.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-3"><strong>Definición 5.3.3:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-4"><strong>Definición 5.3.4:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Definición 5.3.4:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodo-de-un-estado-en-cmtds">Periodo de un estado en CMTDs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-1"><strong>Definición 5.4.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-2"><strong>Definición 5.4.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-3"><strong>Definición 5.4.3:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-ergodicas">Cadenas ergódicas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-5-1"><strong>Definición 5.5.1:</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clasificacion-de-estados">
+<h1>Clasificación de estados<a class="headerlink" href="#clasificacion-de-estados" title="Link to this heading">#</a></h1>
+<p>En este capítulo se presenta la definición de periodicidad e
+irreductibilidad de las cadenas de Markov, dos propiedades importantes
+cuando se quiere analizar el comportamiento de la cadena en el largo
+plazo. Para la construcción de estas propiedades, también se presentan
+ciertas clasificaciones de los estados y las cadenas de Markov.</p>
+<section id="definiciones-preliminares">
+<h2>Definiciones preliminares<a class="headerlink" href="#definiciones-preliminares" title="Link to this heading">#</a></h2>
+<section id="definicion-5-1-1">
+<h3><strong>Definición 5.1.1:</strong><a class="headerlink" href="#definicion-5-1-1" title="Link to this heading">#</a></h3>
+<p>Sea una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span>. Se conoce como un
+<strong>camino</strong> entre <span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(j\)</span> <span class="math notranslate nohighlight">\((i,j \in S)\)</span> a una secuencia de arcos
+<span class="math notranslate nohighlight">\(\left\lbrack a_{0},\ a_{1},\ldots,\ a_{k} \right\rbrack\)</span> (que no
+necesariamente son todos) del diagrama de transiciones (o tasas) tal que
+el origen del arco <span class="math notranslate nohighlight">\(a_{0}\)</span> es <span class="math notranslate nohighlight">\(i\)</span>, el destino de <span class="math notranslate nohighlight">\(a_{k}\)</span> es <span class="math notranslate nohighlight">\(j\)</span>, el
+destino del arco <span class="math notranslate nohighlight">\(a_{h}\)</span> es el origen del arco <span class="math notranslate nohighlight">\(a_{h + 1}\)</span> (para
+<span class="math notranslate nohighlight">\(h = 0,1,\ldots,k - 1\)</span>), y la probabilidad (en el caso de cadenas de
+Markov de tiempo discreto) o la tasa (para cadenas de tiempo continuo)
+asociada a cada arco es mayor a cero (sin importar su magnitud).</p>
+<p>Por ejemplo, en la cadena que se muestra en la Figura 1, un camino entre
+el estado 3 y el estado 6 está compuesto por el arco que conecta el
+estado 3 con el estado 5 y el arco que conecta el estado 5 con el estado
+6.</p>
+</section>
+<section id="definicion-5-1-2">
+<h3><strong>Definición 5.1.2:</strong><a class="headerlink" href="#definicion-5-1-2" title="Link to this heading">#</a></h3>
+<p>Considere una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span>. Si existe al
+menos un camino de <span class="math notranslate nohighlight">\(i\)</span> a <span class="math notranslate nohighlight">\(j\ \)</span>(<span class="math notranslate nohighlight">\(i,j \in S\)</span>) en el diagrama de
+transiciones, se dice que el estado <span class="math notranslate nohighlight">\(j\)</span> es <strong>alcanzable</strong> desde el
+estado <span class="math notranslate nohighlight">\(i\)</span> (y se nota como <span class="math notranslate nohighlight">\(i \rightarrow j\)</span>).</p>
+<p>Esta es una relación transitiva, es decir:</p>
+<div class="math notranslate nohighlight">
+\[i \rightarrow j,\ j \rightarrow k\  \Rightarrow i \rightarrow k\ \]</div>
+<p>Además, siempre se cumple que <span class="math notranslate nohighlight">\(i \rightarrow i\)</span>.</p>
+<p>En particular en el caso de las cadenas en tiempo discreto, que <span class="math notranslate nohighlight">\(j\)</span> sea
+alcanzable desde <span class="math notranslate nohighlight">\(i\)</span> significa que existe un <span class="math notranslate nohighlight">\(n\)</span> tal que
+<span class="math notranslate nohighlight">\(P_{ij}^{n} &gt; 0\)</span>.</p>
+</section>
+<section id="definicion-5-1-3">
+<h3><strong>Definición 5.1.3:</strong><a class="headerlink" href="#definicion-5-1-3" title="Link to this heading">#</a></h3>
+<p>Considere una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span> y un par de
+estados <span class="math notranslate nohighlight">\(i,j \in S\)</span>. Si <span class="math notranslate nohighlight">\(i \rightarrow j\)</span> y <span class="math notranslate nohighlight">\(j \rightarrow i\ \)</span>, se dice
+que el estado <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> <strong>se comunica con el estado</strong> <span class="math notranslate nohighlight">\(\mathbf{j}\)</span> (y
+se denota <span class="math notranslate nohighlight">\(i \leftrightarrow j\)</span>). De la misma forma, <span class="math notranslate nohighlight">\(j\)</span> también se
+comunica con <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>Se puede demostrar que esta es una relación transitiva, simétrica y
+reflexiva, por lo que se puede usar para crear una partición de <span class="math notranslate nohighlight">\(S\)</span> en
+clases.</p>
+<p>Para el caso de la Figura 1, se puede afirmar que el estado 0 se
+comunica con el estado 1 dado que el estado 0 es alcanzable desde el
+estado 1, y viceversa.</p>
+</section>
+<section id="definicion-5-1-4">
+<h3><strong>Definición 5.1.4:</strong><a class="headerlink" href="#definicion-5-1-4" title="Link to this heading">#</a></h3>
+<p>Considere una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span>. Un
+subconjunto de estados <span class="math notranslate nohighlight">\(C \subseteq S\)</span> es una <strong>clase comunicante</strong> si:</p>
+<p><span class="math notranslate nohighlight">\({\forall\ i \in C,\ j \in C \Rightarrow i \leftrightarrow j\}\)</span>
+<span class="math notranslate nohighlight">\({\forall\ i \in C,\ i \leftrightarrow j \Rightarrow j \in C}\)</span></p>
+<p>Esto es, todos los estados en <span class="math notranslate nohighlight">\(C\)</span> se comunican entre sí, y <span class="math notranslate nohighlight">\(C\)</span> es un
+conjunto máximo, esto quiere decir que no hay ningún estado
+<span class="math notranslate nohighlight">\(k \in S \smallsetminus C\)</span> que se comunique con algún estado en <span class="math notranslate nohighlight">\(C\)</span>.</p>
+</section>
+<section id="definicion-5-1-5">
+<h3><strong>Definición 5.1.5:</strong><a class="headerlink" href="#definicion-5-1-5" title="Link to this heading">#</a></h3>
+<p>Considere una clase comunicante <span class="math notranslate nohighlight">\(C\)</span>. Si no existe un par de estados
+<span class="math notranslate nohighlight">\(i \in C\)</span> y <span class="math notranslate nohighlight">\(j \in S \smallsetminus C\)</span> tal que <span class="math notranslate nohighlight">\(i \rightarrow j\)</span>, <span class="math notranslate nohighlight">\(C\)</span> es
+una <strong>clase comunicante cerrada</strong>.</p>
+<p>En la figura 1, los estados <span class="math notranslate nohighlight">\(\{ 0,1,2\}\)</span> conforman una clase comunicante
+cerrada dado que no hay ningún estado por fuera de la clase que sea
+alcanzable desde alguno de los estados en la clase comunicante.</p>
+<p><img alt="Figura 1" src="../../../_images/clasEstados1.png" /></p>
+</section>
+</section>
+<section id="cadenas-de-markov-irreducibles">
+<h2>Cadenas de Markov irreducibles<a class="headerlink" href="#cadenas-de-markov-irreducibles" title="Link to this heading">#</a></h2>
+<section id="definicion-5-2-1">
+<h3><strong>Definición 5.2.1:</strong><a class="headerlink" href="#definicion-5-2-1" title="Link to this heading">#</a></h3>
+<p>Una cadena de Markov con espacio de estados <span class="math notranslate nohighlight">\(S\)</span> es <strong>irreducible</strong> si
+todos sus estados pertenecen a la misma clase comunicante, en otro caso
+se dice que la cadena es reducible.</p>
+<p>Además, si la cadena es irreducible la totalidad del espacio de estados
+es también una clase comunicante cerrada.</p>
+</section>
+</section>
+<section id="estados-absorbentes-recurrentes-y-transitorios">
+<h2>Estados absorbentes, recurrentes y transitorios<a class="headerlink" href="#estados-absorbentes-recurrentes-y-transitorios" title="Link to this heading">#</a></h2>
+<section id="definicion-5-3-1">
+<h3><strong>Definición 5.3.1:</strong><a class="headerlink" href="#definicion-5-3-1" title="Link to this heading">#</a></h3>
+<p>Un <strong>estado</strong> <span class="math notranslate nohighlight">\(i \in S\)</span> es <strong>absorbente</strong> si la probabilidad de hacer
+una transición de <span class="math notranslate nohighlight">\(i\)</span> a otro estado <span class="math notranslate nohighlight">\(j \in S\)</span>, <span class="math notranslate nohighlight">\(j \neq i\)</span>, es 0.</p>
+<p>La identificación de un estado absorbente depende de la temporalidad de
+la cadena.</p>
+<ul class="simple">
+<li><p>En las CMTD el estado <span class="math notranslate nohighlight">\(i \in S\)</span> es absorbente si el único elemento
+no nulo en la fila correspondiente a <span class="math notranslate nohighlight">\(i\)</span> en la matriz de
+probabilidades de transición a un paso <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> está en la
+diagonal (y en este caso, por obvias razones, será 1). En resumen,
+se tendría que <span class="math notranslate nohighlight">\(p_{ii} = 1\)</span>.</p></li>
+<li><p>En las CMTC el estado <span class="math notranslate nohighlight">\(i \in S\)</span> es absorbente si todos los elementos
+de la fila correspondiente a <span class="math notranslate nohighlight">\(i\)</span> en la matriz de tasas de transición
+<span class="math notranslate nohighlight">\(Q\)</span> son iguales a cero.</p></li>
+</ul>
+<p>Por ejemplo, el estado 6 de la figura 1 es un estado absorbente.</p>
+</section>
+<section id="definicion-5-3-2">
+<h3><strong>Definición 5.3.2:</strong><a class="headerlink" href="#definicion-5-3-2" title="Link to this heading">#</a></h3>
+<p>Una <strong>cadena de Markov</strong> es <strong>absorbente</strong> si contiene un conjunto de
+estados absorbentes <span class="math notranslate nohighlight">\(A\)</span>, y para cualquier estado
+<span class="math notranslate nohighlight">\(i \in S \smallsetminus A\)</span>, se tiene que <span class="math notranslate nohighlight">\(i \rightarrow j\)</span> para algún
+estado <span class="math notranslate nohighlight">\(j \in A\)</span>.</p>
+<p>Note que no todas las cadenas que tienen estados absorbentes son cadenas
+absorbentes. Por ejemplo, en la cadena que se muestra en la Figura 1, el
+estado <span class="math notranslate nohighlight">\(6\)</span> es absorbente pero no existen caminos entre <span class="math notranslate nohighlight">\(0,\ 1\)</span> o <span class="math notranslate nohighlight">\(2\)</span> y
+el estado absorbente, por lo que la cadena no es absorbente.</p>
+</section>
+<section id="definicion-5-3-3">
+<h3><strong>Definición 5.3.3:</strong><a class="headerlink" href="#definicion-5-3-3" title="Link to this heading">#</a></h3>
+<p>Un estado <span class="math notranslate nohighlight">\(i \in S\)</span> es <strong>recurrente</strong> si la cadena <u>regresa</u>
+a <span class="math notranslate nohighlight">\(i\)</span> con probabilidad<span class="math notranslate nohighlight">\(\ 1\)</span>.</p>
+<p>Esto quiere decir que si la cadena empieza en el estado <span class="math notranslate nohighlight">\(i\)</span>, siempre va
+a regresar al estado <span class="math notranslate nohighlight">\(i\)</span> en algún momento (incluso si el número de
+transiciones o el tiempo que transcurre antes de que esto pase son muy
+grandes). Alternativamente, que un estado sea recurrente también implica
+que el número esperado de visitas a ese estado es infinito.</p>
+</section>
+<section id="definicion-5-3-4">
+<h3><strong>Definición 5.3.4:</strong><a class="headerlink" href="#definicion-5-3-4" title="Link to this heading">#</a></h3>
+<p>Un estado <span class="math notranslate nohighlight">\(i \in S\)</span> es <strong>recurrente positivo</strong> si además de ser
+recurrente, el valor esperado del tiempo entre visitas a <span class="math notranslate nohighlight">\(i\)</span> es finito.</p>
+<p>Esta condición es más fuerte que la anterior ya que a un estado
+recurrente se podría volver con probabilidad 1, pero el valor esperado
+de regreso podría ser infinito. Esto sucede especialmente en cadenas con
+espacios de estado infinitos. Por ejemplo, si la cadena representa el
+número de personas en una cola, siempre es posible regresar al estado 0
+(cola vacía), pero si las personas llegan mucho más rápido de lo que es
+posible atenderlas, el tiempo hasta volver a la cola vacía puede ser
+infinito, en valor esperado.</p>
+</section>
+<section id="id1">
+<h3><strong>Definición 5.3.4:</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Un estado <span class="math notranslate nohighlight">\(i \in S\)</span> es <strong>transitorio</strong> si no es recurrente.</p>
+<p>La recurrencia es una propiedad que se comparte en la clase comunicante,
+lo que hace más fácil identificar qué estados de una cadena son
+recurrentes o transitorios. Además, si una cadena es finita e
+irreducible se puede garantizar que todos sus estados son recurrentes.</p>
+<p>Adicionalmente, en una cadena absorbente todos los estados que no son
+absorbentes son transitorios, y cada estado absorbente es recurrente.</p>
+</section>
+</section>
+<section id="periodo-de-un-estado-en-cmtds">
+<h2>Periodo de un estado en CMTDs<a class="headerlink" href="#periodo-de-un-estado-en-cmtds" title="Link to this heading">#</a></h2>
+<section id="definicion-5-4-1">
+<h3><strong>Definición 5.4.1:</strong><a class="headerlink" href="#definicion-5-4-1" title="Link to this heading">#</a></h3>
+<p>En una CMTD, el <strong>periodo</strong> de un estado <span class="math notranslate nohighlight">\(i \in S\)</span> es el máximo común
+divisor de la longitud (es decir, el número de arcos que contiene) de
+todos los posibles caminos de <span class="math notranslate nohighlight">\(i\)</span> a <span class="math notranslate nohighlight">\(i.\)</span></p>
+<p>Ahora, si un estado <span class="math notranslate nohighlight">\(i\)</span> tiene periodo <span class="math notranslate nohighlight">\(d\)</span> no significa que la cadena
+visita el estado <span class="math notranslate nohighlight">\(i\)</span> cada <span class="math notranslate nohighlight">\(d\)</span> transiciones, sino que el número de
+transiciones entre cada visita a <span class="math notranslate nohighlight">\(i\)</span> es un múltiplo de <span class="math notranslate nohighlight">\(d\)</span>.</p>
+<p>Por ejemplo, en la CMTD representada por la Figura 2 cuando
+<span class="math notranslate nohighlight">\(\lambda = 1\)</span>, todos los estados tienen periodo 3, pues estando en 1, la
+cadena puede volver a 1 en 3, 6, 9, … pasos (y lo mismo para los
+estados 2 y 3). Por otro lado, cuando <span class="math notranslate nohighlight">\(\lambda &lt; 1\)</span>, el periodo del
+estado 1 es 1, pues para volver a él la cadena puede pasar por 2 y 3, o
+ir a 2 y volver directamente, así obtenemos <span class="math notranslate nohighlight">\(MCD(2,3) = 1\)</span>.</p>
+<p><img alt="Figura 2" src="../../../_images/clasEstados2.png" /></p>
+</section>
+<section id="definicion-5-4-2">
+<h3><strong>Definición 5.4.2:</strong><a class="headerlink" href="#definicion-5-4-2" title="Link to this heading">#</a></h3>
+<p>Un estado es <strong>aperiódico</strong> si tiene periodo 1.</p>
+<p>Ya que la definición del periodo tiene que ver con el número de
+transiciones antes de volver a un estado, el periodo sólo se estudia en
+cadenas de Markov de tiempo discreto. Por definición, todos los estados
+de una cadena de Markov en tiempo continuo son aperiódicos. Además, al
+igual que la comunicación, la periodicidad sólo tiene que ver con la
+existencia de una transición (es decir, es de interés revisar las
+componentes no nulas de la matriz <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, sin importar la
+magnitud).</p>
+<p>De forma similar a la recurrencia, el periodo es una propiedad que se
+comparte entre clases comunicantes cerradas, lo que simplifica el
+cálculo del periodo para todos los estados de una cadena y da pie a la
+siguiente definición.</p>
+</section>
+<section id="definicion-5-4-3">
+<h3><strong>Definición 5.4.3:</strong><a class="headerlink" href="#definicion-5-4-3" title="Link to this heading">#</a></h3>
+<p>Una CMTD es periódica/aperiódica si todos los estados son
+periódicos/aperiódicos.</p>
+</section>
+</section>
+<section id="cadenas-ergodicas">
+<h2>Cadenas ergódicas<a class="headerlink" href="#cadenas-ergodicas" title="Link to this heading">#</a></h2>
+<section id="definicion-5-5-1">
+<h3><strong>Definición 5.5.1:</strong><a class="headerlink" href="#definicion-5-5-1" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Una cadena de Markov de tiempo discreto finita es ergódica si es irreducible y aperiódica.</p></li>
+<li><p>Una cadena de Markov de tiempo discreto infinita es ergódica si es irreducible, aperiódica y todos sus estados son recurrentes positivos.</p></li>
+<li><p>Una cadena de Markov de tiempo continuo finita es ergódica si es irreducible.</p></li>
+<li><p>Una cadena de Markov de tiempo continuo infinita es ergódica si es irreducible y todos sus estados son recurrentes positivos.</p></li>
+</ol>
+<p>Que una cadena sea o no ergódica afecta el tipo de análisis que se puede
+hacer sobre el comportamiento del sistema en el largo plazo, como se
+mostrará en el siguiente capítulo, y permite determinar propiedades
+cualitativas de las distribuciones de la probabilidad de estado en el
+tiempo. Por ejemplo, en una cadena ergódica con más de un estado, la
+probabilidad de estar en un estado en el largo plazo nunca será 0 ni 1.
+En una cadena no ergódica, por ejemplo, absorbente, la probabilidad de
+estar en cada estado absorbente en el largo plazo es no-decreciente en
+el tiempo.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Análisis transitorio de cadenas de Markov</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter6.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Probabilidades en estado estable</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definiciones-preliminares">Definiciones preliminares</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-1"><strong>Definición 5.1.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-2"><strong>Definición 5.1.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-3"><strong>Definición 5.1.3:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-4"><strong>Definición 5.1.4:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-1-5"><strong>Definición 5.1.5:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov-irreducibles">Cadenas de Markov irreducibles</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-2-1"><strong>Definición 5.2.1:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estados-absorbentes-recurrentes-y-transitorios">Estados absorbentes, recurrentes y transitorios</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-1"><strong>Definición 5.3.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-2"><strong>Definición 5.3.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-3"><strong>Definición 5.3.3:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-3-4"><strong>Definición 5.3.4:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Definición 5.3.4:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodo-de-un-estado-en-cmtds">Periodo de un estado en CMTDs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-1"><strong>Definición 5.4.1:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-2"><strong>Definición 5.4.2:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-4-3"><strong>Definición 5.4.3:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-ergodicas">Cadenas ergódicas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-5-5-1"><strong>Definición 5.5.1:</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

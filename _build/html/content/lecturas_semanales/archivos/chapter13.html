@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Redes de Jackson &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=0b548502" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecturas_semanales/archivos/chapter13';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Costos en cadenas de Markov" href="chapter14.html" />
+    <link rel="prev" title="Procesos de nacimiento y muerte" href="chapter11.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria1.html"><h6 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria2.html"><h6 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria3.html"><h6 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria4/Complementaria4.html"><h6 style="color: #ADD8E6;">Complementaria 4</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria5/Complementaria5_IntroDash.html"><h1 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h1></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria6.html"><h6 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h6></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complementarias/Complementaria9.html"><h6 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h6></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/lecturas_semanales/archivos/chapter13.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Redes de Jackson</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estabilidad-en-redes-de-jackson-abiertas">Estabilidad en redes de Jackson abiertas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-teorema-de-jackson-1963-y-sus-aplicaciones">El teorema de Jackson (1963) y sus aplicaciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relevancia-del-teorema-de-jackson">Relevancia del teorema de Jackson</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="redes-de-jackson">
+<h1>Redes de Jackson<a class="headerlink" href="#redes-de-jackson" title="Link to this heading">#</a></h1>
+<p>En este capítulo se introduce una clase de redes de colas conocida como
+redes de Jackson, por el nombre del matemático estadunidense James
+Jackson, quien las introdujo en un famoso artículo científico en 1963.
+Primero se proporciona la definición de las redes de Jackson, y después
+se presenta el teorema de Jackson, que permite analizar de forma muy
+sencilla la distribución de probabilidad de estado estacionario de las
+redes de Jackson estables. Finalmente, se realiza una discusión sobre la
+relevancia del resultado de Jackson.</p>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>Una red de colas general está formada por un conjunto de colas (o
+estaciones), que pueden ser entre ellas diferentes por número de
+servidores, distribución de servicio, disciplina, etc. Los usuarios de
+la red pueden requerir de múltiples y repetidos servicios a las
+estaciones, y se mueven en la red de acuerdo con un ruteo que puede ser
+dependiente del estado de las estaciones, del tiempo (en este caso la
+red será no homogénea), de características particulares del usuario (es
+este caso la red se dirá multi-clase, siendo una clase un conjunto de
+usuarios homogéneo), etc. También, una red puede ser abierta (cuando los
+usuarios llegan a las colas desde un ambiente externo) o cerrada (cuando
+los usuarios circulan indefinidamente en ella sin dejarla). Cuando
+existan clases múltiples de usuarios, es posible encontrar redes
+híbridas, con clases de usuarios que entran a la red y clases de
+usuarios que nunca la dejan.</p>
+<p>Las redes de Jackson conforman una particular familia de redes de colas.
+Para que una red de colas sea una red de Jackson abierta (De aquí en
+adelante solo se considerará esta familia), las siguientes condiciones
+deben ser satisfechas:</p>
+<ul class="simple">
+<li><p>Hay <span class="math notranslate nohighlight">\(m &gt; 0\)</span> estaciones y todas las estaciones tienen tiempos de
+servicio que se distribuyen exponencial con tasa constante<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> y su
+capacidad es infinita.</p></li>
+<li><p>Las llegadas externas a la estación <span class="math notranslate nohighlight">\(i\)</span> siguen un proceso de Poisson
+de parámetro <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>, <span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>. Nótese que puede ser
+<span class="math notranslate nohighlight">\(\lambda_{i} = 0\)</span> para alguna estación, pero debe también ser
+<span class="math notranslate nohighlight">\(\sum_{j = 1}^{m}{\lambda_{j} &gt; 0}\)</span>, de lo contrario no sería una
+red abierta.</p></li>
+<li><p>Un usuario que complete el servicio a la estación <span class="math notranslate nohighlight">\(i\)</span> se mueve a la
+estación <span class="math notranslate nohighlight">\(j\)</span> con probabilidad <span class="math notranslate nohighlight">\(r_{ij}\)</span>, y deja la red con
+probabilidad <span class="math notranslate nohighlight">\(r_{i0} = 1 - \sum_{j = 1}^{m}{r_{ij} \geq 0}\)</span>. Nótese
+que <span class="math notranslate nohighlight">\(r_{i0}\)</span> tiene que ser positivo para alguna estación, de lo
+contrario no habría salida de la red. Es posible que <span class="math notranslate nohighlight">\(r_{ii} &gt; 0\)</span>,
+es decir que en algunas estaciones los usuarios puedan recibir
+servicios repetidos.</p></li>
+</ul>
+<p>Por ejemplo, el diagrama en la Figura 1 representa una red de Jackson
+abierta con 3 estaciones, donde las tasas de llegada y de servicio se
+suponen expresadas en términos de las mismas unidades de tiempo.</p>
+<p><img alt="Figura 1" src="../../../_images/redes1.png" /></p>
+<p>En la red de Jackson de la Figura 1, cada estación es representada
+gráficamente con un rectángulo. En el interior de cada rectángulo se
+describen las características de la estación que se modela. Por ejemplo,
+la estación numerada 1 tiene un número de servidores <span class="math notranslate nohighlight">\(s = 1\)</span>, y la tasa
+del servicio es <span class="math notranslate nohighlight">\(\mu = 1.0\)</span>, la estación 2 tiene 3 servidores con tasa
+de servicio <span class="math notranslate nohighlight">\(\mu = 0.8\)</span> y finalmente la estación 3 tiene infinitos
+servidores, cada uno con tasa de servicio <span class="math notranslate nohighlight">\(\mu = 0.75.\)</span> En la red hay
+llegadas externas a las estaciones 1 y 2, los usuarios que terminan
+servicio a la estación 1 llegan a las estaciones 2 y 3 con igual
+probabilidad, los que salen de la estación 2 pueden volver a esa misma
+estación con una probabilidad de 0.1 o dirigirse a la estación 3.
+Finalmente, todos los usuarios salen de la red después de recibir
+servicio a la estación 3.</p>
+</section>
+<section id="estabilidad-en-redes-de-jackson-abiertas">
+<h2>Estabilidad en redes de Jackson abiertas<a class="headerlink" href="#estabilidad-en-redes-de-jackson-abiertas" title="Link to this heading">#</a></h2>
+<p>En esta sección consideramos el problema de determinar si una red de
+Jackson abierta puede tener un estado estacionario. Para ello,
+necesitamos determinar la tasa de llegada total a cada estación de la
+red. Usamos la expresión tasa total porque en general, por cada estación
+<span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>, pueden existir 2 tipos distintos de llegadas:</p>
+<ul class="simple">
+<li><p>Las llegadas externas, que ocurren de acuerdo con un proceso de
+Poisson de parámetro <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>.</p></li>
+<li><p>Las llegadas de otra estación <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(j = 1,2,\ldots,m\)</span>, de acuerdo
+con la probabilidad de ruteo <span class="math notranslate nohighlight">\(r_{ji}\)</span>.</p></li>
+</ul>
+<p>Para que una red de Jackson abierta sea estable, es necesario que la
+tasa total de llegada a cada estación sea estrictamente menor que la
+tasa de servicio de la estación. Eso asegura que ninguna estación se
+congestione y que el número promedio de usuarios en cada estación sea
+finito en el estado estacionario.</p>
+<p>Denotamos entonces con <span class="math notranslate nohighlight">\(\Lambda_{i}\)</span> la tasa total de llegada a la
+estación <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>. La tasa total, como está descrito
+anteriormente, será el resultado de la siguiente suma:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\Lambda_{i} = \lambda_{i} + \sum_{j = 1}^{m}\Lambda_{j} \cdot r_{ji},\ \ \ \ \ \ i = 1,2,\ldots,m\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>En la ecuación (1), la tasa total de llegada a una estación
+<span class="math notranslate nohighlight">\((\Lambda_{i}\)</span>) está descrita en función de las tasas de llegada a las
+estaciones (los <span class="math notranslate nohighlight">\(\Lambda_{j}\)</span>). Esta definición se basa en el supuesto
+de que, en el equilibrio, la tasa de salida de cada estación es
+necesariamente igual a la tasa total de llegada a la misma, por lo cual
+el flujo de usuarios que de la estación j se dirigen a la estación i
+será igual a <span class="math notranslate nohighlight">\(\Lambda_{j} \cdot r_{ji}\)</span>. Las <span class="math notranslate nohighlight">\(m\)</span> ecuaciones lineales
+(una por cada estación) conforman un sistema lineal, cuya solución
+simultánea proporciona las tasas totales de llegada <span class="math notranslate nohighlight">\(\Lambda_{i}\)</span>,
+<span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 1</p>
+<p>Calculamos las tasas totales de llegada para la red de
+Jackson abierta de la Figura 1. La ecuación para la estación 1 será
+sencillamente:</p>
+<div class="math notranslate nohighlight">
+\[\Lambda_{1} = \lambda_{1}\]</div>
+<p>Dado que no hay llegadas de las demás estaciones. Para la estación 2
+tendremos que:</p>
+<div class="math notranslate nohighlight">
+\[\Lambda_{2} = \lambda_{2} + \Lambda_{1}r_{12} + \Lambda_{2}r_{22}\]</div>
+<p>Suma de las llegadas externas a la estación (<span class="math notranslate nohighlight">\(\lambda_{2}\)</span>), de las
+llegadas de los usuarios que terminan servicio a la estación 1 e
+ingresan a la estación 2 (<span class="math notranslate nohighlight">\(\Lambda_{1}r_{12}\)</span>), y de las llegadas de los
+usuarios que termina servicio a la estación 2 y vuelven a ingresar a esa
+misma estación (<span class="math notranslate nohighlight">\(\Lambda_{2}r_{22}\)</span>). Finalmente, para la estación 3, la
+ecuación (1) nos proporciona la siguiente expresión para <span class="math notranslate nohighlight">\(\Lambda_{3}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Lambda_{3} = \Lambda_{1}r_{13} + \Lambda_{2}r_{23}\]</div>
+<p>Entonces será <span class="math notranslate nohighlight">\(\Lambda_{1} = \lambda_{1} = 0.5\)</span>, y</p>
+<div class="math notranslate nohighlight">
+\[\Lambda_{2} = 1 + 0.5{\Lambda_{1} + 0.1\Lambda}_{2} = 1 + 0.5 \bullet 0.5 + 0.1\Lambda_{2} = 1.25 + 0.1\Lambda_{2} \Rightarrow \Lambda_{2} = \frac{1.25}{0.9} = 1.388\]</div>
+<p>Finalmente:</p>
+<div class="math notranslate nohighlight">
+\[\Lambda_{3} = 0.5\Lambda_{1} + 0.9\Lambda_{2} = 1.25 + 0.9 \bullet 1.562 = 1.5\ \]</div>
+</div>
+<p>Para que una red de Jackson abierta sea estable, deberá ser que, por
+cada estación <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>, la siguiente condición sea
+satisfecha:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\frac{\Lambda_{i}}{s_{i} \bullet \mu_{i}} &lt; 1\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Donde <span class="math notranslate nohighlight">\(s_{i}\)</span> y <span class="math notranslate nohighlight">\(\mu_{i}\)</span> denotan el número de servidores de la estación
+<span class="math notranslate nohighlight">\(i\)</span> y la tasa de servicio de cada servidor de esta, respectivamente.
+Cuando el número de servidores de la estación <span class="math notranslate nohighlight">\(i\)</span> sea <span class="math notranslate nohighlight">\(s_{i} = \infty\)</span>,
+la condición de estabilidad (2) se considera siempre satisfecha, sin
+importar la tasa de servicio, ya que este tipo de estación no podrá
+nunca ser congestionada.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 2</p>
+<p>Verificamos la estabilidad de la red de Jackson en la Figura 1 en la siguiente tabla:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Estación 1</strong></p></th>
+<th class="head"><p><strong>Estación 2</strong></p></th>
+<th class="head"><p><strong>Estación 3</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\frac{\mathbf{\Lambda}_{\mathbf{1}}}{\mathbf{s}_{\mathbf{1}}\mathbf{\bullet}\mathbf{\mu}_{\mathbf{1}}}\mathbf{=}\frac{\mathbf{0.5}}{\mathbf{1 \bullet 1.0}}\mathbf{= 0.5 &lt; 1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\Lambda_{2}}{s_{2} \bullet \mu_{2}} = \frac{1.388}{3 \bullet 0.8} = 0.578 &lt; 1\)</span></p></td>
+<td><p>$<span class="math notranslate nohighlight">\(\frac{\Lambda_{3}}{s_{3} \bullet \mu_{3}} &lt; 1\)</span>$</p></td>
+</tr>
+<tr class="row-odd"><td><p>Estable</p></td>
+<td><p>Estable</p></td>
+<td><p>Estable porque <span class="math notranslate nohighlight">\(s_{3} = \infty\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dado que todas las estaciones son estables, podemos concluir que la
+red de Jackson abierta en la Figura 1 tiene un estado estacionario.</p>
+</div>
+<p>Las ecuaciones en la expresión (1) se llaman por obvias razones
+ecuaciones del tráfico de la red de Jackson. Es posible escribir las
+ecuaciones en forma matricial, lo cual simplifica la automatización del
+cálculo a la hora de utilizar una herramienta computacional como R©.
+Denotamos con
+<span class="math notranslate nohighlight">\(\overrightarrow{\Lambda} = (\Lambda_{1},\Lambda_{2},\ldots,\Lambda_{m})\)</span>
+el vector de las tasas totales de llegada (las variables cuyos valores
+son por determinar), con
+<span class="math notranslate nohighlight">\(\overrightarrow{\lambda} = (\lambda_{1},\lambda_{2},\ldots,\lambda_{m})\)</span>
+el vector de las tasas de llegadas externas y con <span class="math notranslate nohighlight">\(R\)</span> la matriz de
+probabilidades de ruteo, tal que <span class="math notranslate nohighlight">\(\left\| R \right\|_{ij} = r_{ij}\)</span>, es
+posible re-escribir las <span class="math notranslate nohighlight">\(m\)</span> ecuaciones en la expresión (1) de la
+siguiente forma:</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\Lambda} = \overrightarrow{\lambda} + \overrightarrow{\Lambda}R\]</div>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>Y de la (3) obtener una fórmula para el <span class="math notranslate nohighlight">\(\overrightarrow{\Lambda}\)</span>, como
+sigue:</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\Lambda} = \overrightarrow{\lambda} + \overrightarrow{\Lambda}R \Rightarrow \overrightarrow{\Lambda} - \overrightarrow{\Lambda}R = \overrightarrow{\lambda} \Rightarrow \overrightarrow{\Lambda}(I - R) = \overrightarrow{\lambda} \Rightarrow \overrightarrow{\Lambda} = \overrightarrow{\lambda}{(I - R)}^{- 1}\]</div>
+</section>
+<section id="el-teorema-de-jackson-1963-y-sus-aplicaciones">
+<h2>El teorema de Jackson (1963) y sus aplicaciones<a class="headerlink" href="#el-teorema-de-jackson-1963-y-sus-aplicaciones" title="Link to this heading">#</a></h2>
+<p>El resultado conocido como Teorema de Jackson proporciona una manera
+extremadamente sencilla de calcular las probabilidades en estado
+estacionario para las redes de Jackson abiertas estables. Una versión
+muy concisa del teorema de Jackson es la siguiente:</p>
+<blockquote>
+<div><p><em>Teorema de Jackson (1963).</em> En una red de Jackson abierta estable, con
+<span class="math notranslate nohighlight">\(m &gt; 0\)</span> estaciones, donde la estación <span class="math notranslate nohighlight">\(i\)</span> tiene <span class="math notranslate nohighlight">\(s_{i}\)</span> servidores, en
+el estado estacionario la distribución conjunta de la probabilidad de
+estado tiene forma de producto y la distribución de estado estacionaria
+marginal de la estación <span class="math notranslate nohighlight">\(i\)</span> es aquella de una <span class="math notranslate nohighlight">\(M/M/s_{i}\)</span>.</p>
+</div></blockquote>
+<p>Para entender el sentido del teorema de Jackson, empezamos con denotar
+con <span class="math notranslate nohighlight">\(N_{i}\)</span> la variable aleatoria número de usuarios en el estado
+estacionario en la estación <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(i = 1,2,\ldots,m\)</span>. La distribución
+conjunta estacionaria de la probabilidad de estado es la probabilidad de
+que, en el estado estacionario de la red, <span class="math notranslate nohighlight">\(N_{1} = n_{1}\)</span> o sea de que
+<span class="math notranslate nohighlight">\(n_{1}\)</span> usuarios se encuentren en la estación 1, <span class="math notranslate nohighlight">\(N_{2} = n_{2}\)</span>, y así
+hasta la estación <span class="math notranslate nohighlight">\(m\)</span>. Podemos denotar dicha probabilidad estacionaria
+con la siguiente notación:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{n_{1},n_{2},\ldots,n_{m}} = P\lbrack N_{1} = n_{1},N_{2} = n_{2},\ldots,N_{m\ } = n_{m}\rbrack\]</div>
+<p>El teorema de Jackson afirma que</p>
+<div class="math notranslate nohighlight">
+\[\pi_{n_{1},n_{2},\ldots,n_{m}} = \pi_{n_{1}} \bullet \pi_{n_{2}}\cdots\pi_{n_{m}} = P\left\lbrack N_{1} = n_{1} \right\rbrack P\left\lbrack N_{2} = n_{2} \right\rbrack\cdots P\left\lbrack N_{m\ } = n_{m} \right\rbrack = \prod_{j = 1}^{m}{P\left\lbrack N_{i\ } = n_{i} \right\rbrack}\]</div>
+<p>Este resultado tiene forma de producto porque la probabilidad conjunta
+se descompone en el producto de las probabilidades de estado marginales
+de las estaciones.</p>
+<p>Es interesante observar que el resultado de Jackson nos permite tratar
+las diferentes estaciones como si fueran entre sí independientes,
+mientras que no lo son por la obvia razón de que están relacionadas de
+acuerdo con la topología de la red. Además, las distribuciones
+marginales de las estaciones, es decir los factores
+<span class="math notranslate nohighlight">\(P\lbrack N_{i} = n_{i}\rbrack\)</span>, son iguales a las probabilidades de una
+cola <span class="math notranslate nohighlight">\(M/M/s_{i}\)</span>, y por ellas tenemos ya las fórmulas onesin necesidad
+alguna de solucionar ecuaciones de balance.</p>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 3</p>
+<p>Aplicamos el teorema de Jackson a la red de Jackson
+abierta de la Figura 1. Por ejemplo, consideramos la probabilidad de que
+en el estado estacionario todas las estaciones se encuentren vacías, o
+sea de que el número total de usuarios en la red sea cero. Lo que
+queremos evaluar es entonces:</p>
+<div class="math notranslate nohighlight">
+\[P\lbrack N_{1} = 0,N_{2} = 0,N_{3\ } = 0\rbrack\]</div>
+<p>Por el teorema de Jackson, en el estado estacionario esta probabilidad
+conjunta es igual a</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack N_{1} = 0 \right\rbrack P\left\lbrack N_{2} = 0 \right\rbrack P\lbrack N_{3\ } = 0\rbrack\]</div>
+<p>El primer factor en la expresión arriba es la probabilidad de que una
+cola <span class="math notranslate nohighlight">\(M/M/1\)</span> estable se encuentre vacía. Por las fórmulas de la <span class="math notranslate nohighlight">\(M/M/1\)</span>,
+será que
+<span class="math notranslate nohighlight">\(P\left\lbrack N_{1} = 0 \right\rbrack = \pi_{0} = 1 - \rho = 1 - \frac{\Lambda_{1}}{\mu_{1}} = 0.5\)</span>.</p>
+<p>Aquí, nótese que es necesario utilizar las tasas totales de llegada al
+aplicar las fórmulas para calcular los índices de cada estación. Así,
+para la estación 2 que es una cola <span class="math notranslate nohighlight">\(M/M/3\)</span>, será necesario utilizar la
+siguiente fórmula para <span class="math notranslate nohighlight">\(P\left\lbrack N_{2} = 0 \right\rbrack\)</span>=<span class="math notranslate nohighlight">\(\pi_{0}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = \left( \sum_{j = 0}^{s - 1}\frac{\left( s\rho_{s} \right)^{j}}{j!} + \frac{\left( s\rho_{s} \right)^{s}}{s!(1 - \rho_{s})} \right)^{- 1} = \frac{1}{\sum_{j = 0}^{2}\frac{\left( 3\rho_{2} \right)^{j}}{j!} + \frac{\left( 3\rho_{2} \right)^{3}}{6(1 - \rho_{2})}} = \frac{1}{1 + 3\rho_{2} + \frac{\left( 3\rho_{2} \right)^{2}}{2} + \frac{\left( 3\rho_{2} \right)^{3}}{6(1 - \rho_{2})}}\]</div>
+<p>Siendo <span class="math notranslate nohighlight">\(\rho_{2} = \frac{\Lambda_{2}}{s_{2} \bullet \mu_{2}} = 0.5783\)</span>.
+Sustituyendo los valores numéricos se obtiene para la segunda estación</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0} = 0.158\]</div>
+<p>Para la tercera estación, de las fórmulas de la cola <span class="math notranslate nohighlight">\(M/M/\infty\)</span> se
+obtiene:</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack N_{3\ } = 0 \right\rbrack = \pi_{0} = e^{- \rho} = e^{- \frac{\Lambda_{3}}{\mu_{3}}} = e^{- \frac{1.5}{0.75}} = e^{- 2} = 0.135\ \]</div>
+<p>Entonces, la probabilidad de que no haya ningún usuario en la red será
+dada por</p>
+<div class="math notranslate nohighlight">
+\[P\left\lbrack N_{1} = 0 \right\rbrack P\left\lbrack N_{2} = 0 \right\rbrack P\left\lbrack N_{3\ } = 0 \right\rbrack = 0.5 \bullet 0.158 \bullet 0.135 = 0.793\]</div>
+</div>
+<p>El resultado de Jackson implica una forma de independencia que facilita
+el cálculo no solo de las probabilidades de estado estacionarias, sino
+de todas las medidas de desempeño. Por ejemplo, supongamos que nos
+interese calcular <span class="math notranslate nohighlight">\(L^{i}\)</span>, el número promedio de usuarios en estado
+estacionario en la estación <span class="math notranslate nohighlight">\(i\)</span> de la red de Jackson. La fórmula por
+utilizar es la fórmula del promedio, como sigue:</p>
+<div class="math notranslate nohighlight">
+\[L^{i} = \sum_{n_{1} = 0}^{\infty}{\sum_{n_{2} = 0}^{\infty}{\cdots\sum_{n_{i} = 0}^{\infty}\cdots\sum_{n_{m} = 0}^{\infty}{n_{i \bullet}\pi_{n_{1},n_{2},\ldots,n_{i},\ldots,n_{m}}}}}\]</div>
+<p>Ahora, utilizando el teorema de Jackson y repartiendo los factores del
+producto se obtiene lo siguiente:</p>
+<div class="math notranslate nohighlight">
+\[L^{i} = \sum_{n_{1} = 0}^{\infty}{\sum_{n_{2} = 0}^{\infty}{\cdots\sum_{n_{i} = 0}^{\infty}\cdots\sum_{n_{m} = 0}^{\infty}{n_{i \bullet}\pi_{n_{1}} \bullet \pi_{n_{2}}\cdots\ \pi_{n_{i}}\cdots\pi_{n_{m}}}}} = \sum_{n_{1} = 0}^{\infty}{\pi_{n_{1}}\sum_{n_{2} = 0}^{\infty}{\pi_{n_{2}}\cdots\sum_{n_{i} = 0}^{\infty}{n_{i \bullet}\pi_{n_{i}}\cdots\sum_{n_{m} = 0}^{\infty}\pi_{n_{m}}}}}\]</div>
+<p>Ahora bien, la última suma es la suma de toda la distribución de estado
+estacionaria para la última estación, lo cual es 1, igual que la suma de
+todas las demás sumatorias después de aquella para la estación <span class="math notranslate nohighlight">\(i\)</span>, así
+que se obtiene:</p>
+<div class="math notranslate nohighlight">
+\[L^{i} = \sum_{n_{1} = 0}^{\infty}{\pi_{n_{1}}\sum_{n_{2} = 0}^{\infty}{\pi_{n_{2}}\cdots\sum_{n_{i} = 0}^{\infty}{n_{i \bullet}\pi_{n_{i}} \bullet 1 \bullet 1 \bullet \cdots \bullet 1 = \sum_{n_{1} = 0}^{\infty}{\pi_{n_{1}}\sum_{n_{2} = 0}^{\infty}{\pi_{n_{2}}\cdots\sum_{n_{i} = 0}^{\infty}{n_{i \bullet}\pi_{n_{i}}}}}}}}\]</div>
+<p>Y de la misma manera, las sumas para las estaciones antes de aquella
+para la estación <span class="math notranslate nohighlight">\(i\)</span> son unitarias, así que se obtiene:</p>
+<div class="math notranslate nohighlight">
+\[L^{i} = 1 \bullet 1 \bullet \cdots \bullet 1\sum_{n_{i} = 0}^{\infty}{n_{i \bullet}\pi_{n_{1}}} = \sum_{n_{i} = 0}^{\infty}{n_{i \bullet}\pi_{n_{i}}}\]</div>
+<p>Lo anterior significa que para calcular los promedios del número de
+usuarios (tanto <span class="math notranslate nohighlight">\(L\)</span> como <span class="math notranslate nohighlight">\(L_{q}\)</span>y <span class="math notranslate nohighlight">\(L_{s}\)</span>) solo tenemos que utilizar la
+distribución de estado marginal. Y como consecuencia, podemos calcular
+los tiempos promedio <span class="math notranslate nohighlight">\(W\)</span> como <span class="math notranslate nohighlight">\(W_{q}\)</span>y <span class="math notranslate nohighlight">\(W_{s\ }\)</span>de cada estación,
+utilizando la ley de Little. Todos estos cálculos se hacen como si las
+estaciones fuesen colas independientes. A tener siempre en cuenta, las
+tasas de llegada que se utilizan para calcular los índices de
+rendimiento son aquellas totales <span class="math notranslate nohighlight">\((\Lambda_{i})\)</span>, que se obtienen de la
+solución de las ecuaciones de tráfico de la red.</p>
+<p>Finalmente, es importante observar que el número total promedio de
+usuarios en la red se obtiene de la suma de los promedios a cada
+estación, así que será:</p>
+<div class="math notranslate nohighlight">
+\[L = \sum_{j = 1}^{m}L^{j}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(L\)</span> es el promedio de usuarios en la red en estado estacionario.
+De la misma manera, se obtienen los promedios de usuarios en cola y en
+servicio en la red.</p>
+<p>Para el cálculo del tiempo promedio que cada usuario pasa en la red (o
+en general en un subconjunto de las estaciones), es necesario utilizar
+la ley de Little. Nótese que los tiempos promedios <span class="math notranslate nohighlight">\(W\)</span>, <span class="math notranslate nohighlight">\(W_{q}\)</span>y
+<span class="math notranslate nohighlight">\(W_{s\ }\)</span>de cada estación son los tiempos promedios por cada visita de
+un usuario, por lo cual la suma de estos tiempos no es en general igual
+al tiempo promedio total, ya que los usuarios pueden visitar las
+estaciones con diferente probabilidad, e incluso puede visitar múltiples
+veces las mismas, dependiendo de las probabilidades del ruteo.</p>
+<div class="warning admonition">
+<p class="admonition-title">Nota</p>
+<p>La suma de los tiempos promedios que un usuario pasa en las
+diferentes estaciones no es igual al tiempo promedio del usuario en la
+red. La forma correcta de calcular el tiempo promedio total es con la
+ley de Little. El único caso en donde se cumple que la suma de los
+tiempos promedios que un usuario pasa en las diferentes estaciones es
+igual al tiempo promedio del usuario en la red es cuando la red es 100%
+secuencial. Lo anterior significa que no existen reprocesos o, lo que es
+lo mismo, luego de que una entidad termina su proceso en una estación,
+pasará a una única siguiente estación diferente de sí misma el 100% de
+las veces hasta que dicha entidad salga de la red.</p>
+</div>
+<div class="suggestion admonition">
+<p class="admonition-title">Ejemplo 4</p>
+<p>El número promedio total de usuarios en la red de Jackson de la Figura 1
+está dado por la suma de los promedios en las tres estaciones, que se calculan,
+así como sigue:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Estación</strong></p></th>
+<th class="head"><p><strong>Cola correspondiente</strong></p></th>
+<th class="head"><p><strong>Número promedio de usuarios (L)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/M/1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{1} = \frac{\rho}{1 - \rho} = \frac{0.5}{1 - 0.5} = 1\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/M/3\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2} = L_{s} + L_{q} = \frac{\Lambda_{2}}{\mu_{2}} + \frac{P\lbrack i &gt; 3\rbrack\rho_{3}}{1 - \rho_{3}} = 1.735 + 0.342 = 2.0778\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/M/\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{3} = L_{s} = \frac{\Lambda_{3}}{\mu_{3}} = \frac{1.5}{0.75} = 2\ \)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Entonces el promedio total de los usuarios en la red de Jackson, en estado estacionario, es:</p>
+<div class="math notranslate nohighlight">
+\[L = L^{1} + L^{2} + L^{3} = 1 + 2.0778 + 2\  = 5.077\]</div>
+<p>El tiempo promedio total de un usuario en la red se calcula con la ley de Little:</p>
+<div class="math notranslate nohighlight">
+\[L = \lambda \bullet W \Rightarrow W = \frac{L}{\lambda}\]</div>
+<p>El <span class="math notranslate nohighlight">\(L\)</span> a utilizar es el total promedio de todas las estaciones, y el
+<span class="math notranslate nohighlight">\(\lambda\)</span> a utilizar es la tasa total de llegada al sistema
+conformado por las estaciones consideradas. Si consideramos todas las
+estaciones, entonces la tasa total de llegada tiene que incluir la
+tasa externa de llegada a la estación 1 y la tasa externa de llegada
+a la estación 2. Como se explica en la Figura 2, el sistema al cual
+se aplica en este caso la ley de Little es aquel que se encuentra
+dentro del rectángulo con bordes en línea discontinua, y hay dos
+flujos de llegada que cruzan esos bordes.</p>
+<p><img alt="Figura 2" src="../../../_images/redes2.png" /></p>
+<p>Entonces se determina el <span class="math notranslate nohighlight">\(W\)</span> para la red como sigue:
+$<span class="math notranslate nohighlight">\(W = \frac{L}
+{\lambda} = \frac{L^{1} + L^{2} + L^{3}}{\lambda_{1} + \lambda_{2}}\)</span>$</p>
+<p>Finalmente, si por ejemplo se necesitase calcular el tiempo promedio
+que cada usuario pasa en la sub-red conformada por las estaciones 2 y
+3, entonces el sistema al cual aplicar la ley de Little sería aquel
+encerrado en el rectángulo que se ilustra en la Figura 3. El número
+promedio de usuarios a utilizar sería <span class="math notranslate nohighlight">\(\ L = L^{2} + L^{3}\)</span> y la tasa
+<span class="math notranslate nohighlight">\(\lambda = \Lambda_{2}\)</span>, ya que el flujo total de usuarios que
+ingresa al sistema es el flujo total de ingreso a la estación 2.</p>
+<p><img alt="Figura 3" src="../../../_images/redes3.png" /></p>
+</div>
+</section>
+<section id="relevancia-del-teorema-de-jackson">
+<h2>Relevancia del teorema de Jackson<a class="headerlink" href="#relevancia-del-teorema-de-jackson" title="Link to this heading">#</a></h2>
+<p>En esta sección se pretende explicar con un pequeño ejemplo el alcance
+del resultado de Jackson y su utilidad, haciendo énfasis sobre las
+simplificaciones que permite en el análisis de redes de colas.</p>
+<p>Consideramos una de las redes de Jackson más sencillas, la red tándem
+conformada por dos estaciones idénticas, cada una son un solo servidor,
+conectadas en serie, así como se ilustra en la Figura <strong>4</strong>.</p>
+<p><img alt="Figura 4" src="../../../_images/redes4.png" /></p>
+<p>Gracias al teorema de Jackson, sabemos qué si la red es estable, lo cual
+ocurre en este caso particular si <span class="math notranslate nohighlight">\(\lambda &lt; \mu\)</span>, es posible analizar
+el modelo como si fuese conformado por 2 colas <span class="math notranslate nohighlight">\(M/M/1\)</span> idénticas e
+independientes. Supongamos ahora que no se conozca el teorema de
+Jackson, y exploramos el análisis de la red sin ello.</p>
+<p>Dado que todos los tiempos se distribuyen exponencial en la red, es
+posible modelar su evolución en el tiempo con una Cadena de Markov en
+tiempo continuo. Entonces, sea <span class="math notranslate nohighlight">\(\left\{ X(t),t \geq 0 \right\}\)</span> el
+proceso de Markov en tiempo continuo tal que
+<span class="math notranslate nohighlight">\(X(t) = (N_{1}(t),N_{2}(t))\)</span> es el vector cuyos elementos son el número
+de usuarios en cada estación en el tiempo <span class="math notranslate nohighlight">\(t\)</span>. El espacio de estados
+<span class="math notranslate nohighlight">\(S_{X}\)</span> del proceso estocástico es el siguiente:</p>
+<div class="math notranslate nohighlight">
+\[S_{X} = \{(i,j)|i \geq 0,j \geq 0\}\]</div>
+<p>y entonces es infinito. Es posible visualizar el diagrama de estado y
+transiciones de manera ordenada, colocando los estados en los puntos
+enteros del cuadrante cartesiano positivo, como se muestra en la Figura
+5.</p>
+<p><img alt="Figura 5" src="../../../_images/redes5.png" /></p>
+<p>Para realizar el análisis en estado estacionario, sería necesario
+primero escribir las ecuaciones del balance en el estado estacionario.
+Eso sería posible solo en teoría, ya que se trataría de escribir un
+número infinito de ecuaciones. Las ecuaciones no son de hecho
+complicadas. Las primeras serían las siguientes:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{0,0}\lambda = \pi_{0,1}\mu\]</div>
+<div class="math notranslate nohighlight">
+\[\pi_{1,0}(\lambda + \mu) = \pi_{0,0}\lambda + \pi_{0,1}\mu\]</div>
+<div class="math notranslate nohighlight">
+\[\pi_{0,1}(\lambda + \mu) = \pi_{0,2}\mu\]</div>
+<div class="math notranslate nohighlight">
+\[\pi_{1,1}(\lambda + \mu) = \pi_{0,1}\lambda + \pi_{1,2}\mu + \pi_{2,0}\mu\]</div>
+<p>Para cualquier estado <span class="math notranslate nohighlight">\((i,j)\)</span> tal que <span class="math notranslate nohighlight">\(i &gt; 0\ \)</span> y <span class="math notranslate nohighlight">\(j &gt; 0\)</span>, es decir que
+no esté en la frontera del diagrama en la Figura 5, la ecuación del
+balance para el estado estacionario es la siguiente:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{i,j}(\lambda + \mu) = \pi_{i - i,j}\lambda + \pi_{i,j + 1}\mu + \pi_{1 + i,j - 1}\mu\]</div>
+<p>Si bien es posible escribir las ecuaciones, no es posible escribirlas
+todas ni mucho menos solucionarlas. Entonces, para hacer que el cálculo
+sea factible, sería necesario cortar el espacio de estados a una
+cardinalidad finita. Esto podría realizarse, por ejemplo, manteniendo
+solo los estados tales que el total de usuarios en la red fuese menor a
+un número máximo. Si por ejemplo supiéramos que es muy poco probable que
+haya más de 99 usuarios en cada nodo de la red, podríamos eliminar todos
+los estados tales que <span class="math notranslate nohighlight">\(i \geq 100,j \geq 100\)</span>.</p>
+<p>Entonces no quedaría un espacio de estados con <span class="math notranslate nohighlight">\(100 \times 100 = 10,000\)</span>
+estados, por lo cual sería posible solucionar un sistema lineal de
+10,000 ecuaciones y obtener 10,000 probabilidades en estado estable.
+Ahora, para el cálculo de los índices de rendimiento, por ejemplo, el
+valor esperado del número de usuarios en el sistema sería necesario
+realizar el cálculo de la sumatoria que define el valor esperado, ya que
+sin el resultado de Jackson no se conoce ninguna propiedad que permita
+simplificarlo.</p>
+<p>En resumen, el teorema de Jackson nos permite:</p>
+<ul class="simple">
+<li><p>Ahorrar la necesidad de truncar espacios de estados infinitos.</p></li>
+<li><p>Evitar tener que renunciar a la solución exacta por una aproximada.</p></li>
+<li><p>No tener que escribir ecuaciones de balance en el estado
+estacionario.</p></li>
+<li><p>Eliminar la necesidad de solucionar el sistema lineal de las
+ecuaciones del balance.</p></li>
+<li><p>Hacer que el cálculo de los índices de rendimiento sea inmediato.</p></li>
+</ul>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Las redes de Jackson han sido extendidas en el tiempo. Hoy se
+conocen resultados para redes abiertas donde las tasas de servicios
+de las estaciones pueden ser dependientes del número de usuarios en
+la estación.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\lecturas_semanales\archivos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter11.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Procesos de nacimiento y muerte</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter14.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Costos en cadenas de Markov</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estabilidad-en-redes-de-jackson-abiertas">Estabilidad en redes de Jackson abiertas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-teorema-de-jackson-1963-y-sus-aplicaciones">El teorema de Jackson (1963) y sus aplicaciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relevancia-del-teorema-de-jackson">Relevancia del teorema de Jackson</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
