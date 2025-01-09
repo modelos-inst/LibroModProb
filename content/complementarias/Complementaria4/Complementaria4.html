@@ -1845,7 +1845,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/8f0797690ff41e0a70c70ab26382b98453b467c4ed6fda64d37ee64bbf2a1ff4.png" src="../../../_images/8f0797690ff41e0a70c70ab26382b98453b467c4ed6fda64d37ee64bbf2a1ff4.png" />
+<img alt="../../../_images/293b6101f2ad99d1d314fa3e0b3f89034ad2f816620e33e886af06e3f604e713.png" src="../../../_images/293b6101f2ad99d1d314fa3e0b3f89034ad2f816620e33e886af06e3f604e713.png" />
 </div>
 </div>
 <p>Podemos evidenciar que los datos tienen un comportamiento que se asemeja a la distribución exponencial. Por este motivo, con ayuda de la función ktest() vamos a realizar una prueba de bondad de ajuste por Kolmogorov-Smirnov utilizando la función <code class="docutils literal notranslate"><span class="pre">kstest()</span></code>. Esta recibe como parámetro la distribución que queremos probar. Siendo “expon” la distribución exponencial, “norm” la distribución normal, “gamma” la distribución gamma, etc.</p>
@@ -1854,7 +1854,7 @@ Name: 2, dtype: object
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 
 <span class="c1"># Prueba de Kolmogorov-Smirnov</span>
-<span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="s1">&#39;expon&#39;</span><span class="p">)</span>
+<span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="s1">&#39;expon&#39;</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estadístico de KS:&#39;</span><span class="p">,</span> <span class="n">ks_stat</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-value:&#39;</span><span class="p">,</span> <span class="n">ks_p_value</span><span class="p">)</span>
@@ -1863,9 +1863,9 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.22849067578357174
-P-value: 3.0034511331502464e-14
-Tasa estimada: 1.7942266773476703
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.061337705982350665
+P-value: 0.20061379706748217
+Tasa estimada: 2.138226868527878
 </pre></div>
 </div>
 </div>
@@ -1886,7 +1886,7 @@ Tasa estimada: 1.7942266773476703
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/b01a4a5f5f5dee1acbd4f3e13434ae6cf6da4d2743a49ca09b2d441e141b4309.png" src="../../../_images/b01a4a5f5f5dee1acbd4f3e13434ae6cf6da4d2743a49ca09b2d441e141b4309.png" />
+<img alt="../../../_images/40bc0628740ecf58f8fe6a831750f105ad5a4fd33aa99ce916718eded590868a.png" src="../../../_images/40bc0628740ecf58f8fe6a831750f105ad5a4fd33aa99ce916718eded590868a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1905,7 +1905,7 @@ Tasa estimada: 1.7942266773476703
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/077c141836a4256c5d4df9d66968c84fa64c893dc26e5ef0cf8b1f84c2b3b34e.png" src="../../../_images/077c141836a4256c5d4df9d66968c84fa64c893dc26e5ef0cf8b1f84c2b3b34e.png" />
+<img alt="../../../_images/9eb591a7afb81d443d2e43fff7fb4f10c5a150a8019c69381b134ef2cfd5b38f.png" src="../../../_images/9eb591a7afb81d443d2e43fff7fb4f10c5a150a8019c69381b134ef2cfd5b38f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1919,7 +1919,7 @@ Tasa estimada: 1.7942266773476703
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/a703d64c4c2a8c1721571f712ad9c8a7f9b09fa3bb1af04d4dcda9193ff3da0a.png" src="../../../_images/a703d64c4c2a8c1721571f712ad9c8a7f9b09fa3bb1af04d4dcda9193ff3da0a.png" />
+<img alt="../../../_images/b3a332e3c50e596e182919a6d4c355db34f17c8a6820bbf0f4b18af3ef1804da.png" src="../../../_images/b3a332e3c50e596e182919a6d4c355db34f17c8a6820bbf0f4b18af3ef1804da.png" />
 </div>
 </div>
 <h4 style="color: #ADD8E6;">Ajuste de distribuciones discretas
@@ -1958,8 +1958,8 @@ Tasa estimada: 1.7942266773476703
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 2.240636294625155
-P-value: 0.8962907371310873
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 12.35254249510653
+P-value: 0.13615381006147745
 </pre></div>
 </div>
 </div>
