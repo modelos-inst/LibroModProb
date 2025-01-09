@@ -42,3 +42,5 @@ parts:
   - file: content/complementarias/Complementaria5/Complementaria5_IntroDash.ipynb
   - file: content/complementarias/Complementaria6.ipynb
   - file: content/complementarias/Complementaria9.ipynb
+  - file: content/complementarias/Complementaria10.ipynb
+  - file: content/complementarias/Complementaria11.ipynb

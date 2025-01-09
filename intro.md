@@ -18,6 +18,9 @@ Despliega el contenido:
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 5: Introducción a Dash](content/complementarias/Complementaria5/Complementaria5_IntroDash.ipynb)
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 6: Análisis de tiempos en Python](content/complementarias/Complementaria6.ipynb)
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 9: Simulación de Montecarlo en Python](content/complementarias/Complementaria9.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 10: MDP en Python](content/complementarias/Complementaria10.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 11: SDP en Python](content/complementarias/Complementaria11.ipynb)
+
 ```
 
 ```{admonition} Haz click acá!
