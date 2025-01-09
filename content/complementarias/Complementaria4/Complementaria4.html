@@ -203,6 +203,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria5/Complementaria5_IntroDash.html"><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria10.html"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria11.html"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></a></li>
 </ul>
 
     </div>
@@ -1843,7 +1845,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/7fcdeefbc37bd0b76022aaa56d010fb6da41458fdf132646412317d36e815212.png" src="../../../_images/7fcdeefbc37bd0b76022aaa56d010fb6da41458fdf132646412317d36e815212.png" />
+<img alt="../../../_images/8f0797690ff41e0a70c70ab26382b98453b467c4ed6fda64d37ee64bbf2a1ff4.png" src="../../../_images/8f0797690ff41e0a70c70ab26382b98453b467c4ed6fda64d37ee64bbf2a1ff4.png" />
 </div>
 </div>
 <p>Podemos evidenciar que los datos tienen un comportamiento que se asemeja a la distribución exponencial. Por este motivo, con ayuda de la función ktest() vamos a realizar una prueba de bondad de ajuste por Kolmogorov-Smirnov utilizando la función <code class="docutils literal notranslate"><span class="pre">kstest()</span></code>. Esta recibe como parámetro la distribución que queremos probar. Siendo “expon” la distribución exponencial, “norm” la distribución normal, “gamma” la distribución gamma, etc.</p>
@@ -1861,9 +1863,9 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.22449528528922652
-P-value: 9.147137108799603e-14
-Tasa estimada: 1.8433853237094546
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.22849067578357174
+P-value: 3.0034511331502464e-14
+Tasa estimada: 1.7942266773476703
 </pre></div>
 </div>
 </div>
@@ -1884,7 +1886,7 @@ Tasa estimada: 1.8433853237094546
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/88acc34d52cbe37e623c95147f8895c3b3364532524c5fa10f3c5ccd4d68750c.png" src="../../../_images/88acc34d52cbe37e623c95147f8895c3b3364532524c5fa10f3c5ccd4d68750c.png" />
+<img alt="../../../_images/b01a4a5f5f5dee1acbd4f3e13434ae6cf6da4d2743a49ca09b2d441e141b4309.png" src="../../../_images/b01a4a5f5f5dee1acbd4f3e13434ae6cf6da4d2743a49ca09b2d441e141b4309.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1903,7 +1905,7 @@ Tasa estimada: 1.8433853237094546
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/a97e2df5a67702ea9505f5e761d9a42474d41db46e842ddbe67128735cd48a08.png" src="../../../_images/a97e2df5a67702ea9505f5e761d9a42474d41db46e842ddbe67128735cd48a08.png" />
+<img alt="../../../_images/077c141836a4256c5d4df9d66968c84fa64c893dc26e5ef0cf8b1f84c2b3b34e.png" src="../../../_images/077c141836a4256c5d4df9d66968c84fa64c893dc26e5ef0cf8b1f84c2b3b34e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1917,7 +1919,7 @@ Tasa estimada: 1.8433853237094546
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/c7707ac1eb5e6821e9028f150dc028a32be3926890a6348187cb5e898175c609.png" src="../../../_images/c7707ac1eb5e6821e9028f150dc028a32be3926890a6348187cb5e898175c609.png" />
+<img alt="../../../_images/a703d64c4c2a8c1721571f712ad9c8a7f9b09fa3bb1af04d4dcda9193ff3da0a.png" src="../../../_images/a703d64c4c2a8c1721571f712ad9c8a7f9b09fa3bb1af04d4dcda9193ff3da0a.png" />
 </div>
 </div>
 <h4 style="color: #ADD8E6;">Ajuste de distribuciones discretas
@@ -1956,8 +1958,8 @@ Tasa estimada: 1.8433853237094546
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 10.725267383634499
-P-value: 0.15105976724218137
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 2.240636294625155
+P-value: 0.8962907371310873
 </pre></div>
 </div>
 </div>

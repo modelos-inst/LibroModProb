@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Complementaria 10: MDP en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=7815ba43" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria10';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Complementaria 11: SDP en Python" href="Complementaria11.html" />
+    <link rel="prev" title="Complementaria 9: Simulación de Montecarlo" href="Complementaria9.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter17.html">Programación Dinámica</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria4/Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4: Manejo de datos y análisis preliminar en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria5/Complementaria5_IntroDash.html"><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria11.html"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Complementaria10.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="complementaria-10-mdp-en-python">
+<h1><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3><a class="headerlink" href="#complementaria-10-mdp-en-python" title="Link to this heading">#</a></h1>
+<p>En este tutorial nos concentramos en la implementación del modúlo de MDP de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> en Python. Este modúlo permite encontrar la política óptima de un proceso de decisión markoviano (MDP) mediante dos posibles metódos de solución, iteración por valor o iteración de política.</p>
+<h3 style="color: #ADD8E6;">Ejercicio MDP: héroes y villanos</h3><p>Se abordará el problema 1 del archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">10</span> <span class="pre">(Q).pdf</span></code> que se encuentra en BloqueNeón. Modelaremos la situación como un proceso de decisión markoviano (MDP). Para esto, se deben definir los seis componentes principales del problema:</p>
+<ol class="arabic simple">
+<li><p>Épocas de decisión.</p></li>
+<li><p>Variable de estado.</p></li>
+<li><p>Espacio de estados.</p></li>
+<li><p>Espacio  decisiones.</p></li>
+<li><p>Probabilidades de transición,</p></li>
+<li><p>Recompensas inmediatas.</p></li>
+</ol>
+<p>Definimos las épocas:
+<span class="math notranslate nohighlight">\(
+E = \{1,2,..., \infty \} \rightarrow \text{cada ataque}
+\)</span></p>
+<p>Definimos la variable de estado como:
+<span class="math notranslate nohighlight">\(
+X_t = \text{Lugar donde atacaron los villanos en el t-1-ésimo ataque } t\\
+\)</span></p>
+<p>Definimos el espacio de estados:
+<span class="math notranslate nohighlight">\(
+S_X = \{AC,AS\}\\ 
+\)</span>
+Donde AC significa que atacaron el centro y AS que atacaron los suburbios.</p>
+<p>El espacio de decisiones:
+<span class="math notranslate nohighlight">\(
+A(i) = \{C,S\}
+\)</span>
+Donde C indica que los superhéroes se van al centro y S que se van a los suburbios.</p>
+<p>Tendremos una matriz de transición para cada decisión.</p>
+<p><span class="math notranslate nohighlight">\(
+P_{i \to j}^{(a = Suburbio)}= 
+\begin{array}{c|cc}
+   &amp; \text{Centro}&amp; \text{Suburbio}  \\
+    \hline
+    \text{Centro} &amp; 0.5 &amp; 0.5 \\
+    \text{Suburbio} &amp; 0.6 &amp; 0.4 
+    \end{array}
+\\
+P_{i \to j}^{(a = Centro)}= 
+\begin{array}{c|cc}
+   &amp; \text{Centro}&amp; \text{Suburbio}  \\
+    \hline
+    \text{Centro} &amp; 0.3 &amp; 0.7 \\
+    \text{Suburbio} &amp; 0.8 &amp; 0.2
+    \end{array}
+\)</span></p>
+<p>Finalmente, definimos los retornos. Estos corresponden a las batallas ganadas. Notemos que se ganan las batallas cuando los villanos van al lugar que los superhéroes decidieron ir. Así, los retornos son:</p>
+<p><span class="math notranslate nohighlight">\(
+r_{(AS,S)} = 0.4\\
+r_{(AS,C)} = 0.8 \\
+r_{(AC,C)} = 0.3 \\
+r_{(AC,S)} = 0.5
+\)</span></p>
+<p>Para empezar con la implementación, llamamos las librerías necesarias.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">jmarkov.mdp.dtmdp</span> <span class="kn">import</span> <span class="n">dtmdp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Crearemos el espacio de estados en Python como un arreglo de numpy, de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estadosHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Centro&#39;</span><span class="p">,</span><span class="s1">&#39;Suburbio&#39;</span><span class="p">])</span>
+<span class="n">estadosHeroes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Centro&#39;, &#39;Suburbio&#39;], dtype=&#39;&lt;U8&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creamos el espacio de acciones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accionesHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Ir al Centro&#39;</span><span class="p">,</span><span class="s1">&#39;Ir al Suburbio&#39;</span><span class="p">])</span>
+<span class="n">accionesHeroes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Ir al Centro&#39;, &#39;Ir al Suburbio&#39;], dtype=&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creamos las matrices de transición.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matricesHeroes</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">accionesHeroes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;Ir al Centro&#39;</span><span class="p">:</span>
+        <span class="n">matricesHeroes</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
+                                    <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.4</span><span class="p">]])</span>
+    <span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;Ir al Suburbio&#39;</span><span class="p">:</span>
+        <span class="n">matricesHeroes</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.7</span><span class="p">],</span>
+                                    <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">]])</span>
+
+<span class="n">matricesHeroes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Ir al Centro&#39;: array([[0.5, 0.5],
+        [0.6, 0.4]]),
+ &#39;Ir al Suburbio&#39;: array([[0.3, 0.7],
+        [0.8, 0.2]])}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creamos los retornos inmediatos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retornosHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.4</span><span class="p">]])</span>
+<span class="n">retornosHeroes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.3, 0.5],
+       [0.8, 0.4]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creamos el problema como un MDP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span> <span class="o">=</span> <span class="n">dtmdp</span><span class="p">(</span><span class="n">estadosHeroes</span><span class="p">,</span> <span class="n">accionesHeroes</span><span class="p">,</span> <span class="n">matricesHeroes</span><span class="p">,</span> <span class="n">retornosHeroes</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finalmente, solucionamos.</p>
+<p>El método <code class="docutils literal notranslate"><span class="pre">solve</span></code> de la librería recibe por parámetro: la tolerancia (GAP) de convergencia y el método de solución, que puede ser iteración por política o iteración por valor. Ambos métodos garantizan encontrar la solución óptima y llegar al mismo valor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
+<span class="n">value_functions</span><span class="p">,</span> <span class="n">optimal_policy</span> <span class="o">=</span> <span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notamos que el método <code class="docutils literal notranslate"><span class="pre">solve</span></code> nos devuelve dos resultados. El primero se refiere al valor que toma cada una de las funciones de valor; y el segundo corresponde a la política óptima. En este caso, siempre que se esté en el centro se debe decidir ir al suburbio y siempre que se esté en el suburbio se debe decidir ir al centro.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimal_policy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Centro&#39;: &#39;Ir al Suburbio&#39;, &#39;Suburbio&#39;: &#39;Ir al Centro&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valor esperado de la política óptima</span>
+<span class="n">mdpHeroes</span><span class="o">.</span><span class="n">expected_policy_value</span><span class="p">(</span><span class="n">value_functions</span><span class="p">,</span><span class="n">optimal_policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.61538456433202
+</pre></div>
+</div>
+</div>
+</div>
+<p>Adicionalmente, la librería nos permite conocer con un comando el valor esperado de la política óptima en el largo plazo y la matriz de probabilidades de transición de la política óptima.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz de transición de la política óptima</span>
+<span class="n">mdpHeroes</span><span class="o">.</span><span class="n">policy_transition_matrix</span><span class="p">(</span><span class="n">optimal_policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.3, 0.7],
+       [0.6, 0.4]])
+</pre></div>
+</div>
+</div>
+</div>
+<div style="border: 2px solid #4CAF50; background-color: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 16px;">
+💡 <strong>Reto:</strong> Investiga como funciona la iteración por política y la iteración por valor. ¿En qué se parecen? ¿En qué se diferencian?
+</div>
+<h3 style="color: #ADD8E6;">Ejercicio MDP: estudiantes de la Universidad de Los Alpes</h3><p>Ahora intentemos modelar el segundo ejercicio propuesto. ¿Cuáles serían los componentes? ¿Cuántas matrices de probabilidades de transición tendríamos?</p>
+<p>Resuelva el segundo ejercicio propuesto en el archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">10</span> <span class="pre">(Q).pdf</span></code> que se encuentra en BloqueNeón.</p>
+<details>
+<summary>Clic aquí para ver la solución</summary>
+Podemos modelar el problema como un proceso de decisión en el tiempo con épocas infinitas.  
+Así, el conjunto de las épocas está dado por:
+<p><span class="math notranslate nohighlight">\(
+E = \{1,2,\dots,\infty\} \rightarrow \text{cada semestre}
+\)</span></p>
+<p>La variable de estados será
+<span class="math notranslate nohighlight">\(
+X_{t} = \text{Clasificación de un estudiante en la época } t
+\)</span>
+Su respectivo espacio de estados:
+<span class="math notranslate nohighlight">\(
+S_{X} = \{ Excelente, Bueno, Promedio, Regular\}
+\)</span></p>
+<p>Ya que un estudiante podrá decidir si asistir a clase (1), asistir a clase y realizar complementarias y tareas (2) y asistir a clase, realizar complementarias y tareas y leer el libro guía (3).</p>
+<p><span class="math notranslate nohighlight">\(
+A(i) = 
+\begin{cases}
+&amp;\text{Asistir a Clase (1)}, \\
+&amp;\text{Asistir a Clase y Realizar Complementarias y Tareas (2)}, \\
+&amp;\text{Asistir a Clase, Realizar Complementarias y Tareas y Leer el Libro Guía}
+\end{cases}
+\)</span></p>
+<p>Los retornos inmediatos están dados por la tabla 2. En este caso, agregaremos penalizaciones para los retornos infactibles.</p>
+<p><span class="math notranslate nohighlight">\(
+r(i|a) = 
+\begin{array}{|c|c|c|c|}
+\hline
+\text{Categoría/Acción}&amp; \text{1} &amp; \text{2} &amp; \text{3} \\
+\hline
+\text{E} &amp; -1000 &amp; 3 &amp; 0 \\
+\text{B} &amp; 4 &amp; 2 &amp; -10 \\
+\text{P} &amp; 3 &amp; -5 &amp; -10 \\
+\text{R} &amp; -3 &amp; -15 &amp; -1000\\
+\hline
+\end{array}
+\)</span></p>
+<p>Las probabilidades de transición serán:</p>
+<p><span class="math notranslate nohighlight">\(
+P_{i \to j} = 
+\begin{array}{c|cccc}
+\text{a = 1} &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\hline
+\text{Excelente} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\text{Bueno} &amp; 0.05 &amp; 0.7 &amp; 0.15 &amp; 0.1 \\
+\text{Promedio} &amp; 0 &amp; 0.2 &amp; 0.5 &amp; 0.3\\
+\text{Regular} &amp; 0 &amp; 0 &amp; 0.1 &amp; 0.9 \\
+\end{array}
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+P_{i \to j}= 
+\begin{array}{c|cccc}
+\text{a = 2}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\hline
+\text{Excelente} &amp; 0.6 &amp; 0.4 &amp; 0 &amp; 0 \\
+\text{Bueno} &amp; 0.25 &amp; 0.6 &amp; 0.1 &amp; 0.05 \\
+\text{Promedio} &amp; 0.1 &amp; 0.3 &amp; 0.5 &amp; 0.1\\
+\text{Regular} &amp; 0 &amp; 0.05 &amp; 0.25 &amp; 0.7 \\
+\end{array}
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+P_{i \to j}= 
+\begin{array}{c|cccc}
+\text{a = 3}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\hline
+\text{Excelente} &amp; 0.9 &amp; 0.1 &amp; 0 &amp; 0 \\
+\text{Bueno} &amp; 0.5 &amp; 0.5 &amp; 0 &amp; 0 \\
+\text{Promedio} &amp; 0.2 &amp; 0.3 &amp; 0.5 &amp; 0\\
+\text{Regular} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\end{array}
+\)</span></p>
+<p>Así, estamos listos para implementar.</p>
+</details>
+<p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Complementaria9.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Complementaria11.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
