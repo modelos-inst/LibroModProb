@@ -24,6 +24,7 @@ parts:
     sections:
     - file: content/lecturas_semanales/archivos/chapter10
     - file: content/lecturas_semanales/archivos/chapter11
+    - file: content/lecturas_semanales/archivos/chapter12
     - file: content/lecturas_semanales/archivos/chapter13
     - file: content/lecturas_semanales/archivos/chapter14
   - file: content/lecturas_semanales/Modulo4
