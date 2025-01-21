@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial: Instalación Python y Visual Studio Code &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=7815ba43" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Tutorial/tutorial';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Ambientes Virtuales en Python" href="../AmbientesVirtuales/Ambientes_virtuales.html" />
+    <link rel="prev" title="Principio de Optimalidad y Ecuaciones de Bellman" href="../../lecturas_semanales/archivos/chapter16.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter12.html">Teoría de Colas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter17.html">Programación Dinámica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Tutorial: Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AmbientesVirtuales/Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes Virtuales en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Álgebra Lineal en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria4/Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4: Manejo de datos y análisis preliminar en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria5/Complementaria5_IntroDash.html"><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria10.html"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria11.html"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/complementarias/Tutorial/tutorial.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><h3 style="color: #ADD8E6;">Tutorial: Instalación Python y Visual Studio Code</h3></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#en-windows"><strong>En Windows</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#en-macos"><strong>En macOS</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abrir-una-carpeta-en-vs-code"><strong>Abrir una carpeta en VS Code</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explorando-la-interfaz-de-usuario"><strong>Explorando la interfaz de usuario</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ver-y-editar-archivos-con-el-editor"><strong>Ver y editar archivos con el editor</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tutorial-instalacion-python-y-visual-studio-code">
+<h1><h3 style="color: #ADD8E6;">Tutorial: Instalación Python y Visual Studio Code</h3><a class="headerlink" href="#tutorial-instalacion-python-y-visual-studio-code" title="Link to this heading">#</a></h1>
+<p>En este tutorial aprenderemos cómo descargar e instalar Python y Visual Studio Code (VSC). Python es el lenguaje de programación que utilizaremos durante el semestre, mientras que Visual Studio Code es un entorno de desarrollo integrado (IDE) que facilitará el proceso de programación.</p>
+<hr class="docutils" />
+<h3 style="color: #ADD8E6;">1. Descargar Python</h3><ol class="arabic simple">
+<li><p>Abra su navegador y acceda a la página oficial de Python: <a class="reference external" href="https://www.python.org">https://www.python.org</a>.</p></li>
+<li><p>En la página principal, verá un botón llamado <strong>Downloads</strong></p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen1.png" alt="Imagen1" width="600" height="300"/>
+</p><p>Al seleccionarlo, encontrará la versión más reciente recomendada para el sistema operativo Windows. Haga clic en ese botón para iniciar la descarga. Si está utilizando macOS o Linux/UNIX, deberá hacer clic en los enlaces correspondientes, los cuales están marcados con un recuadro rojo que se muestra a continuación.</p>
+<p align="center">
+    <img src="imagenes/Imagen2.png" alt="Imagen2" width="800" height="300"/>
+</p><ol class="arabic" start="3">
+<li><p>Una vez que se haya completado la descarga, haga doble clic en el archivo descargado para ejecutar el instalador.</p></li>
+<li><p>Asegúrese de <strong>marcar la casilla “Add Python to PATH”</strong> antes de hacer clic en “Install Now”. Esto hará que Python sea accesible desde la línea de comandos (terminal). Luego, haga clic en <strong>“Install Now”</strong> y espere a que se complete la instalación.</p></li>
+<li><p>Una vez instalado Python, podrá verificar la versión instalada. Para ello, abra <strong>Command Prompt</strong> (en Windows) y escriba el siguiente comando:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>--version
+</pre></div>
+</div>
+</li>
+</ol>
+<ul>
+<li><p>Si todo está bien, debería ver la versión de Python instalada, como por ejemplo:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Python<span class="w"> </span><span class="m">3</span>.13.1
+</pre></div>
+</div>
+</li>
+</ul>
+<h3 style="color: #ADD8E6;">2.1. Descargar Visual Studio Code (VSC)</h3><p>Visual Studio Code (VS Code) es un editor de código fuente ligero, potente y extensible, ideal para programadores. Este tutorial es una guía paso a paso para instalarlo en su computadora.</p>
+<hr class="docutils" />
+<ol class="arabic simple">
+<li><p>Abra su navegador preferido.</p></li>
+<li><p>Vaya a la página oficial de descarga de VS Code:<br />
+<a class="reference external" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p></li>
+<li><p>Haga clic en el botón <strong>Download for your OS</strong>. VS Code detectará automáticamente su sistema operativo y le ofrecerá la versión adecuada.</p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen3.png" alt="Imagen1" width="700" height="400"/>
+</p><h3 style="color: #ADD8E6;">2.2. Instalar Visual Studio Code (VSC)</h3><section id="en-windows">
+<h2><strong>En Windows</strong><a class="headerlink" href="#en-windows" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Abra el archivo descargado (<code class="docutils literal notranslate"><span class="pre">VSCodeSetup.exe</span></code>).</p></li>
+<li><p>Acepte los términos de la licencia y haga clic en <strong>Next</strong>.</p></li>
+<li><p>Seleccione una carpeta de instalación (o deje la predeterminada) y haga clic en <strong>Next</strong>.</p></li>
+<li><p>Marque las opciones que prefiera, como:</p>
+<ul class="simple">
+<li><p>“Agregar a PATH (recomendado)”.</p></li>
+<li><p>“Registrar el editor como predeterminado para archivos soportados”.</p></li>
+</ul>
+</li>
+<li><p>Haga clic en <strong>Install</strong> y espere a que se complete la instalación.</p></li>
+<li><p>Una vez instalada, haga clic en <strong>Finish</strong> para abrir VS Code.</p></li>
+</ol>
+</section>
+<section id="en-macos">
+<h2><strong>En macOS</strong><a class="headerlink" href="#en-macos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Abra el archivo <code class="docutils literal notranslate"><span class="pre">.dmg</span></code> descargado.</p></li>
+<li><p>Arrastre el ícono de Visual Studio Code a la carpeta <strong>Applications</strong>.</p></li>
+<li><p>Abra la carpeta <strong>Applications</strong> y ejecute VS Code.</p></li>
+</ol>
+<h3 style="color: #ADD8E6;">3. Comenzando con Visual Studio Code (VSC)</h3><p>En esta parte aprenderemos los aspectos mas importantes que Visual Studio Code puede ofrecer, aprenderemos sobre los diferentes componentes sobre la interfaz de usuario y como personalizarlos a su gusto. Al momento de abrir la aplicación observará esto:</p>
+<p align="center">
+    <img src="imagenes/Imagen4.png" alt="Imagen1" width="700" height="400"/>
+</p></section>
+<section id="abrir-una-carpeta-en-vs-code">
+<h2><strong>Abrir una carpeta en VS Code</strong><a class="headerlink" href="#abrir-una-carpeta-en-vs-code" title="Link to this heading">#</a></h2>
+<p>Puede usar VS Code para trabajar en archivos individuales y realizar ediciones sencillas, o puede abrir una carpeta, también conocida como un workspace.</p>
+<p>Comencemos creando una carpeta llamada <code class="docutils literal notranslate"><span class="pre">vscode1000</span></code> y abriéndola en VS Code.</p>
+<ul class="simple">
+<li><p>Al abrir VS Code por primera vez, debería ver la página de bienvenida con diferentes acciones para comenzar.</p></li>
+<li><p>Seleccione <strong>File &gt; Open Folder…</strong> desde el menú para abrir una carpeta.</p></li>
+</ul>
+<p align="center">
+    <img src="imagenes/Imagen5.png" alt="Imagen1" width="700" height="400"/>
+</p></section>
+<section id="explorando-la-interfaz-de-usuario">
+<h2><strong>Explorando la interfaz de usuario</strong><a class="headerlink" href="#explorando-la-interfaz-de-usuario" title="Link to this heading">#</a></h2>
+<p>Ahora que tenemos un espacio de trabajo abierto in VS Code, podemos echar un vistazo rápido a la interfaz de usuario.</p>
+<ol class="arabic simple">
+<li><p>Use la barra de actividades para cambiar entre diferentes vistas</p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen6.png" alt="Imagen1" width="600" height="200"/>
+</p><blockquote>
+<div><p><strong>💡 Tip:</strong> Pase el cursor sobre la barra de actividades para ver el nombre de cada vista y el atajo de teclado correspondiente. Puede abrir y cerrar una vista seleccionando la vista nuevamente o presionando el atajo de teclado.</p>
+</div></blockquote>
+</section>
+<section id="ver-y-editar-archivos-con-el-editor">
+<h2><strong>Ver y editar archivos con el editor</strong><a class="headerlink" href="#ver-y-editar-archivos-con-el-editor" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Seleccione la vista <strong>Explorer</strong> en la Barra de actividades y seleccione el botón <strong>New File…</strong> para crear un nuevo archivo en su espacio de trabajo.</p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen7.png" alt="Imagen1" width="500" height="200"/>
+</p><ol class="arabic simple" start="2">
+<li><p>Introduzca el nombre <code class="docutils literal notranslate"><span class="pre">prueba.py</span></code> y presione <code class="docutils literal notranslate"><span class="pre">Enter</span></code>. Vera que se agrega un archivo a su espacio de trabajo y se abre un Editor en el área principal de la ventana.</p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen8.png" alt="Imagen1" width="500" height="200"/>
+</p><p>Ahora puede escribir codigo en Python en su archivo <code class="docutils literal notranslate"><span class="pre">prueba.py</span></code>. Sin embargo, notará que a medida que escribe no aparecen sugerencias que le ayudan a completar el código, o incluso si intenta ejecutar el codigo con la tecla <code class="docutils literal notranslate"><span class="pre">F5</span></code> notara que aparece este aviso:</p>
+<p align="center">
+    <img src="imagenes/Imagen9.png" alt="Imagen1" width="700" height="200"/>
+</p><p>Es necesario instalar una extensión de Python en Visual Studio Code (VS Code) para ejecutar Python porque VS Code, por defecto, no incluye soporte completo para lenguajes de programación como Python. VS Code cuenta con un gran ecosistema de extensiones que le permiten agregar lenguajes, depuradores y herramientas a su instalación para respaldar su flujo de trabajo. Hay miles de extensiones disponibles en <a class="reference external" href="https://marketplace.visualstudio.com/vscode">Visual Studio Marketplace</a>.</p>
+<p>Instalemos una extensión de lenguaje para agregar compatibilidad con Python.</p>
+<ol class="arabic simple">
+<li><p>Seleccione la vista Extensiones en la barra de actividades.</p></li>
+</ol>
+<ul class="simple">
+<li><p>La vista Extensiones le permite buscar e instalar extensiones desde VS Code.</p></li>
+</ul>
+<p align="center">
+    <img src="imagenes/Imagen10.png" alt="Imagen1" width="700" height="400"/>
+</p><ol class="arabic simple" start="2">
+<li><p>Escriba Python en el cuadro de búsqueda de la vista de extensiones para buscar extensiones relacionadas con Python. Seleccione la extensión de Python publicada por Microsoft y, a continuación, seleccione el botón <strong>Install</strong>.</p></li>
+</ol>
+<p align="center">
+    <img src="imagenes/Imagen11.png" alt="Imagen1" width="600" height="200"/>
+</p><ol class="arabic simple" start="3">
+<li><p>Ahora, vuelva al archivo <code class="docutils literal notranslate"><span class="pre">prueba.py</span></code> en su espacio de trabajo, y puede volver a escribir la famosa linea de codigo <code class="docutils literal notranslate"><span class="pre">print('Hello</span> <span class="pre">World')</span></code>. Note que ahora también recibe sugerencias e IntelliSense para el código Python.</p></li>
+</ol>
+<p>Finalmente, para ejecutar el código, puede hacer clic en la flecha ubicada en la esquina superior derecha de la ventana o presionar la tecla <code class="docutils literal notranslate"><span class="pre">F5</span></code>. Al hacerlo, el archivo de Python se ejecutará y verá cómo se despliega la terminal, mostrando el mensaje <strong>Hello World</strong>.</p>
+<p align="center">
+    <img src="imagenes/Imagen12.png" alt="Imagen1" width="700" height="400"/>
+</p><blockquote>
+<div><p><strong>💡 Con esto, ya estamos listos para comenzar a trabajar. ¡Esperamos que disfrute del curso de Modelos Probabilisticos!</strong></p>
+</div></blockquote>
+<p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\complementarias\Tutorial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../lecturas_semanales/archivos/chapter16.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Principio de Optimalidad y Ecuaciones de Bellman</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../AmbientesVirtuales/Ambientes_virtuales.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Ambientes Virtuales en Python</h3></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#en-windows"><strong>En Windows</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#en-macos"><strong>En macOS</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abrir-una-carpeta-en-vs-code"><strong>Abrir una carpeta en VS Code</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explorando-la-interfaz-de-usuario"><strong>Explorando la interfaz de usuario</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ver-y-editar-archivos-con-el-editor"><strong>Ver y editar archivos con el editor</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
