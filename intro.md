@@ -19,9 +19,10 @@ Despliega el contenido:
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 4: Manejo de datos y análisis preliminar en Python](content/complementarias/Complementaria4/Complementaria4.ipynb)
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 5: Introducción a Dash](content/complementarias/Complementaria5/Complementaria5_IntroDash.ipynb)
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 6: Análisis de tiempos en Python](content/complementarias/Complementaria6.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 9: Simulación de Montecarlo en Python](content/complementarias/Complementaria9.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 10: MDP en Python](content/complementarias/Complementaria10.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 11: SDP en Python](content/complementarias/Complementaria11.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 7: Cálculo de filas en Python](content/complementarias/Complementaria7.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 8: Simulación de Montecarlo en Python](content/complementarias/Complementaria8.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 9: MDP en Python](content/complementarias/Complementaria9.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 10: SDP en Python](content/complementarias/Complementaria10.ipynb)
 
 ```
 
