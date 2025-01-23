@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Complementaria 10: MDP en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+    <title>Complementaria 10: SDP en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
   
   
   
@@ -66,8 +66,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria10';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Complementaria 11: SDP en Python" href="Complementaria11.html" />
-    <link rel="prev" title="Complementaria 9: Simulación de Montecarlo" href="Complementaria9.html" />
+    <link rel="prev" title="Complementaria 9: MDP en Python" href="Complementaria9.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -207,9 +206,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Complementaria4/Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4: Manejo de datos y análisis preliminar en Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria5/Complementaria5_IntroDash.html"><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Análisis de tiempos promedio</h3></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Complementaria11.html"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria7.html"><h3 style="color: #ADD8E6;">Complementaria 7: Cálculo de filas</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria8.html"><h3 style="color: #ADD8E6;">Complementaria 8: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: MDP en Python</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 10: SDP en Python</h3></a></li>
 </ul>
 
     </div>
@@ -343,7 +343,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></h1>
+    <h1><h3 style="color: #ADD8E6;">Complementaria 10: SDP en Python</h3></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,80 +357,97 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="complementaria-10-mdp-en-python">
-<h1><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3><a class="headerlink" href="#complementaria-10-mdp-en-python" title="Link to this heading">#</a></h1>
-<p>En este tutorial nos concentramos en la implementación del modúlo de MDP de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> en Python. Este modúlo permite encontrar la política óptima de un proceso de decisión markoviano (MDP) mediante dos posibles metódos de solución, iteración por valor o iteración de política.</p>
-<h3 style="color: #ADD8E6;">Ejercicio MDP: héroes y villanos</h3><p>Se abordará el problema 1 del archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">10</span> <span class="pre">(Q).pdf</span></code> que se encuentra en BloqueNeón. Modelaremos la situación como un proceso de decisión markoviano (MDP). Para esto, se deben definir los seis componentes principales del problema:</p>
-<ol class="arabic simple">
-<li><p>Épocas de decisión.</p></li>
-<li><p>Variable de estado.</p></li>
-<li><p>Espacio de estados.</p></li>
-<li><p>Espacio  decisiones.</p></li>
-<li><p>Probabilidades de transición,</p></li>
-<li><p>Recompensas inmediatas.</p></li>
-</ol>
-<p>Definimos las épocas:
+  <section id="complementaria-10-sdp-en-python">
+<h1><h3 style="color: #ADD8E6;">Complementaria 10: SDP en Python</h3><a class="headerlink" href="#complementaria-10-sdp-en-python" title="Link to this heading">#</a></h1>
+<p>En este tutorial nos concentramos en la implementación del modúlo de SDP de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> en Python, a través de dos ejemplos. Este módulo de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> permite encontrar la política óptima de un proceso de decisión en el tiempo estocástico (SDP) mediante programación dinámica.</p>
+<h3 style="color: #ADD8E6;">Problema 1: Máquinas</h3><p>Se resolverá el primer problema del archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">11</span> <span class="pre">(Q).pdf</span></code> que se encuentra en Bloque Neón.</p>
+<p>Vamos a modelar el problema de la máquina mediante un modelo de programación dinámica estocástica. El problema está definido para un horizonte de tiempo de 3 épocas (semanas), así, el conjunto de las épocas es:
 <span class="math notranslate nohighlight">\(
-E = \{1,2,..., \infty \} \rightarrow \text{cada ataque}
+\text{Épocas} = \{1,2,3\}
 \)</span></p>
-<p>Definimos la variable de estado como:
+<p>Para poder determinar las posibles decisiones en una época, se necesita conocer el estado de la máquina al inicio de cada semana. Por ende, se define una única variable:
 <span class="math notranslate nohighlight">\(
-X_t = \text{Lugar donde atacaron los villanos en el t-1-ésimo ataque } t\\
+X_{t} = \text{Estado de la máquina al inicio de la semana }t
+\)</span>
+Esta variable puede tomar los siguientes estados:
+<span class="math notranslate nohighlight">\(
+S_{X} = \{ \text{Excelente}, \text{Bueno}, \text{Promedio}, \text{Malo}\}
 \)</span></p>
-<p>Definimos el espacio de estados:
+<p>Todas las semanas se puede tomar la decisión de reemplazar o no reemplazar, así que las decisiones posibles no dependerán de la época. Sin embargo, no es posible tomar la decisión de reemplazar si la máquina se encuentra en el estado Excelente, por lo que <strong>sí dependerán del estado</strong>.
 <span class="math notranslate nohighlight">\(
-S_X = \{AC,AS\}\\ 
+A_{t}(i) = \{\text{Reemplazar},\text{No Reemplazar}\} \forall t \in E, i \in S_{X}|i\neq \text{Excelente}
 \)</span>
-Donde AC significa que atacaron el centro y AS que atacaron los suburbios.</p>
-<p>El espacio de decisiones:
 <span class="math notranslate nohighlight">\(
-A(i) = \{C,S\}
+A_{t}(i) = \{\text{No Reemplazar}\} \forall t \in E, i = \text{Excelente}
+\)</span></p>
+<p>Los retornos inmediatos dependen del estado que tenga la máquina al inicio de la semana y están dados por:
+<span class="math notranslate nohighlight">\(
+r_{t}(i,a) = \text{Ganancia semanal}-\text{Costo asociado a la decisión}
 \)</span>
-Donde C indica que los superhéroes se van al centro y S que se van a los suburbios.</p>
-<p>Tendremos una matriz de transición para cada decisión.</p>
+Dado que si se decide reemplazar la máquina, ésta queda en perfectas condiciones, los ingresos que recibirá esa semana corresponden a una máquina en excelente estado ($100). Los retornos se pueden entender como:</p>
 <p><span class="math notranslate nohighlight">\(
-P_{i \to j}^{(a = Suburbio)}= 
-\begin{array}{c|cc}
-   &amp; \text{Centro}&amp; \text{Suburbio}  \\
+r_{t}(i,a)= 
+\begin{array}{|c|c|c|}
     \hline
-    \text{Centro} &amp; 0.5 &amp; 0.5 \\
-    \text{Suburbio} &amp; 0.6 &amp; 0.4 
-    \end{array}
-\\
-P_{i \to j}^{(a = Centro)}= 
-\begin{array}{c|cc}
-   &amp; \text{Centro}&amp; \text{Suburbio}  \\
+    &amp; \text{Reemplazar}&amp; \text{No Reemplazar}  \\
     \hline
-    \text{Centro} &amp; 0.3 &amp; 0.7 \\
-    \text{Suburbio} &amp; 0.8 &amp; 0.2
+    \text{Excelente} &amp; -1000 &amp; 100 \\
+    \text{Bueno} &amp; -100 &amp; 80 \\
+    \text{Promedio} &amp; -100 &amp; 50 \\
+    \text{Malo} &amp; -100 &amp; 10 \\
+    \hline
     \end{array}
 \)</span></p>
-<p>Finalmente, definimos los retornos. Estos corresponden a las batallas ganadas. Notemos que se ganan las batallas cuando los villanos van al lugar que los superhéroes decidieron ir. Así, los retornos son:</p>
+<p>El costo de reemplazar cuando la máquina está en excelentes condiciones toma un valor negativo de penalización, ya que ésta es una decisión infactible. De este modo, nos aseguramos que esta decisión nunca sea tomada.</p>
+<p>Las probabilidades de transición están dadas por el enunciado, como se ve a continuación:</p>
 <p><span class="math notranslate nohighlight">\(
-r_{(AS,S)} = 0.4\\
-r_{(AS,C)} = 0.8 \\
-r_{(AC,C)} = 0.3 \\
-r_{(AC,S)} = 0.5
+P_{i \to j}^{(a = No Reemplazar)}= 
+\begin{array}{|c|cccc|}
+    \hline
+   &amp; \text{E}&amp; \text{B} &amp; \text{P} &amp; \text{M} \\
+    \hline
+    \text{E} &amp; 0.7 &amp; 0.3 &amp;  0 &amp; 0 \\
+    \text{B} &amp; 0 &amp; 0.7 &amp;  0.3 &amp; 0 \\
+    \text{P} &amp; 0 &amp; 0 &amp;  0.7 &amp; 0.3 \\
+    \text{M} &amp; 0 &amp; 0 &amp;  0 &amp; 1 \\
+    \hline
+    \end{array}
 \)</span></p>
+<p><span class="math notranslate nohighlight">\(
+P_{i \to j}^{(a = Reemplazar)}= 
+\begin{array}{|c|cccc|}
+    \hline
+   &amp; \text{E}&amp; \text{B} &amp; \text{P} &amp; \text{M} \\
+    \hline
+    \text{E} &amp; 0 &amp; 0 &amp;  0 &amp; 0 \\
+    \text{B} &amp; 0.7 &amp; 0.3 &amp;  0. &amp; 0 \\
+    \text{P} &amp; 0.7 &amp; 0.3 &amp;  0 &amp; 0 \\
+    \text{M} &amp; 0.7 &amp; 0.3 &amp;  0 &amp; 0 \\
+    \hline
+    \end{array}
+\)</span></p>
+<p>Notemos que la matriz de Reemplazar cuenta con una condición particular: las entradas de primera fila son todas iguales a 0, en vez de sumar a 1; esto se debe a que la decisión de reemplazar no es fáctible para el estado excelente.</p>
 <p>Para empezar con la implementación, llamamos las librerías necesarias.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">jmarkov.mdp.dtmdp</span> <span class="kn">import</span> <span class="n">dtmdp</span>
+<span class="kn">from</span> <span class="nn">jmarkov.sdp.dtsdp</span> <span class="kn">import</span> <span class="n">dtsdp</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Crearemos el espacio de estados en Python como un arreglo de numpy, de la siguiente manera:</p>
+<p>Crearemos el espacio de las épocas en Python como un arreglo de numpy, de la siguiente manera:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estadosHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Centro&#39;</span><span class="p">,</span><span class="s1">&#39;Suburbio&#39;</span><span class="p">])</span>
-<span class="n">estadosHeroes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Centro&#39;, &#39;Suburbio&#39;], dtype=&#39;&lt;U8&#39;)
+</div>
+<p>Creamos el espacio de estados.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Excelente&#39;</span><span class="p">,</span><span class="s1">&#39;Bueno&#39;</span><span class="p">,</span><span class="s1">&#39;Promedio&#39;</span><span class="p">,</span><span class="s1">&#39;Malo&#39;</span><span class="p">])</span> <span class="c1"># Estado de la máquina al inicio de la semana t</span>
 </pre></div>
 </div>
 </div>
@@ -438,39 +455,7 @@ r_{(AC,S)} = 0.5
 <p>Creamos el espacio de acciones.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accionesHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Ir al Centro&#39;</span><span class="p">,</span><span class="s1">&#39;Ir al Suburbio&#39;</span><span class="p">])</span>
-<span class="n">accionesHeroes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Ir al Centro&#39;, &#39;Ir al Suburbio&#39;], dtype=&#39;&lt;U14&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Creamos las matrices de transición.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matricesHeroes</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">accionesHeroes</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;Ir al Centro&#39;</span><span class="p">:</span>
-        <span class="n">matricesHeroes</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
-                                    <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.4</span><span class="p">]])</span>
-    <span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;Ir al Suburbio&#39;</span><span class="p">:</span>
-        <span class="n">matricesHeroes</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.7</span><span class="p">],</span>
-                                    <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">]])</span>
-
-<span class="n">matricesHeroes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Ir al Centro&#39;: array([[0.5, 0.5],
-        [0.6, 0.4]]),
- &#39;Ir al Suburbio&#39;: array([[0.3, 0.7],
-        [0.8, 0.2]])}
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Reemplazar&#39;</span><span class="p">,</span><span class="s1">&#39;No Reemplazar&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -478,157 +463,124 @@ r_{(AC,S)} = 0.5
 <p>Creamos los retornos inmediatos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retornosHeroes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
-                           <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.4</span><span class="p">]])</span>
-<span class="n">retornosHeroes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">E</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+
+<span class="c1"># Recorremos sobre las épocas</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">E</span><span class="p">)):</span>
+    <span class="c1"># Recorremos sobre los estados:</span>
+    <span class="k">for</span> <span class="n">s_index</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+        <span class="c1"># Recorremos sobre las decisiones:</span>
+        <span class="k">for</span> <span class="n">a_index</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="s1">&#39;Excelente&#39;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s1">&#39;Reemplazar&#39;</span><span class="p">:</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+            <span class="k">elif</span> <span class="n">i</span><span class="o">==</span><span class="s1">&#39;Excelente&#39;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s1">&#39;No Reemplazar&#39;</span><span class="p">:</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Bueno&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=-</span><span class="mi">100</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Bueno&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;No Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=</span><span class="mi">80</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Promedio&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=-</span><span class="mi">100</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Promedio&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;No Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=</span><span class="mi">50</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Malo&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=-</span><span class="mi">100</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="s2">&quot;Malo&quot;</span> <span class="ow">and</span> <span class="n">a</span><span class="o">==</span><span class="s2">&quot;No Reemplazar&quot;</span><span class="p">):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">s_index</span><span class="p">,</span><span class="n">a_index</span><span class="p">]</span><span class="o">=</span><span class="mi">10</span>
+            
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creamos las matrices de transición.
+Tendremos una matriz para cada época y para cada decisión.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matNoReemplazar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">matReemplazar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">probs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">E</span><span class="p">:</span>  <span class="c1"># Iterar sobre cada época</span>
+    <span class="n">decisiones_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">posA</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;Reemplazar&quot;</span><span class="p">:</span>
+            <span class="n">decisiones_dict</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">matReemplazar</span>
+        <span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;No Reemplazar&quot;</span><span class="p">:</span>
+            <span class="n">decisiones_dict</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">matNoReemplazar</span>
+    <span class="n">probs</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">decisiones_dict</span>
+
+<span class="n">probs</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.3, 0.5],
-       [0.8, 0.4]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1: {&#39;Reemplazar&#39;: array([[1. , 0. , 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ]]),
+  &#39;No Reemplazar&#39;: array([[0.7, 0.3, 0. , 0. ],
+         [0. , 0.7, 0.3, 0. ],
+         [0. , 0. , 0.7, 0.3],
+         [0. , 0. , 0. , 1. ]])},
+ 2: {&#39;Reemplazar&#39;: array([[1. , 0. , 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ]]),
+  &#39;No Reemplazar&#39;: array([[0.7, 0.3, 0. , 0. ],
+         [0. , 0.7, 0.3, 0. ],
+         [0. , 0. , 0.7, 0.3],
+         [0. , 0. , 0. , 1. ]])},
+ 3: {&#39;Reemplazar&#39;: array([[1. , 0. , 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ],
+         [0.7, 0.3, 0. , 0. ]]),
+  &#39;No Reemplazar&#39;: array([[0.7, 0.3, 0. , 0. ],
+         [0. , 0.7, 0.3, 0. ],
+         [0. , 0. , 0.7, 0.3],
+         [0. , 0. , 0. , 1. ]])}}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Creamos el problema como un MDP.</p>
+<p>Finalmente, creamos el problema como un SDP.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span> <span class="o">=</span> <span class="n">dtmdp</span><span class="p">(</span><span class="n">estadosHeroes</span><span class="p">,</span> <span class="n">accionesHeroes</span><span class="p">,</span> <span class="n">matricesHeroes</span><span class="p">,</span> <span class="n">retornosHeroes</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdpMaquinas</span> <span class="o">=</span> <span class="n">dtsdp</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Finalmente, solucionamos.</p>
-<p>El método <code class="docutils literal notranslate"><span class="pre">solve</span></code> de la librería recibe por parámetro: la tolerancia (GAP) de convergencia y el método de solución, que puede ser iteración por política o iteración por valor. Ambos métodos garantizan encontrar la solución óptima y llegar al mismo valor.</p>
+<p>Ahora, solucionamos el SDP. El método <code class="docutils literal notranslate"><span class="pre">solve</span></code> de la librería recibe el sentido del problema, es decir, si estamos minimizando o maximizando.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
-<span class="n">value_functions</span><span class="p">,</span> <span class="n">optimal_policy</span> <span class="o">=</span> <span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Notamos que el método <code class="docutils literal notranslate"><span class="pre">solve</span></code> nos devuelve dos resultados. El primero se refiere al valor que toma cada una de las funciones de valor; y el segundo corresponde a la política óptima. En este caso, siempre que se esté en el centro se debe decidir ir al suburbio y siempre que se esté en el suburbio se debe decidir ir al centro.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimal_policy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdpMaquinas</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">minimize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Centro&#39;: &#39;Ir al Suburbio&#39;, &#39;Suburbio&#39;: &#39;Ir al Centro&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[255.151, 184.6  , 100.   ],
+        [193.391, 143.9  ,  80.   ],
+        [108.176,  84.2  ,  50.   ],
+        [ 55.151,  19.   ,  10.   ]]),
+ array([[&#39;N&#39;, &#39;N&#39;, &#39;N&#39;],
+        [&#39;N&#39;, &#39;N&#39;, &#39;N&#39;],
+        [&#39;N&#39;, &#39;N&#39;, &#39;N&#39;],
+        [&#39;R&#39;, &#39;N&#39;, &#39;N&#39;]], dtype=&#39;&lt;U1&#39;))
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valor esperado de la política óptima</span>
-<span class="n">mdpHeroes</span><span class="o">.</span><span class="n">expected_policy_value</span><span class="p">(</span><span class="n">value_functions</span><span class="p">,</span><span class="n">optimal_policy</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.61538456433202
-</pre></div>
-</div>
-</div>
-</div>
-<p>Adicionalmente, la librería nos permite conocer con un comando el valor esperado de la política óptima en el largo plazo y la matriz de probabilidades de transición de la política óptima.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz de transición de la política óptima</span>
-<span class="n">mdpHeroes</span><span class="o">.</span><span class="n">policy_transition_matrix</span><span class="p">(</span><span class="n">optimal_policy</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.3, 0.7],
-       [0.6, 0.4]])
-</pre></div>
-</div>
-</div>
-</div>
+<p>Notamos que nos devuelve dos resultados. El primero se refiere al valor que toma cada una de las funciones de valor, para cada época y estado. Y el segundo, corresponde a la política óptima. En este caso, únicamente se debe reemplazar cuando se está en la primera época y la máquina se encuentra en un mal estado.</p>
 <div style="border: 2px solid #4CAF50; background-color: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 16px;">
-💡 <strong>Reto:</strong> Investiga como funciona la iteración por política y la iteración por valor. ¿En qué se parecen? ¿En qué se diferencian?
+💡 <strong>Reto:</strong> Animate a implementar el segundo ejercicio propuesto!
 </div>
-<h3 style="color: #ADD8E6;">Ejercicio MDP: estudiantes de la Universidad de Los Alpes</h3><p>Ahora intentemos modelar el segundo ejercicio propuesto. ¿Cuáles serían los componentes? ¿Cuántas matrices de probabilidades de transición tendríamos?</p>
-<p>Resuelva el segundo ejercicio propuesto en el archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">10</span> <span class="pre">(Q).pdf</span></code> que se encuentra en BloqueNeón.</p>
-<details>
-<summary>Clic aquí para ver la solución</summary>
-Podemos modelar el problema como un proceso de decisión en el tiempo con épocas infinitas.  
-Así, el conjunto de las épocas está dado por:
-<p><span class="math notranslate nohighlight">\(
-E = \{1,2,\dots,\infty\} \rightarrow \text{cada semestre}
-\)</span></p>
-<p>La variable de estados será
-<span class="math notranslate nohighlight">\(
-X_{t} = \text{Clasificación de un estudiante en la época } t
-\)</span>
-Su respectivo espacio de estados:
-<span class="math notranslate nohighlight">\(
-S_{X} = \{ Excelente, Bueno, Promedio, Regular\}
-\)</span></p>
-<p>Ya que un estudiante podrá decidir si asistir a clase (1), asistir a clase y realizar complementarias y tareas (2) y asistir a clase, realizar complementarias y tareas y leer el libro guía (3).</p>
-<p><span class="math notranslate nohighlight">\(
-A(i) = 
-\begin{cases}
-&amp;\text{Asistir a Clase (1)}, \\
-&amp;\text{Asistir a Clase y Realizar Complementarias y Tareas (2)}, \\
-&amp;\text{Asistir a Clase, Realizar Complementarias y Tareas y Leer el Libro Guía}
-\end{cases}
-\)</span></p>
-<p>Los retornos inmediatos están dados por la tabla 2. En este caso, agregaremos penalizaciones para los retornos infactibles.</p>
-<p><span class="math notranslate nohighlight">\(
-r(i|a) = 
-\begin{array}{|c|c|c|c|}
-\hline
-\text{Categoría/Acción}&amp; \text{1} &amp; \text{2} &amp; \text{3} \\
-\hline
-\text{E} &amp; -1000 &amp; 3 &amp; 0 \\
-\text{B} &amp; 4 &amp; 2 &amp; -10 \\
-\text{P} &amp; 3 &amp; -5 &amp; -10 \\
-\text{R} &amp; -3 &amp; -15 &amp; -1000\\
-\hline
-\end{array}
-\)</span></p>
-<p>Las probabilidades de transición serán:</p>
-<p><span class="math notranslate nohighlight">\(
-P_{i \to j} = 
-\begin{array}{c|cccc}
-\text{a = 1} &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
-\hline
-\text{Excelente} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-\text{Bueno} &amp; 0.05 &amp; 0.7 &amp; 0.15 &amp; 0.1 \\
-\text{Promedio} &amp; 0 &amp; 0.2 &amp; 0.5 &amp; 0.3\\
-\text{Regular} &amp; 0 &amp; 0 &amp; 0.1 &amp; 0.9 \\
-\end{array}
-\)</span></p>
-<p><span class="math notranslate nohighlight">\(
-P_{i \to j}= 
-\begin{array}{c|cccc}
-\text{a = 2}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
-\hline
-\text{Excelente} &amp; 0.6 &amp; 0.4 &amp; 0 &amp; 0 \\
-\text{Bueno} &amp; 0.25 &amp; 0.6 &amp; 0.1 &amp; 0.05 \\
-\text{Promedio} &amp; 0.1 &amp; 0.3 &amp; 0.5 &amp; 0.1\\
-\text{Regular} &amp; 0 &amp; 0.05 &amp; 0.25 &amp; 0.7 \\
-\end{array}
-\)</span></p>
-<p><span class="math notranslate nohighlight">\(
-P_{i \to j}= 
-\begin{array}{c|cccc}
-\text{a = 3}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
-\hline
-\text{Excelente} &amp; 0.9 &amp; 0.1 &amp; 0 &amp; 0 \\
-\text{Bueno} &amp; 0.5 &amp; 0.5 &amp; 0 &amp; 0 \\
-\text{Promedio} &amp; 0.2 &amp; 0.3 &amp; 0.5 &amp; 0\\
-\text{Regular} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-\end{array}
-\)</span></p>
-<p>Así, estamos listos para implementar.</p>
-</details>
 <p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
 </section>
 
@@ -668,17 +620,8 @@ P_{i \to j}=
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 9: MDP en Python</h3></p>
       </div>
-    </a>
-    <a class="right-next"
-       href="Complementaria11.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 11: SDP en Python</h3></p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
