@@ -466,12 +466,12 @@ P_{i \rightarrow j} = \begin{cases}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_cierre</span> <span class="o">=</span> <span class="n">prob_viernes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">prob_viernes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; La probabilidad de que el viernes los colegios suspendan la actividad académica debido a la mala calidad del aire es: </span><span class="si">{</span><span class="n">prob_cierre</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; La probabilidad de que el viernes los colegios suspendan la actividad académica debido a la mala calidad del aire, dado que hoy (lunes) el ICA se encuentra en el nivel 2, es: </span><span class="si">{</span><span class="n">prob_cierre</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> La probabilidad de que el viernes los colegios suspendan la actividad académica debido a la mala calidad del aire es: 0.4475
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> La probabilidad de que el viernes los colegios suspendan la actividad académica debido a la mala calidad del aire, dado que hoy (lunes) el ICA se encuentra en el nivel 2, es: 0.4475
 </pre></div>
 </div>
 </div>
@@ -601,12 +601,12 @@ Q_{i \rightarrow j} = \begin{cases}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_bicis</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probs</span><span class="p">))</span>
 <span class="n">resultado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probs</span> <span class="o">*</span> <span class="n">num_bicis</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El número promedio de bicicletas a las que se les realizará limpieza y mantenimiento el lunes es: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">resultado</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El número promedio de bicicletas a las que se les realizará limpieza y mantenimiento el lunes es, dado que actualmente hay 10 bicis alquiladas es: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">resultado</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El número promedio de bicicletas a las que se les realizará limpieza y mantenimiento el lunes es: 14.444
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El número promedio de bicicletas a las que se les realizará limpieza y mantenimiento el lunes es, dado que actualmente hay 10 bicis alquiladas es: 14.444
 </pre></div>
 </div>
 </div>
