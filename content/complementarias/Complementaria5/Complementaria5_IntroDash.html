@@ -359,8 +359,8 @@
   <section id="complementaria-5-introduccion-a-dash">
 <h1><h3 style="color: #ADD8E6;">Complementaria 5: Introducción a Dash</h3><a class="headerlink" href="#complementaria-5-introduccion-a-dash" title="Link to this heading">#</a></h1>
 <p>Este es un tutorial para construir un tablero web con funcionalidades básicas usando el paquete dash del software Python.</p>
-<h3 style="color: #ADD8E6;">Ejemplo de una aplicación Dashboard</h3><p>En Bloque Neón descargue el archivo <strong>app_ejemplo.py</strong>, abralo en VSCode y ejecutelo. El programa abrirá el terminar, donde se ejecutará el siguiente comando:
-<img alt="image.png" src="../../../_images/Ambiente_ejecucion.png" /></p>
+<h3 style="color: #ADD8E6;">Ejemplo de una aplicación Dashboard</h3><p>En Bloque Neón descargue el archivo <strong>app_ejemplo.py</strong>, abralo en VSCode y ejecutelo. El programa abrirá el terminar, donde se ejecutará el siguiente comando:</p>
+<p><img alt="image.png" src="../../../_images/Ambiente_ejecucion.png" /></p>
 <p>Una vez ejecutado el archivo, en su navegador de preferencia (Chrome, Firefox, Safari, Edge) visite el servidor local usando el puerto 8050, es decir, vaya a la página:</p>
 <p><a class="reference external" href="http://127.0.0.1:8050/">http://127.0.0.1:8050/</a></p>
 <p>Dentro del archivo <strong>app_ejemplo.py</strong> se pueden identificar múltiples elementos. El primero es un enlace de estilos CSS que permitirá construir la herramienta Dashboard y se guarda en la variable <em>external_stylesheets</em>. También se puede identificar al objeto app, del cual se extrae el atributo server. Adicionalmente, se cuenta con una función <em>app.layout</em> donde se agregan elementos como deslizadores (<code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">dcc.Slider()</code>) y gráficas (<code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">dcc.Graph()</code>) , es decir, donde se describe la interfaz gráfica de la aplicación. Finalmente, se cuenta con una función <em>update_figure</em> que junto al decorador <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">app.Callback()</code> , va a actualizar la información de la gráfica de forma automática cuando el usuario interactúe con el deslizador.</p>
@@ -451,10 +451,10 @@
 <p>Para calcular las probabilidades de transición de la anteriores cadenas de Markov, se debe tener en cuenta que la demanda semanal se distribuye Poisson. Para calcular las probabilidades de Poisson, se utiliza la librería <strong>scipy.stats</strong>, específicamente la clase <strong>poisson</strong>. Esta clase tiene como parámetros el valor de <em>k</em> y de <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <ul class="simple">
 <li><p>Si se quiere obtener la probabilidad puntual, se utiliza la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.pmf()</code>, que es equivalente a realizar el cálculo
-$<span class="math notranslate nohighlight">\(P(X=k) = \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span>$</p></li>
+<span class="math notranslate nohighlight">\(P(X=k) = \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span></p></li>
 <li><p>Si queremos calcular el valor de la probabilidad acumulada, utilizamos la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.cdf()</code>, la cual calcula
-$<span class="math notranslate nohighlight">\(P(X\leq k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span>$</p></li>
-<li><p>Si queremos calcular la probabilidad acumulada de <strong>cola derecha</strong> utilizamos la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.sf()</code>, la cual calcula $<span class="math notranslate nohighlight">\(P(X&gt; k).\)</span>$</p></li>
+<span class="math notranslate nohighlight">\(P(X\leq k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span></p></li>
+<li><p>Si queremos calcular la probabilidad acumulada de <strong>cola derecha</strong> utilizamos la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.sf()</code>, la cual calcula <span class="math notranslate nohighlight">\(P(X&gt; k).\)</span></p></li>
 </ul>
 <p>Estas dos funciones descritas anteriormente se utilizarán más adelante para llenar las matrices de probabilidades de transición de los dos modelos.</p>
 <p>A continuación, se desarrolla un nuevo script de python, que llamaremos “<a class="reference external" href="http://Funciones.py">Funciones.py</a>”.</p>
@@ -601,7 +601,7 @@ $<span class="math notranslate nohighlight">\(P(X\leq k) = \sum_{i=0}^{k} \frac{
 
 </pre></div>
 </div>
-<p>Luego, debe llamarse la funcion dash_function() que se encuentra en el archivo “<a class="reference external" href="http://Funciones.py">Funciones.py</a>”. La gráfica resultante se renderiza usando la clase <em>go</em> de la librería <em>plotly.graph_objs</em>.</p>
+<p>Luego, debe llamarse la funcion dash_function() que se encuentra en el archivo <code class="docutils literal notranslate"><span class="pre">Funciones.py</span></code>. La gráfica resultante se renderiza usando la clase <em>go</em> de la librería <em>plotly.graph_objs</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
