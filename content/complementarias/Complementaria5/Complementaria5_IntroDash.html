@@ -450,14 +450,12 @@
 <p>Volviendo al ejemplo de la fábrica de resmas de papel, se deben implementar, en un nuevo script .py, dos modelos de cadena de Markov de tiempo discreto, uno para cada política de inventario. A partir de estos modelos, se estimarán los costos requeridos usando análisis transitorio. Es importante denotar que <u>dicho script debe ser guardado dentro de la carpeta resultante</u> al crear el aplicativo de Dashboard.</p>
 <p>Para calcular las probabilidades de transición de la anteriores cadenas de Markov, se debe tener en cuenta que la demanda semanal se distribuye Poisson. Para calcular las probabilidades de Poisson, se utiliza la librería <strong>scipy.stats</strong>, específicamente la clase <strong>poisson</strong>. Esta clase tiene como parámetros el valor de <em>k</em> y de <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <ul class="simple">
-<li><p>Si se quiere obtener la probabilidad puntual, se utiliza la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.pmf()</code>, que es equivalente a realizar el cálculo
-<span class="math notranslate nohighlight">\(P(X=k) = \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span></p></li>
-<li><p>Si queremos calcular el valor de la probabilidad acumulada, utilizamos la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.cdf()</code>, la cual calcula
-<span class="math notranslate nohighlight">\(P(X\leq k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!}.\)</span></p></li>
-<li><p>Si queremos calcular la probabilidad acumulada de <strong>cola derecha</strong> utilizamos la función <code style="background-color: #cfcfcf; padding: 2px 4px; border-radius: 4px;color: black;">poisson.sf()</code>, la cual calcula <span class="math notranslate nohighlight">\(P(X&gt; k).\)</span></p></li>
+<li><p>Si se quiere obtener la probabilidad puntual, se utiliza la función <code class="docutils literal notranslate"><span class="pre">poisson.pmf()</span></code>, que es equivalente a realizar el cálculo <span class="math notranslate nohighlight">\( P(X=k) = \frac{e^{-\lambda} \cdot (\lambda)^{k}}{k!} \)</span>.</p></li>
+<li><p>Si queremos calcular el valor de la probabilidad acumulada, utilizamos la función <code class="docutils literal notranslate"><span class="pre">poisson.cdf()</span></code>, la cual calcula <span class="math notranslate nohighlight">\( P(X\leq k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \cdot (\lambda)^{i}}{i!} \)</span>.</p></li>
+<li><p>Si queremos calcular la probabilidad acumulada de <strong>cola derecha</strong> utilizamos la función <code class="docutils literal notranslate"><span class="pre">poisson.sf()</span></code>, la cual calcula <span class="math notranslate nohighlight">\(P(X&gt; k). \)</span></p></li>
 </ul>
 <p>Estas dos funciones descritas anteriormente se utilizarán más adelante para llenar las matrices de probabilidades de transición de los dos modelos.</p>
-<p>A continuación, se desarrolla un nuevo script de python, que llamaremos “<a class="reference external" href="http://Funciones.py">Funciones.py</a>”.</p>
+<p>A continuación, se desarrolla un nuevo script de python, que llamaremos <code class="docutils literal notranslate"><span class="pre">Funciones.py</span></code>.</p>
 <p>Antes de escribir cualquier cosa, se deben cargar (y de ser necesario, instalar) las librerías <strong>pandas</strong>, <strong>numpy</strong>, <strong>jmarkov</strong> (específicamente la clase dtmc para cadenas discretas) y <strong>scipy.stats</strong> (específicamente la clase poisson).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
