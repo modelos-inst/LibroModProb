@@ -318,8 +318,6 @@ s.a,
 
 $$V(i) \geq c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)}\ \forall\ a \in A(i),\ i \in S$$
 
-$$V(i) \geq 0\ \forall\ i \in S\ $$
-
 Observemos que, si el problema de decisión busca maximizar, el programa
 lineal tendrá sentido de minimización. Así mismo, si el problema de
 decisión busca minimizar, el programa lineal tendrá sentido de
@@ -341,7 +339,6 @@ s.a,
 
 $$\sum_{a \in A(j)}^{}{\mu(j,a)}\  = \beta \cdot \sum_{i \in S}^{}{\sum_{a \in A(i)}^{}{p\left( j \middle| i,a \right) \cdot \mu(i,a)}}\ \forall\ \ j \in S$$
 
-$$\mu(i,a) \geq 0\ \forall\ a\  \in A(i),\ i\  \in \ S$$
 
 Por dualidad fuerte se tiene que $P^{*} = D^{*}$. De esta manera, para
 saber las acciones correspondientes de política óptima para cada estado,
