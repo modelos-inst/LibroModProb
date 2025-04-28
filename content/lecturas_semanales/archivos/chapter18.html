@@ -654,8 +654,6 @@ programación lineal</p>
 <p>s.a,</p>
 <div class="math notranslate nohighlight">
 \[V(i) \geq c(i,a) + \beta \cdot \sum_{j \in S}^{}{p\left( j \middle| i,a \right) \cdot V(j)}\ \forall\ a \in A(i),\ i \in S\]</div>
-<div class="math notranslate nohighlight">
-\[V(i) \geq 0\ \forall\ i \in S\ \]</div>
 <p>Observemos que, si el problema de decisión busca maximizar, el programa
 lineal tendrá sentido de minimización. Así mismo, si el problema de
 decisión busca minimizar, el programa lineal tendrá sentido de
@@ -673,8 +671,6 @@ cada restricción del problema primal.</p>
 <p>s.a,</p>
 <div class="math notranslate nohighlight">
 \[\sum_{a \in A(j)}^{}{\mu(j,a)}\  = \beta \cdot \sum_{i \in S}^{}{\sum_{a \in A(i)}^{}{p\left( j \middle| i,a \right) \cdot \mu(i,a)}}\ \forall\ \ j \in S\]</div>
-<div class="math notranslate nohighlight">
-\[\mu(i,a) \geq 0\ \forall\ a\  \in A(i),\ i\  \in \ S\]</div>
 <p>Por dualidad fuerte se tiene que <span class="math notranslate nohighlight">\(P^{*} = D^{*}\)</span>. De esta manera, para
 saber las acciones correspondientes de política óptima para cada estado,
 se buscan las restricciones activas del problema primal <span class="math notranslate nohighlight">\(P\)</span> (donde las
