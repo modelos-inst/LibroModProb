@@ -37,7 +37,7 @@ parts:
   numbered: false
   chapters:
   - file: content/complementarias/Tutorial/tutorial.ipynb
-  - file: content/complementarias/AmbientesVirtuales/Ambientes_virtuales.ipynb
+  - file: content/complementarias/Ambientes Virtuales/Ambientes_virtuales.ipynb
   - file: content/complementarias/Complementaria1.ipynb
   - file: content/complementarias/Complementaria2.ipynb
   - file: content/complementarias/Complementaria3.ipynb
