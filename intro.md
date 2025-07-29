@@ -13,16 +13,16 @@ Despliega el contenido:
 ```{dropdown} Módulos: Complementarias
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Tutorial: Instalación de Python y VSCode](content/complementarias/Tutorial/tutorial.ipynb)
 - <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Tutorial: Ambientes Virtuales en Python](content/complementarias/AmbientesVirtuales/Ambientes_virtuales.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 1: Introducción a Python](content/complementarias/Complementaria1.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 2: Álgebra lineal en Python](content/complementarias/Complementaria2.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 3: Cadenas de Markov en Python](content/complementarias/Complementaria3.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 4: Manejo de datos y análisis preliminar en Python](content/complementarias/Complementaria4/Complementaria4.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 5: Cadenas Absorbentes en Python](content/complementarias/Complementaria5_temp.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 6: Análisis de tiempos en Python](content/complementarias/Complementaria6.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 7: Cálculo de filas en Python](content/complementarias/Complementaria7.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 8: Simulación de Montecarlo en Python](content/complementarias/Complementaria8.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 9: MDP en Python](content/complementarias/Complementaria9.ipynb)
-- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 10: SDP en Python](content/complementarias/Complementaria10.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 1: Introducción a Python y Álgebra Lineal en Python](content/complementarias/Complementaria1.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 2: Cadenas de Markov en Python I](content/complementarias/Complementaria2.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 3: Cadenas de Markov en Python II](content/complementarias/Complementaria3.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 4: Cadenas de Markov en Python III](content/complementarias/Complementaria4.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 5: Manejo de datos y análisis preliminar en Python](content/complementarias/Complementaria%205/Complementaria5.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 6: Estado Estable y Análisis de Tiempos en Python](content/complementarias/Complementaria6.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 7: Cadenas Absorbentes en Python](content/complementarias/Complementaria7.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 8: Cálculo de filas en Python](content/complementarias/Complementaria8.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 9: Simulación de Montecarlo en Python](content/complementarias/Complementaria9.ipynb)
+- <i class="fa-solid fa-check" style="color:#ADD8E6"></i> [Complementaria 10: MDP en Python](content/complementarias/Complementaria10.ipynb)
 
 ```
 
