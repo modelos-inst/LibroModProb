@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+    <title>Ambientes virtuales en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
   
   
   
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Complementaria 1: Introducción a Python" href="../Complementaria1.html" />
-    <link rel="prev" title="En Windows" href="../Tutorial/tutorial.html" />
+    <link rel="prev" title="Tutorial. Instalación Python y Visual Studio Code" href="../Tutorial/tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -196,12 +196,9 @@
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Tutorial/tutorial.html"><strong>En Windows</strong></a></li>
-
-
-
-
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Cadenas de Markov en Python I</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3></a></li>
@@ -334,9 +331,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -347,19 +342,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h1></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -369,7 +356,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1 style="color: #ADD8E6;">Ambientes virtuales en Python</h1><p>En este tutorial veremos cómo se crean ambientes virtuales en Python empleando la librería <em>venv</em>. Las aplicaciones en Python suelen utilizar paquetes y módulos que no forman parte de la biblioteca estándar. En ocasiones, las aplicaciones necesitan una versión específica de una biblioteca porque requieren que se haya corregido un error particular o porque fueron desarrolladas usando una versión anterior de la biblioteca.</p>
+  <section id="ambientes-virtuales-en-python">
+<h1><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h1><a class="headerlink" href="#ambientes-virtuales-en-python" title="Link to this heading">#</a></h1>
+<p>En este tutorial veremos cómo se crean ambientes virtuales en Python empleando la librería <em>venv</em>. Las aplicaciones en Python suelen utilizar paquetes y módulos que no forman parte de la biblioteca estándar. En ocasiones, las aplicaciones necesitan una versión específica de una biblioteca porque requieren que se haya corregido un error particular o porque fueron desarrolladas usando una versión anterior de la biblioteca.</p>
 <p>Esto significa que una única instalación de Python puede no ser capaz de satisfacer los requisitos de todas las aplicaciones. Por ejemplo, si la aplicación A necesita la versión 1.0 de un módulo en particular, pero la aplicación B requiere la versión 2.0, los requisitos entran en conflicto. Instalar la versión 1.0 o la 2.0 dejará a una de las aplicaciones sin poder ejecutarse.</p>
 <p>La solución a este problema es crear un entorno o ambiente virtual, que es un árbol de directorios independiente que contiene una instalación de Python para una versión específica, junto con un conjunto de paquetes adicionales.</p>
 <p>De esta forma, diferentes aplicaciones pueden usar diferentes entornos virtuales. Para resolver el ejemplo anterior de requisitos en conflicto, la aplicación A puede tener su propio entorno virtual con la versión 1.0 instalada, mientras que la aplicación B tiene otro entorno virtual con la versión 2.0. Si la aplicación B necesita actualizar una biblioteca a la versión 3.0, esto no afectará el entorno de la aplicación A.</p>
@@ -455,6 +444,7 @@
     <img src="Imagen8.png" alt="Imagen8" width="700" height="90"/>
 </p><p>Con este tutorial ya aprendimos a crear, activar y desactivar entornos virtuales en Python, instalar dependencias, y gestionar sus proyectos de manera aislada y eficiente.</p>
 <p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -492,7 +482,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><strong>En Windows</strong></p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></p>
       </div>
     </a>
     <a class="right-next"
@@ -510,22 +500,6 @@
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
