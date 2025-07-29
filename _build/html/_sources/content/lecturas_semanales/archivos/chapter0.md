@@ -35,7 +35,7 @@ $$P[X<t|X>s] = P[X<t-s] \forall t>s\ge 0 $$
 
 ### Distribución Lognormal 
 
-Se dice que $X$ es una variable aleatoria que sigue una distribución de probabilidad lognormal si el logaritmo de $X$ es una variable siguen una distribución normal con parámetros $\mu$ y $\\sigma$. Estos dos valores también son los **parámetros** de la distribución lognormal. 
+Se dice que $X$ es una variable aleatoria que sigue una distribución de probabilidad lognormal si el logaritmo de $X$ es una variable que sigue una distribución normal con parámetros $\mu$ y $\\sigma$. Estos dos valores también son los **parámetros** de la distribución lognormal. 
 
 |                                                               |  |                                                                                        |
 |---------------------------------------------------------------|--|----------------------------------------------------------------------------------------|
@@ -55,19 +55,19 @@ Se dice que $X$ es una variable aleatoria que sigue una distribución de probabi
 |**Varianza:** $Var[X]=\frac{a^{2}+b^{2}+c^{2}-ab-ac-bc}{18}$   |  |                                                                                        |
 
 
-A continuación, se presenta el histograma de frecuencias para una variable aleatoria  que sigue una distribución de probabilidad triangular con parámetros  = 0, = 60 y  = 20. 
+A continuación, se presenta el histograma de frecuencias para una variable aleatoria  que sigue una distribución de probabilidad triangular con parámetros a = 0, b = 60 y c = 20. 
 
 ![Figura 3](imagenes/Distribuciones1.png)
 
 
 ### Distribución Erlang 
 
-Se define $X$ como una variable aleatoria que sigue una distribución Erlang si constituye una suma de *K* variables aleatorias distribuidas exponencialmente con el mismo parámetro  , y estas son independientes entre sí. Los parámetros de la distribución Erlang son  (cantidad de variables aleatorias exponenciales que se suman) y  (parámetro de cada una de esas variables aleatorias). 
+Se define $X$ como una variable aleatoria que sigue una distribución Erlang si constituye una suma de *K* variables aleatorias distribuidas exponencialmente con el mismo parámetro  , y estas son independientes entre sí. Los parámetros de la distribución Erlang son $k$ (cantidad de variables aleatorias exponenciales que se suman) y $\lambda$ (parámetro de cada una de esas variables aleatorias). 
 
-Sea $Y_{i}$ un conjunto de variables aleatoria distribuidas exponencialmente con parámetro $\lambda$. $Y_{i}$ son **iid** (independientes e idénticamente distribuidas). 
+Sea $Y_{i}$ un conjunto de variables aleatoria distribuidas exponencialmente con parámetro $\lambda$, independientes e identicamente distribuidas.
 
 $$X = \sum_{i=1}^{N} Y_{i}$$
-$$X~Erlang(k=N, \lambda)$$
+$$X \sim \text{Erlang}(k=N, \lambda)$$
 
 En caso en que $Y_{i}$ no sean variables aleatorias **iid**, la distribución de probabilidad de $X$ **no** será Erlang. 
 
@@ -83,7 +83,7 @@ Nos interesa utilizar variables aleatorias discretas para modelar la probabilida
 
 ### Distribución Poisson 
 
-Una variable aleatoria que siga una distribución de Poisson nos permite conocer la probabilidad que ocurra una cantidad determinada de eventos durante un período de tiempo definido $t$. De este modo, el parámetro de esta distribución es $\lambda$, que indica la tasa de ocurrencia de eventos por unidad de tiempo. Las unidades de medida de $\lambda$ son de  \frac{1}{tiempo}; por ejemplo: $segundos^{−1}$, $horas^{−1}$,$meses^{−1}$.
+Una variable aleatoria que siga una distribución de Poisson nos permite conocer la probabilidad que ocurra una cantidad determinada de eventos durante un período de tiempo definido $t$. De este modo, el parámetro de esta distribución es $\lambda$, que indica la tasa de ocurrencia de eventos por unidad de tiempo. Las unidades de medida de $\lambda$ son de  $\frac{1}{tiempo}$; por ejemplo: $segundos^{−1}$, $horas^{−1}$,$meses^{−1}$.
 
 
 |                                                               |  |                                                                                        |
@@ -137,7 +137,7 @@ Sea $X$ una variable aleatoria que cuenta el número de éxitos en una secuencia
 
 ### Distribución Binomial Negativa 
 
-Sea $X$ una variable aleatoria que cuenta el número de intentos necesarios para el obtener k-ésimo éxito (por primera vez). Cada uno de los intentos es un ensayo de Bernoulli independiente del resto, en donde hay dos posibles resultados: éxito o fracaso. Dicha variable aleatoria sigue una distribución de probabilidad Binomial Negativa. 
+Sea $X$ una variable aleatoria que cuenta el número de intentos necesarios para el obtener k-ésimo éxito por primera vez. Cada uno de los intentos es un ensayo de Bernoulli independiente del resto, en donde hay dos posibles resultados: éxito o fracaso. Dicha variable aleatoria sigue una distribución de probabilidad Binomial Negativa. 
 
 **Parámetros:** $k$ (número de éxito de interés), $p$ (probabilidad de éxito de cada uno de los intentos). 
 

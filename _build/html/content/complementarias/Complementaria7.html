@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Complementaria 7: Cadenas Absorbentes en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=406e030a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria7';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Complementaria 8: Cálculo de filas" href="Complementaria8.html" />
+    <link rel="prev" title="Complementaria 6: Estado Estable y Análisis de Tiempos Promedio" href="Complementaria6.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter12.html">Teoría de Colas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecturas_semanales/Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter17.html">Programación Dinámica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecturas_semanales/archivos/chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="AmbientesVirtuales/Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Cadenas de Markov en Python I</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4: Cadenas de Markov en Python III</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria%205/Complementaria5.html"><h3 style="color: #ADD8E6;">Complementaria 5: Manejo de datos y análisis preliminar en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Estado Estable y  Análisis de Tiempos Promedio</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 7: Cadenas Absorbentes en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria8.html"><h3 style="color: #ADD8E6;">Complementaria 8: Cálculo de filas</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Complementaria10.html"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Complementaria7.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><h3 style="color: #ADD8E6;">Complementaria 7: Cadenas Absorbentes en Python</h3></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="complementaria-7-cadenas-absorbentes-en-python">
+<h1><h3 style="color: #ADD8E6;">Complementaria 7: Cadenas Absorbentes en Python</h3><a class="headerlink" href="#complementaria-7-cadenas-absorbentes-en-python" title="Link to this heading">#</a></h1>
+<p>En este tutorial se abordará el tema de análisis de cadenas de Markov absorbentes a través de dos ejemplos, uno continuo y discreto. Para desarrollar estos ejercicio utilizaremos las librerías <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> y <code class="docutils literal notranslate"><span class="pre">numpy</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">jmarkov.dtmc</span> <span class="kn">import</span> <span class="n">dtmc</span>
+<span class="kn">from</span> <span class="nn">jmarkov.ctmc</span> <span class="kn">import</span> <span class="n">ctmc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<h3 style="color: #ADD8E6;">1. Cadena de Markov de Tiempo Continuo</h3><h4 style="color: #ADD8E6;">Literal a</h4><p>Vamos a realizar el primer problema del archivo “Complementaria 7(Q).pdf” que se encuentra en Bloque Neon. En primer lugar, se modelará la situación como una cadena de Markov de tiempo continuo:</p>
+<div class="math notranslate nohighlight">
+\[
+X(t) = \text{Estado del paciente en la EPS en el tiempo } t
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+S_X = \{D, TNI, TI, CEPS, M\}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{Q}_{i \rightarrow j} =
+\begin{bmatrix}
+-(\phi + \omega + \mu + \alpha ) &amp; \phi &amp; \omega &amp; \mu &amp; \alpha \\
+0 &amp; -(\gamma + 0.5\mu + \kappa) &amp; \gamma &amp; 0.5\mu &amp; \kappa \\
+0 &amp; 0 &amp; -(0.2\mu + \tau) &amp; 0.2\mu &amp; \tau \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\end{bmatrix}
+\end{split}\]</div>
+<p>Es importante notar que los estados absorbentes Cambio de EPS (<span class="math notranslate nohighlight">\(CEPS\)</span>) y Muerte (<span class="math notranslate nohighlight">\(M\)</span>) se representan en la matriz de tasas <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span> por tener filas llenas de 0 únicamente, ya que no existe ninguna tasa de salida de un estado absorbente. Con la formulación, podemos definir la lista de estados y la matriz generadora.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">,</span>     <span class="c1"># Diagnosticado</span>
+           <span class="s1">&#39;TNI&#39;</span><span class="p">,</span>   <span class="c1"># Tratamieno No Invasivo</span>
+           <span class="s1">&#39;TI&#39;</span><span class="p">,</span>    <span class="c1"># Tratamiento Invasivo</span>
+           <span class="s1">&#39;CEPS&#39;</span><span class="p">,</span>  <span class="c1"># Cambio de EPS</span>
+           <span class="s1">&#39;M&#39;</span><span class="p">]</span>     <span class="c1"># Muerte</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">3.5</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">tao</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+<span class="n">matriz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">omega</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">alpha</span><span class="p">),</span> <span class="n">phi</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">alpha</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">mu</span> <span class="o">+</span> <span class="n">kappa</span><span class="p">),</span> <span class="n">gamma</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="n">kappa</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">mu</span> <span class="o">+</span> <span class="n">tao</span><span class="p">),</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="n">tao</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="n">ctmc</span><span class="p">(</span><span class="n">matriz</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<h4 style="color: #ADD8E6;">Literal b</h4><p>El literal b solicita determinar cuánto tiempo permanece un paciente diagnosticado en el mismo estado antes de morir (<span class="math notranslate nohighlight">\(M\)</span>) o cambiar de EPS (<span class="math notranslate nohighlight">\(CEPS\)</span>), siendo estos dos últimos los estados absorbentes.</p>
+<p>Este análisis puede resolverse utilizando los tiempos antes de absorción. Recordando la estructura de la matriz de tasas de transición para una cadena de Markov absorbente en tiempo continuo, esta tiene la forma:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{Q} = 
+\begin{bmatrix}
+\mathbb{U} &amp; \mathbb{V} \\
+0 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> contiene las tasas de transición entre los estados transitorios. Así, la matriz de tiempos antes de absorción en una cadena continua está dada por:</p>
+<div class="math notranslate nohighlight">
+\[
+(-\mathbb{U})^{-1}
+\]</div>
+<p>En esta matriz, el elemento <span class="math notranslate nohighlight">\([i, j]\)</span> representa el tiempo promedio que la cadena pasa en el estado transitorio <span class="math notranslate nohighlight">\(j\)</span>, dado que comenzó en el estado transitorio <span class="math notranslate nohighlight">\(i\)</span>, antes de alcanzar un estado absorbente.</p>
+<p>Por lo tanto, para responder el literal, basta con calcular esta matriz y seleccionar el componente <span class="math notranslate nohighlight">\([i, i]\)</span>, donde <span class="math notranslate nohighlight">\(i\)</span> corresponde al estado Diagnosticado (<span class="math notranslate nohighlight">\(D\)</span>), ya que se desea conocer el tiempo que el paciente permanece en ese mismo estado antes de ser absorbido. Con la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> este tiempo se puede calcular usando el atributo <code class="docutils literal notranslate"><span class="pre">absorbtion_times</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.1]])
+</pre></div>
+</div>
+</div>
+</div>
+<h4 style="color: #ADD8E6;">Literal c</h4><p>Para resolver este literal, podemos hacer uso de las probabilidades de absorción, las cuales están dadas por la siguiente matriz:</p>
+<div class="math notranslate nohighlight">
+\[
+-\mathbb{U}^{-1} \cdot \mathbb{V}
+\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\mathbb{U}\)</span> contiene las tasas de transición entre los estados transitorios, y <span class="math notranslate nohighlight">\(\mathbb{V}\)</span> aquellas entre estados transitorios y  absorbentes. La componente <span class="math notranslate nohighlight">\([i, j]\)</span> de esta matriz indica la probabilidad de que la cadena sea absorbida por el estado <span class="math notranslate nohighlight">\(j\)</span>, dado que inició en el estado <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>Teniendo esto en cuenta, para responder el literal, se debe seleccionar la componente en la que <span class="math notranslate nohighlight">\(i\)</span> corresponde al estado Tratamiento No Invasivo (<span class="math notranslate nohighlight">\(TNI\)</span>) y <span class="math notranslate nohighlight">\(j\)</span> al estado de (<span class="math notranslate nohighlight">\(CEPS\)</span>). Esto se puede hacer con el atributo <code class="docutils literal notranslate"><span class="pre">absorbtion_probabilities</span></code> de la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="o">.</span><span class="n">absorbtion_probabilities</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.11764706]])
+</pre></div>
+</div>
+</div>
+</div>
+<h3 style="color: #ADD8E6;">2. Cadena de Markov de Tiempo Discreto</h3><h4 style="color: #ADD8E6;">Literal a</h4><p>Continuando con el segundo problema del archivo “Complementaria 7(Q).pdf” que se encuentra en Bloque Neon. En primer lugar, se modelará la situación como una cadena de Markov de tiempo discreto:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X_n = \text{Clasificación del proyecto al final del año } n\\
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+S_X = \{\text{Poco Rentable (PR)},\text{Rentable (R)},\text{Muy Rentable (MR)},\text{No Rentable (NR)},\text{Liquidado (L)}\}\\
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{P}_{i \rightarrow j} =
+\begin{bmatrix}
+0.3 &amp; 0.2 &amp; 0 &amp; 0.3 &amp; 0.2 \\
+0.1 &amp; 0.5 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
+0 &amp; 0.2 &amp; 0.8 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+\end{bmatrix}
+\end{split}\]</div>
+<p>Es importante notar que los estados absorbentes No Rentable (<span class="math notranslate nohighlight">\(NR\)</span>) y Liquidado (<span class="math notranslate nohighlight">\(L\)</span>) se representan en la matriz de transición <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> mediante la condición <span class="math notranslate nohighlight">\(p_{ij} = 0\)</span> y <span class="math notranslate nohighlight">\(p_{ii} = 1\)</span>, ya que <span class="math notranslate nohighlight">\(i\)</span> es absorbente, lo cual indica que, una vez que se alcanza un estado absorbente, no existe posibilidad de ir a otro estado.</p>
+<p>Con la formulación, podemos definir la lista de estados y la matriz de probabilidades.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PR&#39;</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">,</span><span class="s1">&#39;MR&#39;</span><span class="p">,</span><span class="s1">&#39;NR&#39;</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">]</span>
+
+<span class="n">matriz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">matriz</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<h4 style="color: #ADD8E6;">Literal b</h4><p>Para verificar si la afirmación del analista es correcta, se debe calcular el tiempo que permanece en el portafolio un proyecto que entra con la clasificación Muy Rentable (<span class="math notranslate nohighlight">\(MR\)</span>), y compararlo con el tiempo que permanece un proyecto que ingresa con la clasificación Poco Rentable (<span class="math notranslate nohighlight">\(PR\)</span>). Estos tiempos pueden estimarse mediante el tiempo esperado antes de absorción, el cual está dado por la matriz:</p>
+<div class="math notranslate nohighlight">
+\[
+(\mathbb{I} - \mathbb{Q})^{-1}
+\]</div>
+<p>Cada elemento <span class="math notranslate nohighlight">\([i,j]\)</span> de esta matriz representa el número esperado de veces que la cadena estará en el estado transitorio <span class="math notranslate nohighlight">\(j\)</span>, dado que comenzó en el estado transitorio <span class="math notranslate nohighlight">\(i\)</span>, antes de alcanzar un estado absorbente. La librería <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> permite calcular estos tiempos mediante el atributo <code class="docutils literal notranslate"><span class="pre">absorbtion_times</span></code>, el cual recibe como parámetros el estado inicial y el estado final.</p>
+<p>A modo de ejemplo, se calculará el tiempo que permanece un proyecto en la clasificación Rentable (<span class="math notranslate nohighlight">\(R\)</span>), dado que comenzó en la clasificación Poco Rentable (<span class="math notranslate nohighlight">\(PR\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Tiempo antes de absorción desde el estado &#39;Poco Rentable&#39; (índice 0) hasta el estado &#39;Rentable&#39; (índice 1)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0526315789473688
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado obtenido fue 1.0526, lo que indica que, en promedio, un proyecto que comienza en la clasificación Poco Rentable tarda aproximadamente <strong>1.05 años</strong> en alcanzar la clasificación Rentable, antes de ser absorbido por un estado como No Rentable o Liquidado.</p>
+<p>Retomando el ejercicio, para calcular el tiempo total que permanece un proyecto en el portafolio, se deben sumar los tiempos antes de absorción en cada uno de los tres estados transitorios. La suma de estos tiempos representa el número esperado de años que el proyecto permanece  en el portafolio antes de ser absorbido por uno de los dos estados absorbentes (<em>No Rentable</em> o <em>Liquidado</em>).</p>
+<p>Estos tiempos se presentan a continuación y se denotarán como <code class="docutils literal notranslate"><span class="pre">TAA_MR</span></code> y <code class="docutils literal notranslate"><span class="pre">TAA_PR</span></code>, que significan <strong>Tiempos Antes de Absorción</strong> para los proyectos que ingresan con clasificación Muy Rentable (<span class="math notranslate nohighlight">\(MR\)</span>) y Poco Rentable (<span class="math notranslate nohighlight">\(PR\)</span>), respectivamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TAA_MR</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">estados</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;MR&#39;</span><span class="p">),</span> <span class="n">target</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">TAA_PR</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">estados</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;PR&#39;</span><span class="p">),</span> <span class="n">target</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finalmente, la división entre los dos tiempos (<code class="docutils literal notranslate"><span class="pre">TAA_MR</span> <span class="pre">/</span> <span class="pre">TAA_PR</span></code>) permite evaluar si la afirmación del analista es correcta.</p>
+<p>Si el resultado es <strong>mayor a 4</strong>, se concluye que el analista tenía razón al afirmar que un proyecto clasificado inicialmente como Muy Rentable (<span class="math notranslate nohighlight">\(MR\)</span>) permanece al menos cuatro veces más tiempo en el portafolio que uno clasificado como Poco Rentable (<span class="math notranslate nohighlight">\(PR\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resultado</span> <span class="o">=</span> <span class="n">TAA_MR</span> <span class="o">/</span> <span class="n">TAA_PR</span> 
+<span class="n">resultado</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.500000000000001
+</pre></div>
+</div>
+</div>
+</div>
+<p>Como el proyecto que entra al portafolio con clasificación muy rentable (MR) permanece dentro del portafolio en promedio 3.5 veces mas que un proyecto que entra al portafolio con clasificación poco rentable (PR) se puede concluir que la afirmación del analista es incorrecta</p>
+<h4 style="color: #ADD8E6;">Literal c</h4><p>EL literal c pide calcular la ganancia neta promedio que generara un proyecto que inicialmente es clasificado como muy rentable. Para esto se definira un vector de costos que corresponden al ingreso o costo de acuerdo a la lista de estados que se definio previamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">38</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">190</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Como se sabe, las ganancias se calculan como la diferencia entre los ingresos y los costos. Para estimar los ingresos, se multiplicará el ingreso asociado a cada estado transitorio por el tiempo esperado que el proyecto permanece en dicho estado antes de ser absorbido. Esto se ve de la siguiente manera</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Ingresos} = \$38 \cdot (\mathbb{I} - \mathbb{Q})^{-1}_{[MR,PR]} + \$76 \cdot (\mathbb{I} - \mathbb{Q})^{-1}_{[MR,R]} + \$114 \cdot (\mathbb{I} - \mathbb{Q})^{-1}_{[MR,MR]}
+\]</div>
+<p>Por otro lado, para calcular los costos se debe tener en cuenta la probabilidad de que el proyecto sea liquidado o deje de ser rentable. Dichas probabilidades se pueden calcular mediante las probabilidades antes de absorción dadas por la siguiente matriz:</p>
+<div class="math notranslate nohighlight">
+\[
+(\mathbb{I} - \mathbb{Q})^{-1} \cdot \mathbb{R}
+\]</div>
+<p>Teniendo en cuenta esto se pueden estimar los costos como:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Costos} = \$152 \cdot (\mathbb{I} - \mathbb{Q})^{-1} \cdot \mathbb{R}_{[MR,NR]} + \$190 \cdot (\mathbb{I} - \mathbb{Q})^{-1} \cdot \mathbb{R}_{[MR,L]} 
+\]</div>
+<p>Dicho procedimiento se presenta a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculando los ingresos</span>
+<span class="n">ingresos</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">P</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">estados</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;MR&#39;</span><span class="p">),</span> <span class="n">target</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Calculando los costos</span>
+<span class="n">costos</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">P</span><span class="o">.</span><span class="n">absorbtion_probabilities</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">estados</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;MR&#39;</span><span class="p">),</span> <span class="n">target</span> <span class="o">=</span> <span class="n">i</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ganancias</span> <span class="o">=</span> <span class="n">ingresos</span> <span class="o">-</span> <span class="n">costos</span>
+<span class="n">ganancias</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1120.0000000000005
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Complementaria6.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 6: Estado Estable y  Análisis de Tiempos Promedio</h3></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Complementaria8.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 8: Cálculo de filas</h3></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

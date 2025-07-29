@@ -1,0 +1,2084 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Complementaria 5: Manejo de datos y análisis preliminar en Python &#8212; Libro Modelos Probabilísticos - IIND 2104</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=406e030a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria 5/Complementaria5';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Complementaria 6: Estado Estable y Análisis de Tiempos Promedio" href="../Complementaria6.html" />
+    <link rel="prev" title="Complementaria 4: Cadenas de Markov en Python III" href="../Complementaria4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+    <img src="../../../_static/uniandes.png" class="logo__image only-dark pst-js-only" alt="Libro Modelos Probabilísticos - IIND 2104 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecturas Semanales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo1.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 1: Introducción (Semana 1)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter0.html">Distribuciones de probabilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter1.html">Procesos estocásticos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo2.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 2: De un sistema real a un modelo (Semanas 2-8)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter2.html">Procesos de Poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter3.html">Cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter4.html">Análisis transitorio de cadenas de Markov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter5.html">Clasificación de estados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter6.html">Probabilidades en estado estable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter7.html">Cadenas embebidas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter8.html">Análisis de tiempos promedios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter9.html">Cadenas absorbentes: Tiempos antes de la absorción y probabilidades de absorción</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo3.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 3: Medir el sistema a través del modelo (Semanas 9-12)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter10.html">Ley de Little</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter11.html">Procesos de nacimiento y muerte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter12.html">Teoría de Colas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter13.html">Redes de Jackson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter14.html">Costos en cadenas de Markov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecturas_semanales/Modulo4.html"><span style="color:#86A8B3; font-weight: bold;">Módulo 4: Toma de decisiones para mejorar el sistema (Semanas 13-16)</span></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter18.html">Procesos de Decisión Markovianos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter15.html">Procesos de decisión en el tiempo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter17.html">Programación Dinámica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecturas_semanales/archivos/chapter16.html">Principio de Optimalidad y Ecuaciones de Bellman</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AmbientesVirtuales/Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Cadenas de Markov en Python I</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria4.html"><h3 style="color: #ADD8E6;">Complementaria 4: Cadenas de Markov en Python III</h3></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 5: Manejo de datos y análisis preliminar en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria6.html"><h3 style="color: #ADD8E6;">Complementaria 6: Estado Estable y  Análisis de Tiempos Promedio</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria7.html"><h3 style="color: #ADD8E6;">Complementaria 7: Cadenas Absorbentes en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria8.html"><h3 style="color: #ADD8E6;">Complementaria 8: Cálculo de filas</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria9.html"><h3 style="color: #ADD8E6;">Complementaria 9: Simulación de Montecarlo</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Complementaria10.html"><h3 style="color: #ADD8E6;">Complementaria 10: MDP en Python</h3></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/complementarias/Complementaria 5/Complementaria5.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><h3 style="color: #ADD8E6;">Complementaria 5: Manejo de datos y análisis preliminar en Python</h3></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="complementaria-5-manejo-de-datos-y-analisis-preliminar-en-python">
+<h1><h3 style="color: #ADD8E6;">Complementaria 5: Manejo de datos y análisis preliminar en Python</h3><a class="headerlink" href="#complementaria-5-manejo-de-datos-y-analisis-preliminar-en-python" title="Link to this heading">#</a></h1>
+<p>El objetivo de esta complementaria es aprender a procesar datos en Python, desde importar y exportar archivos, hasta el manejo interno de datos y el ajuste de distribuciones.</p>
+<h3 style="color: #ADD8E6;">Importar archivos de datos
+</h3><p>Para importar archivos de datos de extensión csv, txt, xlsx, dta o sas, podemos utilizar la librería <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
+<p>A continuación, queremos importar la base de datos “AAPL.csv” que se encuentra en Bloque Neón. Para esto, usaremos la función <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</span></code>. Antes de ejecutar el código para importar el archivo, debe establecer el directorio de trabajo (Working Directory) en la ruta en la que se encuentra el archivo en su computador. (P. ej. “C://Desktop/Modelos 202510/Complementarias/Complementaria 4/AAPL.csv”) utilizando el módulo <code class="docutils literal notranslate"><span class="pre">os</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1">#Conocer el directorio de trabajo actual</span>
+<span class="n">directorio_actual</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">directorio_actual</span><span class="p">)</span>
+
+<span class="c1">#Si se quiere cambiar el directorio</span>
+<span class="sd">&#39;&#39;&#39;os.chdir(&#39;/ruta/del/nuevo/directorio&#39;)&#39;&#39;&#39;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;AAPL.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\maria\OneDrive - Universidad de los Andes\Escritorio\Migración\Libro_ModProb\LibroModProb\content\complementarias\Complementaria 5
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017-07-17</td>
+      <td>148.820007</td>
+      <td>150.899994</td>
+      <td>148.570007</td>
+      <td>149.559998</td>
+      <td>148.974976</td>
+      <td>23793500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2017-07-18</td>
+      <td>149.199997</td>
+      <td>150.130005</td>
+      <td>148.669998</td>
+      <td>150.080002</td>
+      <td>149.492950</td>
+      <td>17868800</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017-07-19</td>
+      <td>150.479996</td>
+      <td>151.419998</td>
+      <td>149.949997</td>
+      <td>151.020004</td>
+      <td>150.429276</td>
+      <td>20923000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2017-07-20</td>
+      <td>151.500000</td>
+      <td>151.740005</td>
+      <td>150.190002</td>
+      <td>150.339996</td>
+      <td>149.751923</td>
+      <td>17243700</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2017-07-21</td>
+      <td>149.990005</td>
+      <td>150.440002</td>
+      <td>148.880005</td>
+      <td>150.270004</td>
+      <td>149.682205</td>
+      <td>26252600</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La base de datos “AAPL.csv” incluye la información de las acciones de Apple para los meses de julio y agosto del año 2017. Para cada fecha se conoce el precio al que abrió la acción ese día, los valores máximo y mínimo del precio, el precio de cierre de la acción, el precio ajustado y, finalmente, el volumen de acciones transado. De esta misma manera se pueden importar datos de archivos con diferente extensión (<code class="docutils literal notranslate"><span class="pre">pd.read_excel()</span></code>, <code class="docutils literal notranslate"><span class="pre">pd.read_stata()</span></code>, por ejemplo).</p>
+<p><em>Nota:</em> Para conocer el directorio actual dónde se está trabajando en Python se puede utilizar la función <code class="docutils literal notranslate"><span class="pre">getcwd()</span></code> del módulo <code class="docutils literal notranslate"><span class="pre">os</span></code>. Si se desea cambiar el directorio de trabajo se puede usar la función chdir() ingresando como parámetro la dirección que se quiere asignar, por ejemplo:
+<code class="docutils literal notranslate"><span class="pre">os.chdir(&quot;C:Desktop/Modelos</span> <span class="pre">202510/Complementarias/Complementaria</span> <span class="pre">4&quot;).</span></code></p>
+<h3 style="color: #ADD8E6;">DataFrame
+</h3><p>Cuando importamos los datos utilizando la librería de <code class="docutils literal notranslate"><span class="pre">pandas</span></code> estos se almacenan en estructura de DataFrame. Un DataFrame es útil porque podemos almacenar vectores de diferente tipo (por ejemplo, numéricos y caracteres). También es útil porque podemos acceder a la información de cierta columna, conociendo el número de la columna o el nombre que le asignamos a dicha columna. La línea superior del DataFrame, llamada el encabezado, contiene los nombres de columna. Cada línea horizontal denota una fila de datos, que comienza con el nombre de la fila y, a continuación, los datos.</p>
+<p>Para llamar los datos de una celda se pueden utilizar dos métodos diferentes:</p>
+<ul class="simple">
+<li><p>iloc[]: Utiliza índices numéricos (enteros) para acceder a las filas y las columnas.</p></li>
+<li><p>loc[]: Utiliza etiquetas de fila y nombres de columnas para acceder a los datos.</p></li>
+</ul>
+<p>Para llamar los datos de una celda utilizando <code class="docutils literal notranslate"><span class="pre">iloc[]</span></code> introducimos sus coordenadas de fila y columna (como números enteros) en el operador de corchetes [ ]. Las dos coordenadas están separadas por una coma [numero de fila, numero de columna]. Por ejemplo, queremos traer el dato que se encuentra en la fila 3 y columna 4 (recuerde que los índices en Python empiezan en 0, por lo que en este caso se debe usar el índice 2 para las filas y el 3 para las columnas).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>149.949997
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para llamar los datos de una celda utilizando <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> introducimos la etiqueta de la fila (si no tiene etiqueta es directamente el número de fila) y el nombre de la columna en el operador de corchetes [ ].</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>149.949997
+</pre></div>
+</div>
+</div>
+</div>
+<p>De igual forma, podemos conocer el número de filas y columnas de un DataFrame con las función <code class="docutils literal notranslate"><span class="pre">shape</span></code>. Esta función guarda las dimensiones del DataFrame en una tupla, en donde el primer elemento corresponde al número de filas y el segundo almacena el número de columnas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(21, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_filas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El DataFrame tiene </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> filas.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El DataFrame tiene 21 filas.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_columnas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El DataFrame tiene </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> columnas.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El DataFrame tiene 7 columnas.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Más aún, podemos acceder a la información básica del DataFrame utilizando la función <code class="docutils literal notranslate"><span class="pre">describe()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>21.000000</td>
+      <td>21.000000</td>
+      <td>21.000000</td>
+      <td>21.000000</td>
+      <td>21.000000</td>
+      <td>2.100000e+01</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>153.880954</td>
+      <td>154.989048</td>
+      <td>152.591431</td>
+      <td>153.814287</td>
+      <td>153.300663</td>
+      <td>2.657169e+07</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.053136</td>
+      <td>4.252413</td>
+      <td>3.980617</td>
+      <td>4.047153</td>
+      <td>4.122180</td>
+      <td>1.205136e+07</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>148.820007</td>
+      <td>150.130005</td>
+      <td>147.300003</td>
+      <td>148.729996</td>
+      <td>148.148224</td>
+      <td>1.578100e+07</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>149.990005</td>
+      <td>150.899994</td>
+      <td>148.880005</td>
+      <td>150.270004</td>
+      <td>149.682205</td>
+      <td>1.984590e+07</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>153.350006</td>
+      <td>153.929993</td>
+      <td>151.800003</td>
+      <td>152.740005</td>
+      <td>152.142548</td>
+      <td>2.202820e+07</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>157.059998</td>
+      <td>158.919998</td>
+      <td>156.070007</td>
+      <td>157.139999</td>
+      <td>156.525330</td>
+      <td>2.709730e+07</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>159.899994</td>
+      <td>161.830002</td>
+      <td>159.110001</td>
+      <td>161.059998</td>
+      <td>160.429993</td>
+      <td>6.993680e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Allí encontramos las estadísticas básicas de variables numéricas (media, cuartiles, desviación, mínimo y máximo) para cada columna dentro del DataFrame.</p>
+<p>Para acceder a una columna podemos hacerlo de varias formas:</p>
+<ol class="arabic simple">
+<li><p>Utilizando el nombre de la columna.</p></li>
+<li><p>Utilizando el atributo de columna.</p></li>
+<li><p>Utilizando la función <code class="docutils literal notranslate"><span class="pre">loc[]</span></code>.</p></li>
+<li><p>Utilizando la función <code class="docutils literal notranslate"><span class="pre">iloc[]</span></code>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Volume&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     23793500
+1     17868800
+2     20923000
+3     17243700
+4     26252600
+5     21493200
+6     18853900
+7     15781000
+8     32476300
+9     17213700
+10    19845900
+11    35368600
+12    69936800
+13    27097300
+14    20559900
+15    21870300
+16    36205900
+17    26131500
+18    40804300
+19    26257100
+20    22028200
+Name: Volume, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Para este método el nombre de la columna no puede tener espacios ni caracteres especiales</span>
+<span class="n">df</span><span class="o">.</span><span class="n">Volume</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     23793500
+1     17868800
+2     20923000
+3     17243700
+4     26252600
+5     21493200
+6     18853900
+7     15781000
+8     32476300
+9     17213700
+10    19845900
+11    35368600
+12    69936800
+13    27097300
+14    20559900
+15    21870300
+16    36205900
+17    26131500
+18    40804300
+19    26257100
+20    22028200
+Name: Volume, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Volume&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     23793500
+1     17868800
+2     20923000
+3     17243700
+4     26252600
+5     21493200
+6     18853900
+7     15781000
+8     32476300
+9     17213700
+10    19845900
+11    35368600
+12    69936800
+13    27097300
+14    20559900
+15    21870300
+16    36205900
+17    26131500
+18    40804300
+19    26257100
+20    22028200
+Name: Volume, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     23793500
+1     17868800
+2     20923000
+3     17243700
+4     26252600
+5     21493200
+6     18853900
+7     15781000
+8     32476300
+9     17213700
+10    19845900
+11    35368600
+12    69936800
+13    27097300
+14    20559900
+15    21870300
+16    36205900
+17    26131500
+18    40804300
+19    26257100
+20    22028200
+Name: Volume, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Si se quiere acceder a múltiples columnas simultáneamente se puede hacer uso del doble corchete [[]].</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;High&#39;</span><span class="p">,</span><span class="s1">&#39;Volume&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>High</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>150.899994</td>
+      <td>23793500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>150.130005</td>
+      <td>17868800</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>151.419998</td>
+      <td>20923000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>151.740005</td>
+      <td>17243700</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>150.440002</td>
+      <td>26252600</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>152.440002</td>
+      <td>21493200</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>153.839996</td>
+      <td>18853900</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>153.929993</td>
+      <td>15781000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>153.990005</td>
+      <td>32476300</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>150.229996</td>
+      <td>17213700</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>150.330002</td>
+      <td>19845900</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>150.220001</td>
+      <td>35368600</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>159.750000</td>
+      <td>69936800</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>157.210007</td>
+      <td>27097300</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>157.399994</td>
+      <td>20559900</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>158.919998</td>
+      <td>21870300</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>161.830002</td>
+      <td>36205900</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>161.270004</td>
+      <td>26131500</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>160.000000</td>
+      <td>40804300</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>158.570007</td>
+      <td>26257100</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>160.210007</td>
+      <td>22028200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>También, podemos acceder a la información de las filas de diferentes formas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Date         2017-07-19
+Open         150.479996
+High         151.419998
+Low          149.949997
+Close        151.020004
+Adj Close    150.429276
+Volume         20923000
+Name: 2, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;df.loc[&#39;Nombre de la fila&#39;,]&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;df.loc[&#39;Nombre de la fila&#39;,]&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Podemos traer información de múltiples filas o columnas. En este caso queremos traer la información de las filas 5 y 12 al mismo tiempo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span><span class="mi">11</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>2017-07-21</td>
+      <td>149.990005</td>
+      <td>150.440002</td>
+      <td>148.880005</td>
+      <td>150.270004</td>
+      <td>149.682205</td>
+      <td>26252600</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2017-08-01</td>
+      <td>149.100006</td>
+      <td>150.220001</td>
+      <td>148.410004</td>
+      <td>150.050003</td>
+      <td>149.463058</td>
+      <td>35368600</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Por último, es posible obtener un subconjunto de filas dentro del data frame que cumplan cierta condición haciendo uso de arreglos de operadores lógicos.</p>
+<p>Cuando solo se tiene una condición:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">150</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2017-07-19</td>
+      <td>150.479996</td>
+      <td>151.419998</td>
+      <td>149.949997</td>
+      <td>151.020004</td>
+      <td>150.429276</td>
+      <td>20923000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2017-07-24</td>
+      <td>150.580002</td>
+      <td>152.440002</td>
+      <td>149.899994</td>
+      <td>152.089996</td>
+      <td>151.495071</td>
+      <td>21493200</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2017-07-25</td>
+      <td>151.800003</td>
+      <td>153.839996</td>
+      <td>151.800003</td>
+      <td>152.740005</td>
+      <td>152.142548</td>
+      <td>18853900</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2017-07-26</td>
+      <td>153.350006</td>
+      <td>153.929993</td>
+      <td>153.059998</td>
+      <td>153.460007</td>
+      <td>152.859726</td>
+      <td>15781000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2017-08-02</td>
+      <td>159.279999</td>
+      <td>159.750000</td>
+      <td>156.160004</td>
+      <td>157.139999</td>
+      <td>156.525330</td>
+      <td>69936800</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2017-08-03</td>
+      <td>157.050003</td>
+      <td>157.210007</td>
+      <td>155.020004</td>
+      <td>155.570007</td>
+      <td>154.961472</td>
+      <td>27097300</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2017-08-04</td>
+      <td>156.070007</td>
+      <td>157.399994</td>
+      <td>155.690002</td>
+      <td>156.389999</td>
+      <td>155.778259</td>
+      <td>20559900</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2017-08-07</td>
+      <td>157.059998</td>
+      <td>158.919998</td>
+      <td>156.669998</td>
+      <td>158.809998</td>
+      <td>158.188797</td>
+      <td>21870300</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2017-08-08</td>
+      <td>158.600006</td>
+      <td>161.830002</td>
+      <td>158.270004</td>
+      <td>160.080002</td>
+      <td>159.453827</td>
+      <td>36205900</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2017-08-09</td>
+      <td>159.259995</td>
+      <td>161.270004</td>
+      <td>159.110001</td>
+      <td>161.059998</td>
+      <td>160.429993</td>
+      <td>26131500</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2017-08-10</td>
+      <td>159.899994</td>
+      <td>160.000000</td>
+      <td>154.630005</td>
+      <td>155.320007</td>
+      <td>155.320007</td>
+      <td>40804300</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2017-08-11</td>
+      <td>156.600006</td>
+      <td>158.570007</td>
+      <td>156.070007</td>
+      <td>157.479996</td>
+      <td>157.479996</td>
+      <td>26257100</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2017-08-14</td>
+      <td>159.320007</td>
+      <td>160.210007</td>
+      <td>158.750000</td>
+      <td>159.850006</td>
+      <td>159.850006</td>
+      <td>22028200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Cuando se tienen múltiples condiciones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">150</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">150</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2017-07-19</td>
+      <td>150.479996</td>
+      <td>151.419998</td>
+      <td>149.949997</td>
+      <td>151.020004</td>
+      <td>150.429276</td>
+      <td>20923000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2017-07-24</td>
+      <td>150.580002</td>
+      <td>152.440002</td>
+      <td>149.899994</td>
+      <td>152.089996</td>
+      <td>151.495071</td>
+      <td>21493200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Ahora bien, también podemos añadir columnas a un DataFrame. Por ejemplo, podemos crear una columna, <code class="docutils literal notranslate"><span class="pre">LogAdj</span></code>, que sea el logaritmo del precio ajustado de cierre:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;LogAdj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+      <th>LogAdj</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017-07-17</td>
+      <td>148.820007</td>
+      <td>150.899994</td>
+      <td>148.570007</td>
+      <td>149.559998</td>
+      <td>148.974976</td>
+      <td>23793500</td>
+      <td>2.173113</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2017-07-18</td>
+      <td>149.199997</td>
+      <td>150.130005</td>
+      <td>148.669998</td>
+      <td>150.080002</td>
+      <td>149.492950</td>
+      <td>17868800</td>
+      <td>2.174621</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017-07-19</td>
+      <td>150.479996</td>
+      <td>151.419998</td>
+      <td>149.949997</td>
+      <td>151.020004</td>
+      <td>150.429276</td>
+      <td>20923000</td>
+      <td>2.177332</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2017-07-20</td>
+      <td>151.500000</td>
+      <td>151.740005</td>
+      <td>150.190002</td>
+      <td>150.339996</td>
+      <td>149.751923</td>
+      <td>17243700</td>
+      <td>2.175372</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2017-07-21</td>
+      <td>149.990005</td>
+      <td>150.440002</td>
+      <td>148.880005</td>
+      <td>150.270004</td>
+      <td>149.682205</td>
+      <td>26252600</td>
+      <td>2.175170</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2017-07-24</td>
+      <td>150.580002</td>
+      <td>152.440002</td>
+      <td>149.899994</td>
+      <td>152.089996</td>
+      <td>151.495071</td>
+      <td>21493200</td>
+      <td>2.180399</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2017-07-25</td>
+      <td>151.800003</td>
+      <td>153.839996</td>
+      <td>151.800003</td>
+      <td>152.740005</td>
+      <td>152.142548</td>
+      <td>18853900</td>
+      <td>2.182251</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2017-07-26</td>
+      <td>153.350006</td>
+      <td>153.929993</td>
+      <td>153.059998</td>
+      <td>153.460007</td>
+      <td>152.859726</td>
+      <td>15781000</td>
+      <td>2.184293</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2017-07-27</td>
+      <td>153.750000</td>
+      <td>153.990005</td>
+      <td>147.300003</td>
+      <td>150.559998</td>
+      <td>149.971069</td>
+      <td>32476300</td>
+      <td>2.176007</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2017-07-28</td>
+      <td>149.889999</td>
+      <td>150.229996</td>
+      <td>149.190002</td>
+      <td>149.500000</td>
+      <td>148.915207</td>
+      <td>17213700</td>
+      <td>2.172939</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2017-07-31</td>
+      <td>149.899994</td>
+      <td>150.330002</td>
+      <td>148.130005</td>
+      <td>148.729996</td>
+      <td>148.148224</td>
+      <td>19845900</td>
+      <td>2.170696</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2017-08-01</td>
+      <td>149.100006</td>
+      <td>150.220001</td>
+      <td>148.410004</td>
+      <td>150.050003</td>
+      <td>149.463058</td>
+      <td>35368600</td>
+      <td>2.174534</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2017-08-02</td>
+      <td>159.279999</td>
+      <td>159.750000</td>
+      <td>156.160004</td>
+      <td>157.139999</td>
+      <td>156.525330</td>
+      <td>69936800</td>
+      <td>2.194585</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2017-08-03</td>
+      <td>157.050003</td>
+      <td>157.210007</td>
+      <td>155.020004</td>
+      <td>155.570007</td>
+      <td>154.961472</td>
+      <td>27097300</td>
+      <td>2.190224</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2017-08-04</td>
+      <td>156.070007</td>
+      <td>157.399994</td>
+      <td>155.690002</td>
+      <td>156.389999</td>
+      <td>155.778259</td>
+      <td>20559900</td>
+      <td>2.192507</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2017-08-07</td>
+      <td>157.059998</td>
+      <td>158.919998</td>
+      <td>156.669998</td>
+      <td>158.809998</td>
+      <td>158.188797</td>
+      <td>21870300</td>
+      <td>2.199176</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2017-08-08</td>
+      <td>158.600006</td>
+      <td>161.830002</td>
+      <td>158.270004</td>
+      <td>160.080002</td>
+      <td>159.453827</td>
+      <td>36205900</td>
+      <td>2.202635</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2017-08-09</td>
+      <td>159.259995</td>
+      <td>161.270004</td>
+      <td>159.110001</td>
+      <td>161.059998</td>
+      <td>160.429993</td>
+      <td>26131500</td>
+      <td>2.205286</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2017-08-10</td>
+      <td>159.899994</td>
+      <td>160.000000</td>
+      <td>154.630005</td>
+      <td>155.320007</td>
+      <td>155.320007</td>
+      <td>40804300</td>
+      <td>2.191227</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2017-08-11</td>
+      <td>156.600006</td>
+      <td>158.570007</td>
+      <td>156.070007</td>
+      <td>157.479996</td>
+      <td>157.479996</td>
+      <td>26257100</td>
+      <td>2.197225</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2017-08-14</td>
+      <td>159.320007</td>
+      <td>160.210007</td>
+      <td>158.750000</td>
+      <td>159.850006</td>
+      <td>159.850006</td>
+      <td>22028200</td>
+      <td>2.203713</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Para eliminar una columna de nuestro DataFrame usamos el siguiente código:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;LogAdj&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017-07-17</td>
+      <td>148.820007</td>
+      <td>150.899994</td>
+      <td>148.570007</td>
+      <td>149.559998</td>
+      <td>148.974976</td>
+      <td>23793500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2017-07-18</td>
+      <td>149.199997</td>
+      <td>150.130005</td>
+      <td>148.669998</td>
+      <td>150.080002</td>
+      <td>149.492950</td>
+      <td>17868800</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017-07-19</td>
+      <td>150.479996</td>
+      <td>151.419998</td>
+      <td>149.949997</td>
+      <td>151.020004</td>
+      <td>150.429276</td>
+      <td>20923000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2017-07-20</td>
+      <td>151.500000</td>
+      <td>151.740005</td>
+      <td>150.190002</td>
+      <td>150.339996</td>
+      <td>149.751923</td>
+      <td>17243700</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2017-07-21</td>
+      <td>149.990005</td>
+      <td>150.440002</td>
+      <td>148.880005</td>
+      <td>150.270004</td>
+      <td>149.682205</td>
+      <td>26252600</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2017-07-24</td>
+      <td>150.580002</td>
+      <td>152.440002</td>
+      <td>149.899994</td>
+      <td>152.089996</td>
+      <td>151.495071</td>
+      <td>21493200</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2017-07-25</td>
+      <td>151.800003</td>
+      <td>153.839996</td>
+      <td>151.800003</td>
+      <td>152.740005</td>
+      <td>152.142548</td>
+      <td>18853900</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2017-07-26</td>
+      <td>153.350006</td>
+      <td>153.929993</td>
+      <td>153.059998</td>
+      <td>153.460007</td>
+      <td>152.859726</td>
+      <td>15781000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2017-07-27</td>
+      <td>153.750000</td>
+      <td>153.990005</td>
+      <td>147.300003</td>
+      <td>150.559998</td>
+      <td>149.971069</td>
+      <td>32476300</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2017-07-28</td>
+      <td>149.889999</td>
+      <td>150.229996</td>
+      <td>149.190002</td>
+      <td>149.500000</td>
+      <td>148.915207</td>
+      <td>17213700</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2017-07-31</td>
+      <td>149.899994</td>
+      <td>150.330002</td>
+      <td>148.130005</td>
+      <td>148.729996</td>
+      <td>148.148224</td>
+      <td>19845900</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2017-08-01</td>
+      <td>149.100006</td>
+      <td>150.220001</td>
+      <td>148.410004</td>
+      <td>150.050003</td>
+      <td>149.463058</td>
+      <td>35368600</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2017-08-02</td>
+      <td>159.279999</td>
+      <td>159.750000</td>
+      <td>156.160004</td>
+      <td>157.139999</td>
+      <td>156.525330</td>
+      <td>69936800</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2017-08-03</td>
+      <td>157.050003</td>
+      <td>157.210007</td>
+      <td>155.020004</td>
+      <td>155.570007</td>
+      <td>154.961472</td>
+      <td>27097300</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2017-08-04</td>
+      <td>156.070007</td>
+      <td>157.399994</td>
+      <td>155.690002</td>
+      <td>156.389999</td>
+      <td>155.778259</td>
+      <td>20559900</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2017-08-07</td>
+      <td>157.059998</td>
+      <td>158.919998</td>
+      <td>156.669998</td>
+      <td>158.809998</td>
+      <td>158.188797</td>
+      <td>21870300</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2017-08-08</td>
+      <td>158.600006</td>
+      <td>161.830002</td>
+      <td>158.270004</td>
+      <td>160.080002</td>
+      <td>159.453827</td>
+      <td>36205900</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2017-08-09</td>
+      <td>159.259995</td>
+      <td>161.270004</td>
+      <td>159.110001</td>
+      <td>161.059998</td>
+      <td>160.429993</td>
+      <td>26131500</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2017-08-10</td>
+      <td>159.899994</td>
+      <td>160.000000</td>
+      <td>154.630005</td>
+      <td>155.320007</td>
+      <td>155.320007</td>
+      <td>40804300</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2017-08-11</td>
+      <td>156.600006</td>
+      <td>158.570007</td>
+      <td>156.070007</td>
+      <td>157.479996</td>
+      <td>157.479996</td>
+      <td>26257100</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2017-08-14</td>
+      <td>159.320007</td>
+      <td>160.210007</td>
+      <td>158.750000</td>
+      <td>159.850006</td>
+      <td>159.850006</td>
+      <td>22028200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<h3 style="color: #ADD8E6;">Gráficas
+</h3><p>Podemos utilizar gráficas para hacer exploración de datos dentro del DataFrame. Por ejemplo, utilizando la función <code class="docutils literal notranslate"><span class="pre">plot()</span></code> de la librería <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> creamos un histograma de una variable de interés.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Crear un histograma de la columna &#39;Adj Close&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># Añadir títulos y etiquetas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma del Precio de cierre ajustado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Precio&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b5b48d83c8e58429f8a98c7459c3211225b80c595084629646e68531123071ed.png" src="../../../_images/b5b48d83c8e58429f8a98c7459c3211225b80c595084629646e68531123071ed.png" />
+</div>
+</div>
+<p>También podemos hacer gráficos de dispersión, en este caso queremos crear un gráfico de dispersión de los precios de cierre versus los precios máximos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un gráfico de dispersión</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># Añadir títulos y etiquetas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gráfico de Dispersión&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Precio de cierre&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio máximo&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b2a7e2d08148496e9fe2fe82757a54e1730542d286f4356412545b2f21a87f87.png" src="../../../_images/b2a7e2d08148496e9fe2fe82757a54e1730542d286f4356412545b2f21a87f87.png" />
+</div>
+</div>
+<h3 style="color: #ADD8E6;">Ajuste de distribuciones
+</h3><p>Para realizar un ajuste de datos a una distribución de probabilidad se puede utilizar la librería de <code class="docutils literal notranslate"><span class="pre">scipy</span></code> con el módulo <code class="docutils literal notranslate"><span class="pre">stats</span></code> y se debe tener una intuición sobre la naturaleza de los datos (continuos o discretos).</p>
+<h4 style="color: #ADD8E6;">Ajuste de distribuciones continuas
+</h3><p>Algunas de las distribuciones continuas son: exponencial, Gamma, Weibull, normal, lognormal, uniforme, entre otras. Para conocer si un vector de datos se ajusta a alguna de estas distribuciones puede utilizar la librería de <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. Suponga que el vector <code class="docutils literal notranslate"><span class="pre">tClientes</span></code> contiene el tiempo entre llegadas de clientes a una tienda. Primero, creamos 300 realizaciones de estos tiempos que seguirán una distribución exponencial con tasa 2 clientes por cualquier unidad de tiempo (p. ej. horas):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tClientes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Supongamos que no conocemos en un principio qué tipo de distribución siguen los datos del vector <code class="docutils literal notranslate"><span class="pre">tClientes</span></code>. De esta manera, primero haremos un histograma para ver si los datos se comportan de acuerdo a una distribución conocida.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># Añadir títulos y etiquetas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de la serie de datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tiempo entre llegada&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d0f39f75e03d6cb0c5ed04641565de4962c7c8b52c3abc321273f0a99a93c8e8.png" src="../../../_images/d0f39f75e03d6cb0c5ed04641565de4962c7c8b52c3abc321273f0a99a93c8e8.png" />
+</div>
+</div>
+<p>Podemos evidenciar que los datos tienen un comportamiento que se asemeja a la distribución exponencial. Por este motivo, con ayuda de la función ktest() vamos a realizar una prueba de bondad de ajuste por Kolmogorov-Smirnov utilizando la función <code class="docutils literal notranslate"><span class="pre">kstest()</span></code>. Esta recibe como parámetro la distribución que queremos probar. Siendo “expon” la distribución exponencial, “norm” la distribución normal, “gamma” la distribución gamma, etc.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Prueba de Kolmogorov-Smirnov</span>
+<span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="s1">&#39;expon&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estadístico de KS:&#39;</span><span class="p">,</span> <span class="n">ks_stat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-value:&#39;</span><span class="p">,</span> <span class="n">ks_p_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tasa estimada:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.24982703321865662
+P-value: 5.53170555612306e-17
+Tasa estimada: 1.9599274072637562
+</pre></div>
+</div>
+</div>
+</div>
+<p>Como pudimos observar, se obtuvo un p-value mayor a 0.05, lo cual nos indica que con una significancia del 5% no rechazamos la hipótesis nula y nuestros datos siguen la distribución exponencial.</p>
+<p>Adicionalmente, podemos ver algunas gráficas de interés para la prueba de bondad de ajuste realizada.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<span class="c1"># Ajustar la distribución exponencial a los datos</span>
+<span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)</span>
+
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Q-Q plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/f932bdea88e655567c2ddfab8112dfba9698777946b2eb15bbc10d603032be7b.png" src="../../../_images/f932bdea88e655567c2ddfab8112dfba9698777946b2eb15bbc10d603032be7b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)</span>
+
+<span class="c1"># CDF empírica y teórica</span>
+<span class="n">ecdf</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">ECDF</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">tClientes</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">tClientes</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Empirical and theoretical CDFs&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6e518eb8a2cfdda41e1e9c730fcfe25b3949cf3f46f6d2269be5538bb92f84de.png" src="../../../_images/6e518eb8a2cfdda41e1e9c730fcfe25b3949cf3f46f6d2269be5538bb92f84de.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P-P plot</span>
+<span class="n">pp_plot</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">ProbPlot</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pp_plot</span><span class="o">.</span><span class="n">ppplot</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;P-P plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/cdeef4e298c8038230b9f13e19df96fe1c58b65d7679276287b245d7d64b8fdf.png" src="../../../_images/cdeef4e298c8038230b9f13e19df96fe1c58b65d7679276287b245d7d64b8fdf.png" />
+</div>
+</div>
+<h4 style="color: #ADD8E6;">Ajuste de distribuciones discretas
+</h3><p>Algunas de las distribuciones discretas son: Poisson, geométrica, binomial, hipergeométrica y binomial negativa, entre otras. A continuación generamos un vector de datos que siguen una distribución Poisson con tasa de 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tasa</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">tasa</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Evaluamos si los datos siguen la distribución Poisson</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">poisson</span><span class="p">,</span> <span class="n">chisquare</span>
+
+<span class="c1">#Calcular la media de la muestra:</span>
+<span class="n">media</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="c1">#Calcular las frecuencias observadas:</span>
+<span class="n">valores</span><span class="p">,</span> <span class="n">frecuencias_observadas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#Calcular las frecuencias esperadas:</span>
+<span class="n">frecuencias_esperadas</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">valores</span><span class="p">,</span> <span class="n">media</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="c1"># Ajuste de las frecuencias esperadas para que sumen lo mismo que las observadas</span>
+<span class="n">frecuencias_esperadas</span> <span class="o">=</span> <span class="n">frecuencias_esperadas</span> <span class="o">*</span> <span class="n">frecuencias_observadas</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">frecuencias_esperadas</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1">#Realizar prueba chi-cuadrado</span>
+<span class="n">estadistico_chi2</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">chisquare</span><span class="p">(</span><span class="n">frecuencias_observadas</span><span class="p">,</span> <span class="n">frecuencias_esperadas</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor estadístico:&#39;</span><span class="p">,</span> <span class="n">estadistico_chi2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-value:&#39;</span><span class="p">,</span> <span class="n">p_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 3.876765996770492
+P-value: 0.8680673031825911
+</pre></div>
+</div>
+</div>
+</div>
+<p>Como pudimos observar, se obtuvo un p-value mayor a 0.05, lo cual nos indica que con una significancia del 5% no rechazamos la hipótesis nula y nuestros datos siguen la distribución Poisson.</p>
+<h3 style="color: #ADD8E6;">Ejercicios
+</h3><ol class="arabic simple">
+<li><p>Utilizando el archivo de datos “AAPL.csv”, grafique un histograma del precio de cierre de la acción para los días martes y viernes.</p></li>
+<li><p>Cree una nueva columna que contenga la diferencia entre el precio de apertura y cierre. Luego cree un subconjunto de datos en donde estén las 20 observaciones con mayor valor de la nueva variable.</p></li>
+</ol>
+<p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\complementarias\Complementaria 5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Complementaria4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 4: Cadenas de Markov en Python III</h3></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Complementaria6.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><h3 style="color: #ADD8E6;">Complementaria 6: Estado Estable y  Análisis de Tiempos Promedio</h3></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos Probabilísticos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
