@@ -376,31 +376,26 @@
 <p><strong>Otras definiciones:</strong></p>
 <p>Adicionalmente, se definen las siguientes variables aleatorias:</p>
 <ul class="simple">
-<li><p>La variable aleatoria <span class="math notranslate nohighlight">\(D\)</span> que representa la demanda diaria del medicamento, la cual se distribuye según una distribución de Poisson con parámetro <span class="math notranslate nohighlight">\(\lambda = 3\)</span>:
-$<span class="math notranslate nohighlight">\(
-D \sim \text{Poisson}(\lambda = 3)
-\)</span>$</p></li>
+<li><p>La variable aleatoria <span class="math notranslate nohighlight">\(D\)</span> que representa la demanda diaria del medicamento, la cual se distribuye según una distribución de Poisson con parámetro <span class="math notranslate nohighlight">\(\lambda = 3\)</span>:</p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[
+<p><span class="math notranslate nohighlight">\(
+ D \sim \text{Poisson}(\lambda = 3)
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
 \mathbb{P}(D = k) = \frac{3^k e^{-3}}{k!}, \quad k = 0, 1, 2, \ldots
-\]</div>
-<div class="math notranslate nohighlight">
-\[
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
 \mathbb{P}(D \geq k) = \sum_{r = k}^{\infty} \frac{3^r e^{-3}}{r!}
-\]</div>
+\)</span></p>
 <ul class="simple">
 <li><p>La variable aleatoria <span class="math notranslate nohighlight">\(Y\)</span> que representa la cantidad de unidades que podrían llegar al inventario desde hospitales aliados cuando la farmacia entra en cuarentena por haber finalizado el día con inventario cero.</p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[ Y \sim \text{Binomial}(n = 5, p = 0.07) \]</div>
-<div class="math notranslate nohighlight">
-\[
+<p><span class="math notranslate nohighlight">\( Y \sim \text{Binomial}(n = 5, p = 0.07) \)</span>
+<span class="math notranslate nohighlight">\(
 \mathbb{P}(Y = k) = \binom{5}{k}(0.07)^k(0.93)^{5 - k}, \quad k = 0, 1, 2, 3, 4, 5
-\]</div>
+\)</span></p>
 <p>La política de transición es:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<p><span class="math notranslate nohighlight">\(
 \mathbb{P}_{i \to j} = 
 \left\{
 \begin{array}{ll}
@@ -412,7 +407,7 @@ P(Y = j), &amp;  i = 0 , j \in \{0,1,\dots,5\} \\
 0, &amp; \text{d.l.c.}
 \end{array}
 \right.
-\end{split}\]</div>
+\)</span></p>
 <p>A continuación, se implementa el modelo en Python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -476,15 +471,13 @@ P(Y = j), &amp;  i = 0 , j \in \{0,1,\dots,5\} \\
 </div>
 <h4 style="color: #ADD8E6;">Parte B. Responder preguntas de interés</h4><h5 style="color: #ADD8E6;">Literal a. ¿Cuál es la probabilidad de que el inventario sea igual a 5 dentro de 2 días, si hoy hay 1 unidad?</h5>
 <p>Sea <span class="math notranslate nohighlight">\(X_0 = 1\)</span>, queremos calcular:</p>
-<div class="math notranslate nohighlight">
-\[
+<p><span class="math notranslate nohighlight">\(
 P(X_2 = 5 \mid X_0 = 1)
-\]</div>
-<p>Esta probabilidad corresponde a una transición de dos pasos, por lo tanto:</p>
-<div class="math notranslate nohighlight">
-\[
+\)</span></p>
+<p>Esta probabilidad corresponde a una transición de dos pasos, por lo tanto:
+<span class="math notranslate nohighlight">\(
 P(X_2 = 5 \mid X_0 = 1) = [P^2]_{1,5}
-\]</div>
+\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Probabilidad de estar en estado 5 en dos días si hoy estamos en estado 1</span>
@@ -505,8 +498,8 @@ P(X_2 = 5 \mid X_0 = 1) = [P^2]_{1,5}
 <h5 style="color: #ADD8E6;">Literal b. ¿Qué pasaría si el umbral de reposición cambiara de 2 a 3? ¿Se reduciría el riesgo de quiebre?</h5>
 <p>Para responder esta pregunta podemos ajustar la política de transición para que la reposición se active cuando el inventario sea menor a 3 (en vez de menor a 2). Esto implica modificar las condiciones de la matriz de transición.</p>
 <p>Quedaría como:
-$<span class="math notranslate nohighlight">\(
-p_{ij} = 
+<span class="math notranslate nohighlight">\(
+\mathbb{P}_{i \to j} = 
 \left\{
 \begin{array}{ll}
 P(D = i - j), &amp;  i \geq 3 , j \neq 0 \\
@@ -517,7 +510,7 @@ P(Y = j), &amp;  i = 0 , j \in \{0,1,\dots,5\} \\
 0, &amp; \text{d.l.c.}
 \end{array}
 \right.
-\)</span>$</p>
+\)</span></p>
 <p>Luego de modificar la política, podemos comparar la probabilidad de que el sistema llegue al estado 0 (sin inventario) en el largo plazo.</p>
 <p>Para esto, utilizaremos el vector <span class="math notranslate nohighlight">\(\pi\)</span>, que representa la <strong>distribución estacionaria</strong> de la cadena de Markov, es decir, la proporción de tiempo (o frecuencia a largo plazo) que el sistema pasa en cada uno de los estados cuando se deja evolucionar por un número suficientemente grande de pasos.</p>
 <p>En este contexto, la <strong>probabilidad de que el sistema esté en quiebre (inventario = 0)</strong> en el largo plazo corresponde al valor <span class="math notranslate nohighlight">\(\pi[0]\)</span>.</p>
