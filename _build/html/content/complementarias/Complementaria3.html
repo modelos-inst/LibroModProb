@@ -61,6 +61,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria3';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -197,8 +199,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Tutorial/tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
-<li class="toctree-l1"><a class="reference internal" href="AmbientesVirtuales/Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria2.html"><h3 style="color: #ADD8E6;">Complementaria 2: Cadenas de Markov en Python I</h3></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3></a></li>
@@ -358,6 +360,250 @@
                   
   <section id="complementaria-3-cadenas-de-markov-en-python-ii">
 <h1><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3><a class="headerlink" href="#complementaria-3-cadenas-de-markov-en-python-ii" title="Link to this heading">#</a></h1>
+<h3 style="color: #ADD8E6;">Inventario de farmacia con cadena de Markov</h3>
+<p>Esta complementaria tiene como objetivo resolver el ejercicio de CaliPharm, que modela el sistema de inventario de una farmacia.</p>
+<p>El modelo se basa en una cadena de Markov de tiempo discreto donde:</p>
+<ul class="simple">
+<li><p>La demanda diaria sigue una distribución Poisson.</p></li>
+<li><p>La reposición del medicamento depende del inventario final.</p></li>
+<li><p>Hay colaboración externa si el inventario se agota por completo.</p></li>
+</ul>
+<h4 style="color: #ADD8E6;">Parte A. Modelar el sistema de inventario de CaliPharm como una cadena de Markov</h4>
+<p><strong>Variable de estado:</strong></p>
+<p><span class="math notranslate nohighlight">\( X_n \)</span>: Número de unidades del medicamento disponibles al inicio del día n.</p>
+<p><strong>Espacio de estados:</strong></p>
+<p><span class="math notranslate nohighlight">\( S_X = \{0, 1, 2, 3, 4, 5\} \)</span>:</p>
+<p><strong>Otras definiciones:</strong></p>
+<p>Adicionalmente, se definen las siguientes variables aleatorias:</p>
+<ul class="simple">
+<li><p>La variable aleatoria <span class="math notranslate nohighlight">\(D\)</span> que representa la demanda diaria del medicamento, la cual se distribuye según una distribución de Poisson con parámetro <span class="math notranslate nohighlight">\(\lambda = 3\)</span>:
+$<span class="math notranslate nohighlight">\(
+D \sim \text{Poisson}(\lambda = 3)
+\)</span>$</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(D = k) = \frac{3^k e^{-3}}{k!}, \quad k = 0, 1, 2, \ldots
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(D \geq k) = \sum_{r = k}^{\infty} \frac{3^r e^{-3}}{r!}
+\]</div>
+<ul class="simple">
+<li><p>La variable aleatoria <span class="math notranslate nohighlight">\(Y\)</span> que representa la cantidad de unidades que podrían llegar al inventario desde hospitales aliados cuando la farmacia entra en cuarentena por haber finalizado el día con inventario cero.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ Y \sim \text{Binomial}(n = 5, p = 0.07) \]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(Y = k) = \binom{5}{k}(0.07)^k(0.93)^{5 - k}, \quad k = 0, 1, 2, 3, 4, 5
+\]</div>
+<p>La política de transición es:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{P}_{i \to j} = 
+\left\{
+\begin{array}{ll}
+P(D = i - j), &amp;  i \geq 2 , j \neq 0 \\
+P(D \geq i), &amp;  i \geq 2 , j = 0 \\
+P(D = 5 - j), &amp;  1 \leq i \lt 2 , j \neq 0 \\
+P(D \geq 5), &amp;  1 \leq i \lt 2 , j = 0 \\
+P(Y = j), &amp;  i = 0 , j \in \{0,1,\dots,5\} \\
+0, &amp; \text{d.l.c.}
+\end{array}
+\right.
+\end{split}\]</div>
+<p>A continuación, se implementa el modelo en Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">poisson</span><span class="p">,</span> <span class="n">binom</span>
+
+<span class="c1"># Parámetros</span>
+<span class="n">demanda_lambda</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">hospitales_n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">prob_hospitales</span> <span class="o">=</span> <span class="mf">0.07</span>
+<span class="n">inventario_max</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Espacio de estados</span>
+<span class="n">estados</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inventario_max</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Matriz de transición</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">)))</span>
+
+<span class="c1"># Llenar la matriz de transición</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">estados</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">estados</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">j</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="mi">1</span><span class="o">&lt;=</span><span class="n">i</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">j</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">inventario_max</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="mi">1</span><span class="o">&lt;=</span><span class="n">i</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">inventario_max</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">hospitales_n</span><span class="p">,</span> <span class="n">prob_hospitales</span><span class="p">)</span>
+        
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz de transición P:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriz de transición P:
+[[0.7  0.26 0.04 0.   0.   0.  ]
+ [0.18 0.17 0.22 0.22 0.15 0.05]
+ [0.8  0.15 0.05 0.   0.   0.  ]
+ [0.58 0.22 0.15 0.05 0.   0.  ]
+ [0.35 0.22 0.22 0.15 0.05 0.  ]
+ [0.18 0.17 0.22 0.22 0.15 0.05]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para crear la cadena de markov utilizaremos la instancia <code class="docutils literal notranslate"><span class="pre">dtmc</span></code> la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>, ya que estamos creando una cadena de tiempo discreto.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jmarkov.dtmc</span> <span class="kn">import</span> <span class="n">dtmc</span>
+
+<span class="c1"># Crear objeto de cadena de Markov</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<h4 style="color: #ADD8E6;">Parte B. Responder preguntas de interés</h4><h5 style="color: #ADD8E6;">Literal a. ¿Cuál es la probabilidad de que el inventario sea igual a 5 dentro de 2 días, si hoy hay 1 unidad?</h5>
+<p>Sea <span class="math notranslate nohighlight">\(X_0 = 1\)</span>, queremos calcular:</p>
+<div class="math notranslate nohighlight">
+\[
+P(X_2 = 5 \mid X_0 = 1)
+\]</div>
+<p>Esta probabilidad corresponde a una transición de dos pasos, por lo tanto:</p>
+<div class="math notranslate nohighlight">
+\[
+P(X_2 = 5 \mid X_0 = 1) = [P^2]_{1,5}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Probabilidad de estar en estado 5 en dos días si hoy estamos en estado 1</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">))</span>
+<span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Estado inicial = 1</span>
+
+<span class="n">dist_paso2</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La probabilidad de que el inventario sea igual a 5 en 2 días, dado que hoy hay 1 unidad, es: </span><span class="si">{</span><span class="n">dist_paso2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La probabilidad de que el inventario sea igual a 5 en 2 días, dado que hoy hay 1 unidad, es: 0.0108
+</pre></div>
+</div>
+</div>
+</div>
+<h5 style="color: #ADD8E6;">Literal b. ¿Qué pasaría si el umbral de reposición cambiara de 2 a 3? ¿Se reduciría el riesgo de quiebre?</h5>
+<p>Para responder esta pregunta podemos ajustar la política de transición para que la reposición se active cuando el inventario sea menor a 3 (en vez de menor a 2). Esto implica modificar las condiciones de la matriz de transición.</p>
+<p>Quedaría como:
+$<span class="math notranslate nohighlight">\(
+p_{ij} = 
+\left\{
+\begin{array}{ll}
+P(D = i - j), &amp;  i \geq 3 , j \neq 0 \\
+P(D \geq i), &amp;  i \geq 3 , j = 0 \\
+P(D = 5 - j), &amp;  1 \leq i \lt 3 , j \neq 0 \\
+P(D \geq 5), &amp;  1 \leq i \lt 3 , j = 0 \\
+P(Y = j), &amp;  i = 0 , j \in \{0,1,\dots,5\} \\
+0, &amp; \text{d.l.c.}
+\end{array}
+\right.
+\)</span>$</p>
+<p>Luego de modificar la política, podemos comparar la probabilidad de que el sistema llegue al estado 0 (sin inventario) en el largo plazo.</p>
+<p>Para esto, utilizaremos el vector <span class="math notranslate nohighlight">\(\pi\)</span>, que representa la <strong>distribución estacionaria</strong> de la cadena de Markov, es decir, la proporción de tiempo (o frecuencia a largo plazo) que el sistema pasa en cada uno de los estados cuando se deja evolucionar por un número suficientemente grande de pasos.</p>
+<p>En este contexto, la <strong>probabilidad de que el sistema esté en quiebre (inventario = 0)</strong> en el largo plazo corresponde al valor <span class="math notranslate nohighlight">\(\pi[0]\)</span>.</p>
+<p>Por tanto, comparar <span class="math notranslate nohighlight">\(\pi[0]\)</span> bajo distintas políticas de reposición permite analizar cuál configuración reduce más el riesgo de quiebre permanente del inventario. Una política con menor <span class="math notranslate nohighlight">\(\pi[0]\)</span> indica un sistema más confiable frente a agotamientos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz de transición ajustando el umbral de reposición de &lt;2 a &lt;3</span>
+<span class="n">P_alt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">estados</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">estados</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">j</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P_alt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P_alt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="mi">1</span><span class="o">&lt;=</span><span class="n">i</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">j</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P_alt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">inventario_max</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="mi">1</span><span class="o">&lt;=</span><span class="n">i</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P_alt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">inventario_max</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">demanda_lambda</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">P_alt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">hospitales_n</span><span class="p">,</span> <span class="n">prob_hospitales</span><span class="p">)</span>
+
+
+<span class="c1"># Comparar probabilidad de inventario agotado a largo plazo</span>
+
+<span class="n">mc_old</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>        <span class="c1"># Política con umbral &lt;2</span>
+<span class="n">mc_new</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_alt</span><span class="p">)</span>    <span class="c1"># Política con umbral &lt;3</span>
+
+<span class="n">pi_old</span> <span class="o">=</span> <span class="n">mc_old</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+<span class="n">pi_new</span> <span class="o">=</span> <span class="n">mc_new</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;π[0] con umbral &lt;2 = </span><span class="si">{</span><span class="n">pi_old</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;π[0] con umbral &lt;3 = </span><span class="si">{</span><span class="n">pi_new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>π[0] con umbral &lt;2 = 0.5648
+π[0] con umbral &lt;3 = 0.4759
+</pre></div>
+</div>
+</div>
+</div>
+<h5 style="color: #ADD8E6;">Literal c. ¿Cuánto impacta la probabilidad de colaboración p = 0.07 en la confiabilidad del sistema? ¿Cómo cambiarían las probabilidades si esta subiera a 0.2?</h5>
+<p>Para este análisis se construye una nueva matriz de transición aumentando la probabilidad de préstamo de los hospitales. Luego se compara la probabilidad de que haya inventario disponible al día siguiente de una cuarentena (es decir, cuando hoy hay 0 unidades).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aumentar la probabilidad de colaboración a 0.2</span>
+<span class="n">nueva_prob_hospitales</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="c1"># Recalcular fila i=0 de la matriz</span>
+<span class="n">P_colab</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">estados</span><span class="p">:</span>
+    <span class="n">P_colab</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">hospitales_n</span><span class="p">,</span> <span class="n">nueva_prob_hospitales</span><span class="p">)</span>
+
+<span class="c1"># Crear cadena con nueva p de colaboración</span>
+<span class="n">mc_alt</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_colab</span><span class="p">)</span>
+
+<span class="c1"># Vector inicial desde estado 0</span>
+<span class="n">alpha_cuarentena</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">))</span>
+<span class="n">alpha_cuarentena</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Distribución después de 1 paso (reapertura)</span>
+<span class="n">dist_reapertura</span> <span class="o">=</span> <span class="n">mc_alt</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha_cuarentena</span><span class="p">)</span>
+
+<span class="c1"># Probabilidad de tener inventario &gt; 0</span>
+<span class="n">prob_recuperacion</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">dist_reapertura</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Comparación con la política original</span>
+<span class="n">dist_reapertura_orig</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha_cuarentena</span><span class="p">)</span>
+<span class="n">prob_recuperacion_orig</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">dist_reapertura_orig</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparación:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recuperación con p = 0.07: </span><span class="si">{</span><span class="n">prob_recuperacion_orig</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recuperación con p = 0.20: </span><span class="si">{</span><span class="n">prob_recuperacion</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación:
+Recuperación con p = 0.07: 0.3043
+Recuperación con p = 0.20: 0.6723
+</pre></div>
+</div>
+</div>
+</div>
 <p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
 </section>
 
