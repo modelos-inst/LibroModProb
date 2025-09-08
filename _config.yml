@@ -31,6 +31,7 @@ html:
   use_issues_button: true
   use_repository_button: true
   favicon: favicon.ico
+  google_analytics_id: G-3GT2XZ2ZSP
   theme:
     primary_color: '#86A8B3'
     secondary_color: '#ADD8E6'
