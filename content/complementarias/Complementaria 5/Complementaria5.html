@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=406e030a" />
@@ -66,9 +66,17 @@
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Complementaria 6: Estado Estable y Análisis de Tiempos Promedio" href="../Complementaria6.html" />
     <link rel="prev" title="Complementaria 4: Cadenas de Markov en Python III" href="../Complementaria4.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GT2XZ2ZSP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3GT2XZ2ZSP');
+</script>
+
   </head>
   
   
@@ -1849,7 +1857,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/a6c702f1b062be2e720081dd2b0edcfa175db88a1d2712d4921b055a7b77a8eb.png" src="../../../_images/a6c702f1b062be2e720081dd2b0edcfa175db88a1d2712d4921b055a7b77a8eb.png" />
+<img alt="../../../_images/eb3c9e077aae56a713c3c68140be6499ceec12fac3fba35d035ac0a2cdca9192.png" src="../../../_images/eb3c9e077aae56a713c3c68140be6499ceec12fac3fba35d035ac0a2cdca9192.png" />
 </div>
 </div>
 <p>Podemos evidenciar que los datos tienen un comportamiento que se asemeja a la distribución exponencial. Por este motivo, con ayuda de la función ktest() vamos a realizar una prueba de bondad de ajuste por Kolmogorov-Smirnov utilizando la función <code class="docutils literal notranslate"><span class="pre">kstest()</span></code>. Esta recibe como parámetro la distribución que queremos probar. Siendo “expon” la distribución exponencial, “norm” la distribución normal, “gamma” la distribución gamma, etc.</p>
@@ -1863,6 +1871,13 @@ Name: 2, dtype: object
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estadístico de KS:&#39;</span><span class="p">,</span> <span class="n">ks_stat</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-value:&#39;</span><span class="p">,</span> <span class="n">ks_p_value</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tasa estimada:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.2354309283468753
+P-value: 4.132437775564331e-15
+Tasa estimada: 1.8194480594175193
 </pre></div>
 </div>
 </div>
@@ -1883,7 +1898,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/4752175dba40bcc30c737e64cce03c21dd531ada79c3eab1242e0c776fb7a980.png" src="../../../_images/4752175dba40bcc30c737e64cce03c21dd531ada79c3eab1242e0c776fb7a980.png" />
+<img alt="../../../_images/97e368e898a89d6ca2f6ddc83c44c4dd85ab39791faac545f6da1e9f7b5d019c.png" src="../../../_images/97e368e898a89d6ca2f6ddc83c44c4dd85ab39791faac545f6da1e9f7b5d019c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1902,7 +1917,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/ce94ab4de4b5ab8f129bb09618065b77ba3b5c992fe4cc015a421117b926dfc2.png" src="../../../_images/ce94ab4de4b5ab8f129bb09618065b77ba3b5c992fe4cc015a421117b926dfc2.png" />
+<img alt="../../../_images/84cb5e60015e1ece7fef3476fae865d66751084d85ba8ca8a42753aa04d63be8.png" src="../../../_images/84cb5e60015e1ece7fef3476fae865d66751084d85ba8ca8a42753aa04d63be8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1916,7 +1931,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/beb60d25d526be9dae549b36340d8a8d5cebf2f3c8924794532afe6b23917eed.png" src="../../../_images/beb60d25d526be9dae549b36340d8a8d5cebf2f3c8924794532afe6b23917eed.png" />
+<img alt="../../../_images/029d4fa7c0295b6af1bd00b7f682a748ed13b1799857ea043e825543cf30cad7.png" src="../../../_images/029d4fa7c0295b6af1bd00b7f682a748ed13b1799857ea043e825543cf30cad7.png" />
 </div>
 </div>
 <h4 style="color: #ADD8E6;">Ajuste de distribuciones discretas
@@ -1955,8 +1970,8 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 5.851632782055427
-P-value: 0.440014012987353
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 1.9913746403430923
+P-value: 0.9603162177588562
 </pre></div>
 </div>
 </div>
