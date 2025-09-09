@@ -21,7 +21,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
+  url: https://modelos-inst.github.io/LibroModProb/intro.html  # Online location of your book
   path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
@@ -35,17 +35,13 @@ html:
     primary_color: '#86A8B3'
     secondary_color: '#ADD8E6'
     font: 'Helvetica'
+  extra_css:
+    - _static/custom.css
 
 sphinx:
   config:
     html_theme_options:
       style_nav_header_background: "white"
       font_size: "14px"
-      templates_path: ["_templates"]
-
-
-html:
-  extra_css:
-    - _static/custom.css
-
+    templates_path: ["_templates"]
 
