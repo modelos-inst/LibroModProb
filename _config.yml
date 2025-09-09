@@ -31,7 +31,6 @@ html:
   use_issues_button: true
   use_repository_button: true
   favicon: favicon.ico
-  google_analytics_id: G-3GT2XZ2ZSP
   theme:
     primary_color: '#86A8B3'
     secondary_color: '#ADD8E6'
@@ -42,6 +41,8 @@ sphinx:
     html_theme_options:
       style_nav_header_background: "white"
       font_size: "14px"
+      templates_path: ["_templates"]
+
 
 html:
   extra_css:

@@ -199,8 +199,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Tutorial/tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
-<li class="toctree-l1"><a class="reference internal" href="AmbientesVirtuales/Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><h3 style="color: #ADD8E6;">Tutorial. Instalación Python y Visual Studio Code</h3></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ambientes_virtuales.html"><h3 style="color: #ADD8E6;">Ambientes virtuales en Python</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria1.html"><h3 style="color: #ADD8E6;">Complementaria 1: Introducción a Python</h3></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><h3 style="color: #ADD8E6;">Complementaria 2: Cadenas de Markov en Python I</h3></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Complementaria3.html"><h3 style="color: #ADD8E6;">Complementaria 3: Cadenas de Markov en Python II</h3></a></li>
@@ -522,7 +522,7 @@ P_{i \rightarrow j} = \begin{cases}
 </div>
 </div>
 <h3 style="color: #ADD8E6;">Ejemplo 2. Cadena de Markov de Tiempo Continuo 
-</h3><p>Ahora, se resolverá el problema 2 que se encuentra en el archivo “Complementaria 3 (Q).pdf”. Sea <span class="math notranslate nohighlight">\(X(t)\)</span> el número de bicicletas alquiladas en el tiempo <span class="math notranslate nohighlight">\( t \)</span>, y sea <span class="math notranslate nohighlight">\(S_x = \{0, 1, 2, ..., 15\}\)</span>. Como <span class="math notranslate nohighlight">\(\{X(t), t &gt; 0\}\)</span> es una cadena de Markov en tiempo continuo (CMTC), se debe definir la matriz <strong>Q</strong>. Las tasas de transición entre estados de esta cadena son las siguientes:</p>
+</h3><p>Ahora, se resolverá el problema 2 que se encuentra en el archivo “Complementaria 2 (Q).pdf”. Sea <span class="math notranslate nohighlight">\(X(t)\)</span> el número de bicicletas alquiladas en el tiempo <span class="math notranslate nohighlight">\( t \)</span>, y sea <span class="math notranslate nohighlight">\(S_x = \{0, 1, 2, ..., 15\}\)</span>. Como <span class="math notranslate nohighlight">\(\{X(t), t &gt; 0\}\)</span> es una cadena de Markov en tiempo continuo (CMTC), se debe definir la matriz <strong>Q</strong>. Las tasas de transición entre estados de esta cadena son las siguientes:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 Q_{i \rightarrow j} = \begin{cases}
@@ -568,7 +568,7 @@ Q_{i \rightarrow j} = \begin{cases}
 \]</div>
 <p>donde <span class="math notranslate nohighlight">\( \pi(0)\)</span> es el vector de estado inicial de probabilidades y <span class="math notranslate nohighlight">\( t \)</span> es el instante de tiempo en el cual se desea calcular la distribución de probabilidad.</p>
 <h3 style="color: #ADD8E6;">Problema 2. Literal b.
-</h3><p><strong>ESTO PARECE SER DEL PUNTO ANTERIOR, REVISAR</strong> El literal b dice: Según la Secretaría de Salud, los estudiantes no deben asistir al colegio si el ICA supera el nivel Dañina/Grupos Sensibles. Hoy es lunes y el ICA está en nivel Moderada. ¿Cuál es la probabilidad de que el viernes se suspenda la actividad académica debido a mala calidad del aire?</p>
+</h3><p>El literal b dice: Se ha programado un mantenimiento para el próximo lunes a las 12:00 pm. Hoy es jueves a las 12:00 pm y hay 10 bicicletas alquiladas. Calcule a cuántas bicicletas en promedio se les realizará mantenimiento, teniendo en cuenta que únicamente se le hace mantenimiento a las bicis que estén en el local el lunes a las 12:00 pm.</p>
 <p>Para solucionar este problema, se debe empezar calculando las probabilidades de tener alquiladas un determinado número de bicicletas el próximo lunes a las 12:00 pm, dado que hoy (jueves) a las 12:00 pm, 10 bicicletas están alquiladas.</p>
 <p>A continuación se crea el vector de estado inicial de probabilidades, que tendrá por nombre <code class="docutils literal notranslate"><span class="pre">alpha2</span></code>:</p>
 <div class="cell docutils container">
