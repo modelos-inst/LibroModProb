@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=406e030a" />
@@ -61,24 +61,14 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Complementaria4';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Complementaria 5: Manejo de datos y análisis preliminar en Python" href="Complementaria%205/Complementaria5.html" />
     <link rel="prev" title="Complementaria 3: Cadenas de Markov en Python II" href="Complementaria3.html" />
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GT2XZ2ZSP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3GT2XZ2ZSP');
-</script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -368,201 +358,6 @@
                   
   <section id="complementaria-4-cadenas-de-markov-en-python-iii">
 <h1><h3 style="color: #ADD8E6;">Complementaria 4: Cadenas de Markov en Python III</h3><a class="headerlink" href="#complementaria-4-cadenas-de-markov-en-python-iii" title="Link to this heading">#</a></h1>
-<h3 style="color: #ADD8E6;">Cadena de Markov de Tiempo Continuo
-</h3><p>En esta complementaria nos concentraremos en la implementación de cadenas de markov en tiempo continuo. Para esto, resolveremos el ejercicio propuesto en el archivo <code class="docutils literal notranslate"><span class="pre">Complementaria</span> <span class="pre">4.pdf</span></code></p>
-<h3 style="color: #ADD8E6;"> Modele el sistema como una cadena de Markov
-</h3><p>En este caso se tienen dos variables. Por un lado, nos interesa guardar el <span class="math notranslate nohighlight">\(X(t)\)</span>: el nivel de corrosión de la bomba; y <span class="math notranslate nohighlight">\(Y(t)\)</span>: el nivel de impacto del ambiente.</p>
-<p>El espacio de estados de <span class="math notranslate nohighlight">\(X(t)\)</span> es <span class="math notranslate nohighlight">\(S_X=\{1,\dots,5\}\)</span>, el de <span class="math notranslate nohighlight">\(Y(t)\)</span> es <span class="math notranslate nohighlight">\(S_Y=\{\text{alto},\text{bajo}\}\)</span>, y la cadena se puede describir con la variable compuesta <span class="math notranslate nohighlight">\(Z(t)=(X(t),Y(t))\)</span> con espacio de estados <span class="math notranslate nohighlight">\(S_Z=S_X\times S_Y\)</span>.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-Q_{(i,j)\to(i',j')}=
-\begin{cases}
-\lambda_{\text{Alto}}^{-1}, &amp; i'=i+1,\ j'=j,\ i&lt;5,\\
-\lambda_{\text{Bajo}}^{-1}, &amp; i'=i-1,\ j'=j,\ i&gt;1,\\
-\lambda_{\text{Alto}\to\text{Bajo}}^{-1}, &amp; i'=i,\ j=\text{Alto},\ j'=\text{Bajo},\\
-\lambda_{\text{Bajo}\to\text{Alto}}^{-1}, &amp; i'=i,\ j=\text{Bajo},\ j'=\text{Alto},\\
-0, &amp; \text{d.l.c.}
-\end{cases}
-\end{split}\]</div>
-<p>Con esto, podemos implementar.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Importar las librerías</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">jmarkov.ctmc</span> <span class="kn">import</span> <span class="n">ctmc</span>
-
-<span class="c1">#Tasas a utilizar</span>
-<span class="n">tasa_ambiente_alto</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">tasa_ambiente_bajo</span> <span class="o">=</span> <span class="mf">0.2</span>
-<span class="n">tasa_corrosion_alto_bajo</span> <span class="o">=</span> <span class="mf">0.3</span>
-<span class="n">tasa_corrosion_bajo_alto</span> <span class="o">=</span> <span class="mf">0.4</span>
-
-<span class="c1">#Crear espacios de estados</span>
-<span class="n">estados_corrosion</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)]</span>
-<span class="n">estados_ambiente</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Alto&#39;</span><span class="p">,</span> <span class="s1">&#39;Bajo&#39;</span><span class="p">]</span>
-
-<span class="n">estados</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">estados_corrosion</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">estados_ambiente</span><span class="p">:</span>
-        <span class="n">estado</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span>
-        <span class="n">estados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estado</span><span class="p">)</span>
-
-<span class="n">estados</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados</span><span class="p">)</span>
-<span class="n">estados</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;1,Alto&#39;, &#39;1,Bajo&#39;, &#39;2,Alto&#39;, &#39;2,Bajo&#39;, &#39;3,Alto&#39;, &#39;3,Bajo&#39;,
-       &#39;4,Alto&#39;, &#39;4,Bajo&#39;, &#39;5,Alto&#39;, &#39;5,Bajo&#39;], dtype=&#39;&lt;U6&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Se define la matriz en ceros y se recorre por fila y por columna para ir ingresando las tasas según las condiciones de la formulación. Dado que estamos en tiempo continuo se tiene que llenar la diagonal para que cada fila sume cero.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Crear una matriz de ceros</span>
-
-<span class="n">matrizQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">)))</span>
-
-<span class="c1">#Llenar la matriz de transición</span>
-
-<span class="k">for</span> <span class="n">fila</span><span class="p">,</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estados</span><span class="p">):</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">estado_inicial</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="n">estado_inicial</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">columna</span><span class="p">,</span> <span class="n">estado_futuro</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estados</span><span class="p">):</span>
-        <span class="n">i_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">estado_futuro</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">j_</span> <span class="o">=</span> <span class="n">estado_futuro</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">i_</span><span class="o">==</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j_</span><span class="o">==</span><span class="n">j</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">:</span>
-            <span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span><span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">tasa_ambiente_alto</span>
-        <span class="k">elif</span> <span class="n">i_</span><span class="o">==</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j_</span><span class="o">==</span><span class="n">j</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span><span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">tasa_ambiente_bajo</span>
-        <span class="k">elif</span> <span class="n">i_</span><span class="o">==</span><span class="n">i</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="s2">&quot;Alto&quot;</span> <span class="ow">and</span> <span class="n">j_</span><span class="o">==</span><span class="s2">&quot;Bajo&quot;</span><span class="p">:</span>
-            <span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span><span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">tasa_corrosion_alto_bajo</span>
-        <span class="k">elif</span> <span class="n">i_</span> <span class="o">==</span><span class="n">i</span> <span class="ow">and</span> <span class="n">j</span><span class="o">==</span><span class="s2">&quot;Bajo&quot;</span> <span class="ow">and</span> <span class="n">j_</span><span class="o">==</span><span class="s2">&quot;Alto&quot;</span><span class="p">:</span>
-            <span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span><span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">tasa_corrosion_bajo_alto</span>
-
-<span class="c1"># Llenamos la diagonal</span>
-<span class="k">for</span> <span class="n">fila</span><span class="p">,</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estados</span><span class="p">):</span>
-    <span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span><span class="n">fila</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">matrizQ</span><span class="p">[</span><span class="n">fila</span><span class="p">,])</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">matrizQ</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1">#Creamos el objeto cadena</span>
-
-<span class="n">cadena</span> <span class="o">=</span> <span class="n">ctmc</span><span class="p">(</span><span class="n">matrizQ</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>La segunda pregunta nos dice:
-Suponga que la bomba inicia operación con el nivel mínimo de corrosión y solo se sabe que, con 50% de probabilidad, el ambiente será de alto impacto. Determine la probabilidad de que, pasada 1 semana de operación, la bomba esté en el nivel máximo de corrosión.
-Esto es una probabilidad en el transitorio. Como no conocemos con exactitud desde qué estado se inicia se define el vector de probabilidades iniciales de la siguiente manera:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\alpha(i,j)=\begin{cases}
-0.5, &amp; i=1,\ j\in\{\text{alto},\text{bajo}\},\\
-0, &amp; \text{d.l.c.}
-\end{cases}
-\end{split}\]</div>
-<p>La probabilidad de que <strong>tras 1 semana</strong> (<span class="math notranslate nohighlight">\(24\times 7\)</span> horas) la bomba esté en el <strong>nivel 5</strong> es:
-$<span class="math notranslate nohighlight">\(
-\sum_{j\in S_Y} \big[\ \alpha\, e^{Q\,(24\times 7)}\ \big]_{(5,j)}.
-\)</span>$</p>
-<p>Para calcular en Python la distribución de probabilidad mencionada se utilizará el método <code class="docutils literal notranslate"><span class="pre">transient_probabilities</span></code> de la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> que recibe como parametro el vector inicial <code class="docutils literal notranslate"><span class="pre">alpha</span></code> y el número de pasos necesarios <span class="math notranslate nohighlight">\(24\times 7\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Definir la distribución inicial</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">))</span>
-<span class="n">alpha</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span><span class="o">==</span> <span class="s2">&quot;1,Alto&quot;</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="n">alpha</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span><span class="o">==</span> <span class="s2">&quot;1,Bajo&quot;</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.5</span>
-
-<span class="c1">#Analizar las probabilidades de estado transitorio</span>
-<span class="n">probs_transitorio</span> <span class="o">=</span> <span class="n">cadena</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span><span class="mi">24</span><span class="o">*</span><span class="mi">7</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
-<span class="n">estado_interes1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span><span class="o">==</span> <span class="s2">&quot;5,Alto&quot;</span><span class="p">)</span>
-<span class="n">estado_interes2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span><span class="o">==</span> <span class="s2">&quot;5,Bajo&quot;</span><span class="p">)</span>
-
-<span class="c1">#Calcular la probabilidad de interés</span>
-<span class="n">prob_interes</span> <span class="o">=</span> <span class="n">probs_transitorio</span><span class="p">[</span><span class="n">estado_interes1</span><span class="p">]</span><span class="o">+</span><span class="n">probs_transitorio</span><span class="p">[</span><span class="n">estado_interes2</span><span class="p">]</span>
-<span class="n">prob_interes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.03225762])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Luego, nos preguntan considere el caso en que la máquina inicia su operación en un ambiente con alto impacto y con un nivel de corrosión de 3 (medio). Se observa la máquina a lo largo de 2 semanas. Determine el tiempo esperado (en horas) que pasa la máquina con un nivel de corrosión mayor al estado inicial. Provea una expresión que permita calcular esta cantidad e indique cómo calcularía cada uno de los elementos empleados en su expresión.</p>
-<p>Esto se refiere a un tiempo de ocupación para <span class="math notranslate nohighlight">\(24\times 7\times 24\)</span> horas, que calculamos como</p>
-<div class="math notranslate nohighlight">
-\[
-\sum_{i=4}^{5}\ \sum_{j\in S_Y}
-\left[ \int_{0}^{2\times7\times24} e^{Q u}\,du \right]_{(3,\text{alto}),(i,j)}.
-\]</div>
-<p>Para calcular en Python el tiempo mencionado se utilizará el método <code class="docutils literal notranslate"><span class="pre">occupation_time</span></code> de la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> que recibe como parámetro el tiempo de interés <span class="math notranslate nohighlight">\(2\times 7\times 24\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Calcular el tiempo de ocupación</span>
-<span class="n">tiempo_ocupacion</span> <span class="o">=</span> <span class="n">cadena</span><span class="o">.</span><span class="n">occupation_time</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">7</span><span class="o">*</span><span class="mi">24</span><span class="p">)</span>
-<span class="n">tiempo_interes</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">estado_inicial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span> <span class="o">==</span> <span class="s2">&quot;3,Alto&quot;</span><span class="p">)</span>
-
-<span class="c1"># Calcular el tiempo de ocupación para estados de interés</span>
-<span class="k">for</span> <span class="n">columna</span><span class="p">,</span> <span class="n">estado_futuro</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estados</span><span class="p">):</span>
-    <span class="n">i_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">estado_futuro</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">j_</span> <span class="o">=</span> <span class="n">estado_futuro</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">i_</span><span class="o">&gt;=</span><span class="mi">4</span><span class="p">:</span>
-        <span class="n">tiempo_interes</span> <span class="o">+=</span> <span class="n">tiempo_ocupacion</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">,</span> <span class="n">columna</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="n">tiempo_interes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>34.4620179949542
-</pre></div>
-</div>
-</div>
-</div>
-<p>Finalmente, en el último literal nos piden considerar el caso en que la máquina inicia su operación en un ambiente con bajo impacto y con un nivel de corrosión de 2 (bajo). ¿Cuánto tiempo (en horas) se espera que pase antes de que la máquina llegue a un estado con el máximo nivel de corrosión en un ambiente de alto impacto?</p>
-<p>Esto se trata de un tiempo de primera pasada.</p>
-<p>La máquina inicia en <span class="math notranslate nohighlight">\(Z(0)=(2,\text{bajo})\)</span>. El tiempo promedio de primera pasada al estado objetivo <span class="math notranslate nohighlight">\((5,\text{alto})\)</span> se denota
-$<span class="math notranslate nohighlight">\(
-m_{(2,\text{bajo})\to(5,\text{alto})}.
-\)</span>$</p>
-<p>Sea <span class="math notranslate nohighlight">\(\bar{Q}\)</span> la matriz <span class="math notranslate nohighlight">\(Q\)</span> sin la fila/columna del estado objetivo. Entonces</p>
-<div class="math notranslate nohighlight">
-\[
-m = \bar Q^{-1}\,\mathbf{1},\quad m_{(2,\text{bajo})\to(5,\text{alto})} = [m]_{(2,\text{bajo})}.
-\]</div>
-<p>Equivalente: resolver el sistema lineal</p>
-<div class="math notranslate nohighlight">
-\[
-r(i,j)\,m_{(i,j)\to(5,\text{alto})}
-= 1 + \sum_{(k,\ell)\neq(5,\text{alto})} q_{(i,j),(k,\ell)}\, m_{(k,\ell)\to(5,\text{alto})}.
-\]</div>
-<p>Para calcular en Python el tiempo mencionado se utilizará el método <code class="docutils literal notranslate"><span class="pre">first_time_passage</span></code> de la libreria <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> que recibe como parametro el estado futuro. Además se debe indicar el estado inicial.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular el tiempo de primera pasada </span>
-<span class="c1">#estados de interés</span>
-<span class="n">estado_inicial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span><span class="o">==</span><span class="s1">&#39;2,Bajo&#39;</span><span class="p">)</span>
-<span class="n">estado_futuro</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">estados</span> <span class="o">==</span> <span class="s1">&#39;5,Alto&#39;</span>
-<span class="p">)</span>
-<span class="c1"># Calcular el tiempo</span>
-<span class="n">cadena</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="n">estado_futuro</span><span class="p">)[</span><span class="n">estado_inicial</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>276.4706507868981
-</pre></div>
-</div>
-</div>
-</div>
 <p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
 </section>
 
