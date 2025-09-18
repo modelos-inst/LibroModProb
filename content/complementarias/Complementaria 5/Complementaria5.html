@@ -66,9 +66,17 @@
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Complementaria 6: Estado Estable y Análisis de Tiempos Promedio" href="../Complementaria6.html" />
     <link rel="prev" title="Complementaria 4: Cadenas de Markov en Python III" href="../Complementaria4.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GT2XZ2ZSP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3GT2XZ2ZSP');
+</script>
+
   </head>
   
   
@@ -1849,7 +1857,7 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/21b16d5aaa0c3a6aafce8f2ded387fa881c7a5ed1524068e7007c5202260bb60.png" src="../../../_images/21b16d5aaa0c3a6aafce8f2ded387fa881c7a5ed1524068e7007c5202260bb60.png" />
+<img alt="../../../_images/9fedf8ac83e07891b180e2974ba97659f59aeb3f49eb3b560d3ee6bf32b43d42.png" src="../../../_images/9fedf8ac83e07891b180e2974ba97659f59aeb3f49eb3b560d3ee6bf32b43d42.png" />
 </div>
 </div>
 <p>Podemos evidenciar que los datos tienen un comportamiento que se asemeja a la distribución exponencial. Por este motivo, con ayuda de la función ktest() vamos a realizar una prueba de bondad de ajuste por Kolmogorov-Smirnov utilizando la función <code class="docutils literal notranslate"><span class="pre">kstest()</span></code>. Esta recibe como parámetro la distribución que queremos probar. Siendo “expon” la distribución exponencial, “norm” la distribución normal, “gamma” la distribución gamma, etc.</p>
@@ -1858,7 +1866,7 @@ Name: 2, dtype: object
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 
 <span class="c1"># Prueba de Kolmogorov-Smirnov</span>
-<span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="s1">&#39;expon&#39;</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)))</span>
+<span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">tClientes</span><span class="p">,</span> <span class="s1">&#39;expon&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tClientes</span><span class="p">)))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estadístico de KS:&#39;</span><span class="p">,</span> <span class="n">ks_stat</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-value:&#39;</span><span class="p">,</span> <span class="n">ks_p_value</span><span class="p">)</span>
@@ -1867,9 +1875,9 @@ Name: 2, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.05800228612737035
-P-value: 0.255080534696721
-Tasa estimada: 2.354692280383597
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico de KS: 0.03824815768264078
+P-value: 0.757512588173014
+Tasa estimada: 2.15373746586345
 </pre></div>
 </div>
 </div>
@@ -1890,7 +1898,7 @@ Tasa estimada: 2.354692280383597
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/2344ef6e724d8b91e3f48b4629cbd857a15b4b082e61b90be6fa6c76dbeaa84b.png" src="../../../_images/2344ef6e724d8b91e3f48b4629cbd857a15b4b082e61b90be6fa6c76dbeaa84b.png" />
+<img alt="../../../_images/3499b3271b0cb90ccfbb34b85d60dffce714813a1f3200bfa0b6bc962518bdf4.png" src="../../../_images/3499b3271b0cb90ccfbb34b85d60dffce714813a1f3200bfa0b6bc962518bdf4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1909,7 +1917,7 @@ Tasa estimada: 2.354692280383597
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/557a928dbaa56ec6c806136617606c3bc5b3519476e5d433c7796cd428fd118d.png" src="../../../_images/557a928dbaa56ec6c806136617606c3bc5b3519476e5d433c7796cd428fd118d.png" />
+<img alt="../../../_images/74fc61131b56c13c26e2ae2cb72f6333a0e3ccd837f5b5c37e7168636f258e23.png" src="../../../_images/74fc61131b56c13c26e2ae2cb72f6333a0e3ccd837f5b5c37e7168636f258e23.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1923,7 +1931,7 @@ Tasa estimada: 2.354692280383597
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/d29c6d30961fb3e9ab960a4b9464a37413f4e9b4dcb4af4cf1ca9efbf1869332.png" src="../../../_images/d29c6d30961fb3e9ab960a4b9464a37413f4e9b4dcb4af4cf1ca9efbf1869332.png" />
+<img alt="../../../_images/7c121ec6554a23f300c4fbadcd83c3ec9aa7b40d3b798aa26f4a9d5c47556c50.png" src="../../../_images/7c121ec6554a23f300c4fbadcd83c3ec9aa7b40d3b798aa26f4a9d5c47556c50.png" />
 </div>
 </div>
 <h4 style="color: #ADD8E6;">Ajuste de distribuciones discretas
@@ -1962,8 +1970,8 @@ Tasa estimada: 2.354692280383597
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 6.863854919783998
-P-value: 0.44319171234880705
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estadístico: 1.7146729952519757
+P-value: 0.9885450281408598
 </pre></div>
 </div>
 </div>
