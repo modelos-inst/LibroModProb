@@ -377,49 +377,60 @@
 <li><p>Probabilidades de transición,</p></li>
 <li><p>Recompensas inmediatas.</p></li>
 </ol>
-<p>Definimos las épocas:
-$<span class="math notranslate nohighlight">\(
-E = \{1,2,..., \infty \} \rightarrow \text{cada ataque}
-\)</span>$</p>
-<p>Definimos la variable de estado como:
-$<span class="math notranslate nohighlight">\(
-X_t = \text{Lugar donde atacaron los villanos en el t-1-ésimo ataque } t\\
-\)</span>$</p>
-<p>Definimos el espacio de estados:
-$$
-S_X = {AC,AS}\</p>
+<p>Definimos las épocas:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-Donde AC significa que atacaron el centro y AS que atacaron los suburbios.\\El espacio de decisiones:
-\end{aligned}\end{align} \]</div>
-<p>A(i) = {C,S}
-$$
-Donde C indica que los superhéroes se van al centro y S que se van a los suburbios.</p>
-<p>Tendremos una matriz de transición para cada decisión.
-$<span class="math notranslate nohighlight">\(
-P_{i \to j}^{(a = Suburbio)}= 
-\begin{array}{c|cc}
-   &amp; \text{Centro}&amp; \text{Suburbio}  \\
-    \hline
-    \text{Centro} &amp; 0.5 &amp; 0.5 \\
-    \text{Suburbio} &amp; 0.6 &amp; 0.4 
-    \end{array}
-\\
-P_{i \to j}^{(a = Centro)}= 
-\begin{array}{c|cc}
-   &amp; \text{Centro}&amp; \text{Suburbio}  \\
-    \hline
-    \text{Centro} &amp; 0.3 &amp; 0.7 \\
-    \text{Suburbio} &amp; 0.8 &amp; 0.2
-    \end{array}
-\)</span>$</p>
-<p>Finalmente, definimos los retornos. Estos corresponden a las batallas ganadas. Notemos que se ganan las batallas cuando los villanos van al lugar que los superhéroes decidieron ir. Así, los retornos son:</p>
+\[
+E = \{1, 2, \dots, \infty\} \rightarrow \text{cada ataque}
+\]</div>
+<p>Definimos la variable de estado como:</p>
+<div class="math notranslate nohighlight">
+\[
+X_t = \text{Lugar donde atacaron los villanos en el } (t-1)\text{-ésimo ataque}
+\]</div>
+<p>Definimos el espacio de estados:</p>
+<div class="math notranslate nohighlight">
+\[
+S_X = \{AC, AS\}
+\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(AC\)</span> significa que atacaron el centro y <span class="math notranslate nohighlight">\(AS\)</span> que atacaron los suburbios.</p>
+<p>El espacio de decisiones:</p>
+<div class="math notranslate nohighlight">
+\[
+A(i) = \{C, S\}
+\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(C\)</span> indica que los superhéroes se van al centro y <span class="math notranslate nohighlight">\(S\)</span> que se van a los suburbios.</p>
+<p>Tendremos una matriz de transición para cada decisión:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-r_{(AS,S)} = 0.4\\
-r_{(AS,C)} = 0.8 \\
-r_{(AC,C)} = 0.3 \\
-r_{(AC,S)} = 0.5
+P_{i \to j}^{(a = \text{Suburbio})} =
+\begin{array}{c|cc}
+   &amp; \text{Centro} &amp; \text{Suburbio} \\
+   \hline
+   \text{Centro} &amp; 0.5 &amp; 0.5 \\
+   \text{Suburbio} &amp; 0.6 &amp; 0.4
+\end{array}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{i \to j}^{(a = \text{Centro})} =
+\begin{array}{c|cc}
+   &amp; \text{Centro} &amp; \text{Suburbio} \\
+   \hline
+   \text{Centro} &amp; 0.3 &amp; 0.7 \\
+   \text{Suburbio} &amp; 0.8 &amp; 0.2
+\end{array}
+\end{split}\]</div>
+<p>Finalmente, definimos los retornos. Estos corresponden a las batallas ganadas.<br />
+Notemos que se ganan las batallas cuando los villanos van al lugar que los superhéroes decidieron ir.<br />
+Así, los retornos son:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+r_{(AS,S)} &amp;= 0.4 \\
+r_{(AS,C)} &amp;= 0.8 \\
+r_{(AC,C)} &amp;= 0.3 \\
+r_{(AC,S)} &amp;= 0.5
+\end{aligned}
 \end{split}\]</div>
 <p>Para empezar con la implementación, llamamos las librerías necesarias.</p>
 <div class="cell docutils container">
@@ -608,15 +619,15 @@ Las probabilidades de transición serán:</p>
 \[ \begin{align}\begin{aligned}\begin{split}
 P_{i \to j} = 
 \begin{array}{c|cccc}
-\text{a = 1} &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\text{a = 1} &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
-\text{Excelente} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\text{Excelente} &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.05 &amp; 0.7 &amp; 0.15 &amp; 0.1 \\
 \text{Promedio} &amp; 0 &amp; 0.2 &amp; 0.5 &amp; 0.3\\
 \text{Regular} &amp; 0 &amp; 0 &amp; 0.1 &amp; 0.9 \\
 \end{array}\end{split}\\\begin{split}\\\end{split}\\\begin{split}P_{i \to j}= 
 \begin{array}{c|cccc}
-\text{a = 2}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\text{a = 2}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
 \text{Excelente} &amp; 0.6 &amp; 0.4 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.25 &amp; 0.6 &amp; 0.1 &amp; 0.05 \\
@@ -625,17 +636,16 @@ P_{i \to j} =
 \end{array}
 \\\end{split}\\\begin{split}P_{i \to j}= 
 \begin{array}{c|cccc}
-\text{a = 3}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Regular} &amp; \text{Promedio} \\
+\text{a = 3}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
 \text{Excelente} &amp; 0.9 &amp; 0.1 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.5 &amp; 0.5 &amp; 0 &amp; 0 \\
 \text{Promedio} &amp; 0.2 &amp; 0.3 &amp; 0.5 &amp; 0\\
-\text{Regular} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\text{Regular} &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
 \end{array}
 \end{split}\end{aligned}\end{align} \]</div>
 <p>Así, estamos listos para implementar.</p>
-</details>
-<p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</details><p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
 </section>
 
     <script type="text/x-thebe-config">
