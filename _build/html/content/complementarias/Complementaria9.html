@@ -415,8 +415,9 @@ S_X = \text{\{1 (Mala), 2 (Regular), 3 (Buena)\}}
 </div>
 <p>Hasta este momento del curso, si se desea calcular el valor esperado de la calidad del aire o el valor esperado de algún costo asociado, se ha hecho uso de las probabilidades a un paso, varios pasos o en estado estable de la cadena de Markov. Sin embargo, también es posible realizar simulaciones de este proceso estocástico para estimar estas medidas. Asumamos que al final del día de hoy la calidad de aire es Mala (i=1). Siendo así, se sabe que las probabilidades de transición de la calidad del aire para el día siguiente son:
 $<span class="math notranslate nohighlight">\(
-P[X_{n+1}|X_{n}=1]= \begin{bmatrix}
-0.5 &amp; 0.3 &amp; 0.2 \\
+P[X_{n+1} \mid X_n = 1] =
+\begin{bmatrix}
+0.5 &amp; 0.3 &amp; 0.2
 \end{bmatrix}
 \)</span>$</p>
 <p>Para hacer esto en Python, accedemos a la fila de la matriz <span class="math notranslate nohighlight">\(P\)</span> que hace referencia al estado inicial (1).</p>
@@ -444,7 +445,7 @@ P[X_{n+1}|X_{n}=1]= \begin{bmatrix}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
