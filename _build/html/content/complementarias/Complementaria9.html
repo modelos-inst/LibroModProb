@@ -383,6 +383,7 @@ S_X = \text{\{1 (Mala), 2 (Regular), 3 (Buena)\}}
 \]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
+\mathbb{P}_{i \to j} =
 \begin{bmatrix}
 0.5 &amp; 0.3 &amp; 0.2 \\
 0.3 &amp; 0.4 &amp; 0.3 \\
@@ -437,7 +438,7 @@ P[X_{n+1} \mid X_n = 1] =
 </div>
 </div>
 </div>
-<p>Si deseamos simular la calidad del aire para el día de mañana, podemos generar una muestra aleatoria del estado futuro con estas probabilidades, de modo que, dado que actualmente estamos en el estado 1, con probabilidad de 0.5 se pase al estado 1, con probabilidad de 0.3 se pase al estado 2 y con probabilidad de 0.2 se pase al estado 3. Para esto, utilizamos la función <code class="docutils literal notranslate"><span class="pre">np,random.choice()</span></code>.</p>
+<p>Si deseamos simular la calidad del aire para el día de mañana, podemos generar una muestra aleatoria del estado futuro con estas probabilidades, de modo que, dado que actualmente estamos en el estado 1, con probabilidad de 0.5 se pase al estado 1, con probabilidad de 0.3 se pase al estado 2 y con probabilidad de 0.2 se pase al estado 3. Para esto, utilizamos la función <code class="docutils literal notranslate"><span class="pre">np.random.choice()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="p">])</span>
@@ -445,7 +446,7 @@ P[X_{n+1} \mid X_n = 1] =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
 </pre></div>
 </div>
 </div>
