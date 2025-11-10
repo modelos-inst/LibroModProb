@@ -574,78 +574,91 @@ r_{(AC,S)} &amp;= 0.5
 💡 <strong>Reto:</strong> Investiga como funciona la iteración por política y la iteración por valor. ¿En qué se parecen? ¿En qué se diferencian?
 </div>
 <h3 style="color: #ADD8E6;">Ejercicio MDP: estudiantes de la Universidad de Los Alpes</h3><p>Ahora intentemos modelar el segundo ejercicio propuesto. ¿Cuáles serían los componentes? ¿Cuántas matrices de probabilidades de transición tendríamos?</p>
-<p>Resuelva el segundo ejercicio propuesto en el archivo Complementaria 11 (Q) que se encuentra en BloqueNeón.</p>
+<p>Resuelva el segundo ejercicio propuesto en el archivo <em>Complementaria 11 (Q)</em> que se encuentra en <strong>BloqueNeón</strong>.</p>
 <details>
-<summary>Clic aquí para ver la solución</summary>
-Podemos modelar el problema como un proceso de decisión en el tiempo con épocas infinitas.  
-Así, el conjunto de las épocas está dado por:
+<summary><strong>Clic aquí para ver la solución</strong></summary>
+<p>Podemos modelar el problema como un proceso de decisión en el tiempo con épocas infinitas.<br />
+Así, el conjunto de las épocas está dado por:</p>
 <div class="math notranslate nohighlight">
 \[
-E = \{1,2,\dots,\infty\} \rightarrow \text{cada semestre}
+E = \{1, 2, \dots, \infty\} \rightarrow \text{cada semestre}
 \]</div>
-<p>La variable de estados será
-$<span class="math notranslate nohighlight">\(
-X_{t} = \text{Clasificación de un estudiante en la época } t
-\)</span><span class="math notranslate nohighlight">\(
-Su respectivo espacio de estados:
-\)</span><span class="math notranslate nohighlight">\(
-S_{X} = \{ Excelente, Bueno, Promedio, Regular\}
-\)</span><span class="math notranslate nohighlight">\(
-Ya que un estudiante podrá decidir si asistir a clase (1), asistir a clase y realizar complementarias y tareas (2) y asistir a clase, realizar complementarias y tareas y leer el libro guía (3). 
-\)</span><span class="math notranslate nohighlight">\(
-A(i) = 
+<p>La variable de estado será:</p>
+<div class="math notranslate nohighlight">
+\[
+X_t = \text{Clasificación de un estudiante en la época } t
+\]</div>
+<p>Su respectivo espacio de estados:</p>
+<div class="math notranslate nohighlight">
+\[
+S_X = \{\text{Excelente}, \text{Bueno}, \text{Promedio}, \text{Regular}\}
+\]</div>
+<p>Ya que un estudiante podrá decidir entre tres acciones posibles:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A(i) =
 \begin{cases}
-&amp;\text{Asistir a Clase (1)}, \\
-&amp;\text{Asistir a Clase y Realizar Complementarias y Tareas (2)}, \\
-&amp;\text{Asistir a Clase, Realizar Complementarias y Tareas y Leer el Libro Guía}
+\text{Asistir a Clase (1)}, \\
+\text{Asistir a Clase y Realizar Complementarias y Tareas (2)}, \\
+\text{Asistir a Clase, Realizar Complementarias y Tareas y Leer el Libro Guía (3)}
 \end{cases}
-\)</span><span class="math notranslate nohighlight">\(
-Los retornos inmediatos están dados por la tabla 2. En este caso, agregaremos penalizaciones para los retornos inexistentes. 
-\)</span><span class="math notranslate nohighlight">\(
-r(i|a) = 
+\end{split}\]</div>
+<p>Los retornos inmediatos están dados por la siguiente tabla.<br />
+En este caso, agregamos penalizaciones para los retornos inexistentes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+r(i|a) =
 \begin{array}{|c|c|c|c|}
 \hline
-\text{Categoría/Acción}&amp; \text{1} &amp; \text{2} &amp; \text{3} \\
+\text{Categoría/Acción} &amp; 1 &amp; 2 &amp; 3 \\
 \hline
 \text{E} &amp; -1000 &amp; 3 &amp; 0 \\
 \text{B} &amp; 4 &amp; 2 &amp; -10 \\
 \text{P} &amp; 3 &amp; -5 &amp; -10 \\
-\text{R} &amp; -3 &amp; -15 &amp; -1000\\
+\text{R} &amp; -3 &amp; -15 &amp; -1000 \\
 \hline
 \end{array}
-\)</span>$
-Las probabilidades de transición serán:</p>
+\end{split}\]</div>
+<p>Las probabilidades de transición son las siguientes:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
-P_{i \to j} = 
+\[\begin{split}
+P_{i \to j}^{(a = 1)} =
 \begin{array}{c|cccc}
-\text{a = 1} &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
+ &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
 \text{Excelente} &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.05 &amp; 0.7 &amp; 0.15 &amp; 0.1 \\
-\text{Promedio} &amp; 0 &amp; 0.2 &amp; 0.5 &amp; 0.3\\
+\text{Promedio} &amp; 0 &amp; 0.2 &amp; 0.5 &amp; 0.3 \\
 \text{Regular} &amp; 0 &amp; 0 &amp; 0.1 &amp; 0.9 \\
-\end{array}\end{split}\\\begin{split}\\\end{split}\\\begin{split}P_{i \to j}= 
+\end{array}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{i \to j}^{(a = 2)} =
 \begin{array}{c|cccc}
-\text{a = 2}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
+ &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
 \text{Excelente} &amp; 0.6 &amp; 0.4 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.25 &amp; 0.6 &amp; 0.1 &amp; 0.05 \\
-\text{Promedio} &amp; 0.1 &amp; 0.3 &amp; 0.5 &amp; 0.1\\
+\text{Promedio} &amp; 0.1 &amp; 0.3 &amp; 0.5 &amp; 0.1 \\
 \text{Regular} &amp; 0 &amp; 0.05 &amp; 0.25 &amp; 0.7 \\
 \end{array}
-\\\end{split}\\\begin{split}P_{i \to j}= 
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{i \to j}^{(a = 3)} =
 \begin{array}{c|cccc}
-\text{a = 3}&amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
+ &amp; \text{Excelente} &amp; \text{Bueno} &amp; \text{Promedio} &amp; \text{Regular} \\
 \hline
 \text{Excelente} &amp; 0.9 &amp; 0.1 &amp; 0 &amp; 0 \\
 \text{Bueno} &amp; 0.5 &amp; 0.5 &amp; 0 &amp; 0 \\
-\text{Promedio} &amp; 0.2 &amp; 0.3 &amp; 0.5 &amp; 0\\
+\text{Promedio} &amp; 0.2 &amp; 0.3 &amp; 0.5 &amp; 0 \\
 \text{Regular} &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
 \end{array}
-\end{split}\end{aligned}\end{align} \]</div>
+\end{split}\]</div>
 <p>Así, estamos listos para implementar.</p>
-</details><p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
+</details>
+<p>Universidad de los Andes | Vigilada Mineducación. Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964. Reconocimiento personería jurídica: Resolución 28 del 23 de febrero de 1949 Minjusticia. Departamento de Ingeniería Industrial Carrera 1 Este No. 19 A 40 Bogotá, Colombia Tel. (57.1) 3324320 | (57.1) 3394949 Ext. 2880 /2881 <a class="reference external" href="http://industrial.uniandes.edu.co">http://industrial.uniandes.edu.co</a></p>
 </section>
 
     <script type="text/x-thebe-config">
