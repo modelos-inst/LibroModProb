@@ -393,7 +393,6 @@ S_X = \text{\{1 (Mala), 2 (Regular), 3 (Buena)\}}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># Definir la matriz con probabilidades de transición a un paso (P)</span>
 <span class="n">estados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -402,61 +401,19 @@ S_X = \text{\{1 (Mala), 2 (Regular), 3 (Buena)\}}
               <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
               <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
 
-<span class="c1"># Crear un DataFrame para asignar nombres a las filas y columnas</span>
-<span class="n">P</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">estados</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">estados</span><span class="p">)</span>
-
 <span class="n">P</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>0.5</td>
-      <td>0.3</td>
-      <td>0.2</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.3</td>
-      <td>0.4</td>
-      <td>0.3</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.5, 0.3, 0.2],
+       [0.3, 0.4, 0.3],
+       [0.2, 0.3, 0.5]])
+</pre></div>
 </div>
-<p>Hasta este momento del curso, si se desea calcular el valor esperado de la calidad del aire o el valor esperado de algún costo asociado, se ha hecho uso de las probabilidades a un paso, varios pasos o en estado estable de la cadena de Markov. Sin embargo, también es posible realizar simulaciones de este proceso estocástico para estimar estas medidas. Asumamos que al final del día de hoy la calidad de aire es Mala (1). Siendo así, se sabe que las probabilidades de transición de la calidad del aire para el día siguiente son:
+</div>
+</div>
+<p>Hasta este momento del curso, si se desea calcular el valor esperado de la calidad del aire o el valor esperado de algún costo asociado, se ha hecho uso de las probabilidades a un paso, varios pasos o en estado estable de la cadena de Markov. Sin embargo, también es posible realizar simulaciones de este proceso estocástico para estimar estas medidas. Asumamos que al final del día de hoy la calidad de aire es Mala (i=1). Siendo así, se sabe que las probabilidades de transición de la calidad del aire para el día siguiente son:
 $<span class="math notranslate nohighlight">\(
 P[X_{n+1}|X_{n}=1]= \begin{bmatrix}
 0.5 &amp; 0.3 &amp; 0.2 \\
@@ -468,15 +425,13 @@ P[X_{n+1}|X_{n}=1]= \begin{bmatrix}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estado actual</span>
 <span class="n">estado</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="c1"># Definir la distribución de probabilidad de la calidad de aire para el día siguiente, dado el estado actual</span>
-<span class="n">P</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">estado</span><span class="p">,]</span>
+<span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># Noten que restamos un 1, dado que las posiciones en Python inician en 0 </span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    0.5
-2    0.3
-3    0.2
-Name: 1, dtype: float64
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5, 0.3, 0.2])
 </pre></div>
 </div>
 </div>
@@ -489,7 +444,7 @@ Name: 1, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
 </pre></div>
 </div>
 </div>
@@ -516,7 +471,7 @@ Name: 1, dtype: float64
     <span class="n">lista_estados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estado</span><span class="p">)</span>
     
     <span class="c1"># Obtener estado futuro</span>
-    <span class="n">estado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="p">])</span>
+    <span class="n">estado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -530,13 +485,11 @@ Name: 1, dtype: float64
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Evolución de la calidad del aire&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Día&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Calidad del aire&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Calidad del aire&#39;)
-</pre></div>
-</div>
 <img alt="../../_images/1bf5f72fd84c7a564dc5304315994967c16b428d4484e6b0877657d8231d54fb.png" src="../../_images/1bf5f72fd84c7a564dc5304315994967c16b428d4484e6b0877657d8231d54fb.png" />
 </div>
 </div>
@@ -565,7 +518,7 @@ Name: 1, dtype: float64
         <span class="n">matriz_calidad</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">estado</span>
         
         <span class="c1"># Obtener estado futuro</span>
-        <span class="n">estado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="p">])</span>
+        <span class="n">estado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -581,20 +534,13 @@ Name: 1, dtype: float64
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Evolución de la calidad del aire para varios escenarios&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Día&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Calidad del aire&quot;</span><span class="p">)</span>
-
-<span class="c1"># Agregar leyenda</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
 <span class="c1"># Mostrar el gráfico</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-</pre></div>
-</div>
-<img alt="../../_images/2809b1c15afe62cc030010add1f7e9c24b30c36a57b278d72fcfc6bdcb71e108.png" src="../../_images/2809b1c15afe62cc030010add1f7e9c24b30c36a57b278d72fcfc6bdcb71e108.png" />
+<img alt="../../_images/b86ca545d2f70717039513e6df07e2660c634eb61f283af6ebe392945e81fd35.png" src="../../_images/b86ca545d2f70717039513e6df07e2660c634eb61f283af6ebe392945e81fd35.png" />
 </div>
 </div>
 <p>Con esto en mente, ahora se resolverá el problema del archivo “Complementaria 11 (Q).pdf” que se encuentra en Bloque Neón.</p>
@@ -686,13 +632,11 @@ E[\text{Inventario}]_{n} = \sum_{i\in S_{X}}{[\alpha \mathbb{P}^{n}]_{i}\cdot i}
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Inventario al final de la semana&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Semana&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Valor esperado de inventario&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Valor esperado de inventario&#39;)
-</pre></div>
-</div>
 <img alt="../../_images/6e637affec91edd1c9e8ad7f748f7a0d18c8a5ef50064cc0ccfb079eeee4cde9.png" src="../../_images/6e637affec91edd1c9e8ad7f748f7a0d18c8a5ef50064cc0ccfb079eeee4cde9.png" />
 </div>
 </div>
@@ -772,19 +716,13 @@ E[\text{Costo Ordenar}] = \sum_{n=1}^{30}{5000} \cdot \sum_{i=0}^{70}{[\alpha \m
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Semana&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Inventario&quot;</span><span class="p">)</span>
 
-<span class="c1"># Agregar leyenda</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
 <span class="c1"># Mostrar el gráfico</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-</pre></div>
-</div>
-<img alt="../../_images/5b730b9e176c96b10e1041a04a7c56f7aa0756669cdb53a26b6722acc1993d0f.png" src="../../_images/5b730b9e176c96b10e1041a04a7c56f7aa0756669cdb53a26b6722acc1993d0f.png" />
+<img alt="../../_images/176e9d5f93d496bc06666c2aa841c313e40f71ebd9c9f9f2f47e43daba558433.png" src="../../_images/176e9d5f93d496bc06666c2aa841c313e40f71ebd9c9f9f2f47e43daba558433.png" />
 </div>
 </div>
 <p>Podemos observar que el inventario parece estabilizarse y oscila alrededor de las 70 cajas de medicamento, consistente con lo encontrado en el literal b.</p>
