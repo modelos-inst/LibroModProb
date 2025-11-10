@@ -520,11 +520,11 @@ r_{(AC,S)} &amp;= 0.5
 </div>
 </div>
 <p>Finalmente, solucionamos.</p>
-<p>El método <code class="docutils literal notranslate"><span class="pre">solve</span></code> de la librería recibe por parámetro: la tolerancia (GAP) de convergencia y el método de solución, que puede ser iteración por política o iteración por valor. Ambos métodos garantizan encontrar la solución óptima y llegar al mismo valor.</p>
+<p>El método <code class="docutils literal notranslate"><span class="pre">solve</span></code> de la librería recibe por parámetro: la tolerancia (GAP) de convergencia, el sentido del problema (maximización o minimización) y el método de solución, que puede ser iteración por política o iteración por valor. Ambos métodos garantizan encontrar la solución óptima y llegar al mismo valor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
-<span class="n">value_functions</span><span class="p">,</span> <span class="n">optimal_policy</span> <span class="o">=</span> <span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
+<span class="n">value_functions</span><span class="p">,</span> <span class="n">optimal_policy</span> <span class="o">=</span> <span class="n">mdpHeroes</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;policy_iteration&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -532,7 +532,8 @@ r_{(AC,S)} &amp;= 0.5
 <p>Notamos que el método <code class="docutils literal notranslate"><span class="pre">solve</span></code> nos devuelve dos resultados. El primero se refiere al valor que toma cada una de las funciones de valor; y el segundo corresponde a la política óptima. En este caso, siempre que se esté en el centro se debe decidir ir al suburbio y siempre que se esté en el suburbio se debe decidir ir al centro.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimal_policy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Política Óptima</span>
+<span class="n">optimal_policy</span>
 </pre></div>
 </div>
 </div>
